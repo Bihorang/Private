@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Survey of Bacteria 학습 페이지</title>
+<style>
+:root{
+  --bg:#f6f7fb; --paper:#ffffff; --text:#172033; --muted:#596275; --line:#d8deea;
+  --brand:#2563eb; --brand2:#0f766e; --accent:#f59e0b; --danger:#b91c1c; --soft:#eef4ff;
+  --supp:#ecfdf5; --unc:#fff7ed; --conf:#f8fafc; --shadow:0 10px 25px rgba(15,23,42,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.72;font-size:16px;overflow-wrap:anywhere}
+body.dark-mode{--bg:#0f172a;--paper:#172033;--text:#e5e7eb;--muted:#b6c2d2;--line:#334155;--brand:#60a5fa;--brand2:#2dd4bf;--accent:#fbbf24;--danger:#fca5a5;--soft:#14213d;--supp:#09251d;--unc:#2b1f0c;--conf:#111827;--shadow:0 10px 25px rgba(0,0,0,.28)}
+a{color:var(--brand);text-decoration:none}
+a:focus,button:focus,input:focus,select:focus{outline:3px solid rgba(37,99,235,.35);outline-offset:2px}
+.skip-link{position:absolute;left:-999px;top:8px;background:var(--brand);color:white;padding:8px 12px;border-radius:8px;z-index:10}
+.skip-link:focus{left:8px}
+header{background:linear-gradient(120deg,var(--brand),var(--brand2));color:white;padding:34px 18px 22px}
+.header-inner{max-width:1120px;margin:0 auto}
+h1{margin:0 0 8px;font-size:clamp(1.8rem,4vw,3rem);line-height:1.2}
+.subtitle{font-size:1.05rem;opacity:.95;margin:0 0 16px}
+.top-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:16px}
+.top-box{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:14px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px}
+.controls input[type="search"], .controls select{padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.4);min-height:42px;background:white;color:#111827}
+button{cursor:pointer;border:0;border-radius:10px;padding:10px 13px;background:var(--brand);color:white;font-weight:700}
+button.secondary{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35)}
+#searchCount{font-weight:700}
+.progress-wrap{margin-top:16px;background:rgba(255,255,255,.22);height:16px;border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.3)}
+.progress-bar{height:100%;width:0;background:white;transition:width .25s ease}
+#progressText{display:inline-block;margin-top:6px;font-weight:700}
+.layout{max-width:1120px;margin:0 auto;padding:18px;display:grid;grid-template-columns:260px 1fr;gap:18px}
+.toc{position:sticky;top:10px;align-self:start;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--shadow);max-height:calc(100vh - 20px);overflow:auto}
+.toc h2{font-size:1.05rem;margin:0 0 10px}
+.toc ol{margin:0;padding-left:22px}
+.toc li{margin:6px 0}
+main{min-width:0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;margin-bottom:18px;box-shadow:var(--shadow);overflow:hidden;max-width:100%}
+.section-toggle{width:100%;text-align:left;background:transparent;color:var(--text);padding:18px 20px;font-size:1.25rem;border-radius:0;border-bottom:1px solid var(--line)}
+.card label.study-label{display:flex;gap:8px;align-items:center;padding:10px 20px;color:var(--muted);border-bottom:1px solid var(--line)}
+.section-content{padding:20px;max-width:100%}
+.section-content.collapsed{display:none}
+h2,h3,h4{line-height:1.35;margin-top:1.2em}
+h3{font-size:1.15rem;color:var(--brand)}
+h4{font-size:1.02rem;color:var(--brand2)}
+.table-wrap{max-width:100%;overflow-x:auto;margin:12px 0;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;min-width:680px;background:var(--paper)}
+th,td{border-bottom:1px solid var(--line);padding:10px 12px;vertical-align:top;text-align:left}
+th{background:var(--soft);font-weight:800}
+tr:last-child td{border-bottom:0}
+.badge{display:inline-block;background:var(--accent);color:#111827;border-radius:999px;padding:2px 8px;font-size:.85rem;font-weight:800;margin:2px}
+.uncertain{background:var(--unc);border-left:4px solid var(--danger);padding:10px 12px;border-radius:10px;margin:10px 0}
+.supplement{background:var(--supp);border-left:4px solid var(--brand2);padding:10px 12px;border-radius:10px;margin:10px 0}
+.conflict{background:#fee2e2;color:#7f1d1d;border-left:4px solid #ef4444;padding:10px 12px;border-radius:10px;margin:10px 0}
+.confusion{background:var(--conf);border-left:3px solid var(--line);padding:10px 12px;margin:10px 0;border-radius:10px;box-shadow:none}
+.highlight{background:#fde68a;color:#111827;border-radius:3px;padding:0 .08em}
+.search-hit{border-color:var(--accent)}
+.flash-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}
+.flash-tools input,.flash-tools select{padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--text)}
+.flashcard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:12px}
+.flashcard{min-height:220px;perspective:1000px;max-width:100%}
+.flashcard-inner{position:relative;width:100%;min-height:220px;transition:transform .45s;transform-style:preserve-3d}
+.flashcard.flipped .flashcard-inner{transform:rotateY(180deg)}
+.flashcard-front,.flashcard-back{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:16px;background:var(--paper);padding:16px;overflow:auto;box-shadow:var(--shadow)}
+.flashcard-front{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.flashcard-front strong{font-size:1.22rem;color:var(--brand)}
+.flashcard-back{transform:rotateY(180deg)}
+.mem-row{margin-top:8px;border-top:1px solid var(--line);padding-top:8px}
+.memorized-check{margin-right:6px}
+#toTop{position:fixed;right:16px;bottom:16px;border-radius:999px;padding:12px 15px;box-shadow:var(--shadow);display:none}
+.mermaid{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px;overflow:auto}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+footer{max-width:1120px;margin:0 auto;padding:20px;color:var(--muted)}
+@media(max-width:840px){.layout{grid-template-columns:1fr}.toc{position:static;max-height:none}.controls input[type="search"]{width:100%}header{padding-top:28px}.section-content{padding:16px}table{min-width:620px}}
+@media print{header,.toc,.controls,#toTop,.study-label,.flash-tools{display:none!important}.layout{display:block;max-width:none}.card{box-shadow:none;break-inside:avoid;border:1px solid #bbb}.section-content{display:block!important}body{background:white;color:black;font-size:12px}th{background:#eee!important;color:black}.flashcard-front,.flashcard-back{position:static;transform:none}.flashcard-inner{transform:none!important}.flashcard{min-height:auto}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 바로가기</a>
+<header id="top">
+  <div class="header-inner">
+    <h1>Survey of Bacteria</h1>
+    <p class="subtitle">Chapter 11-2 Bacteria Part 1 · 세균 분류 개관, 깊게 분기한 세균, 광합성 세균, 저 G+C 그람양성 세균</p>
+    <div class="top-grid" aria-label="강의 핵심 정보">
+      <div class="top-box"><strong>강의 주제</strong><br>세균 주요 그룹의 분류 기준과 대표 특징</div>
+      <div class="top-box"><strong>핵심 질문</strong><br>세균은 계통, 염색성, 광합성 방식, G+C 함량에 따라 어떻게 구분되는가?</div>
+      <div class="top-box"><strong>주요 개념</strong><br>Deeply branching bacteria, phototrophic bacteria, cyanobacteria, purple/green bacteria, Firmicutes, Clostridia</div>
+    </div>
+    <div class="controls" role="search">
+      <label class="sr-only" for="globalSearch">섹션 검색</label>
+      <input id="globalSearch" type="search" placeholder="검색어 입력: cyanobacteria, Clostridia 등" aria-label="강의 내용 검색">
+      <span id="searchCount">검색 결과 0개</span>
+      <button id="darkToggle" class="secondary" type="button">다크 모드</button>
+      <button id="expandAll" class="secondary" type="button">전체 펼치기</button>
+      <button id="collapseAll" class="secondary" type="button">전체 접기</button>
+    </div>
+    <div class="progress-wrap" aria-label="학습 진행률"><div id="progressBar" class="progress-bar"></div></div>
+    <span id="progressText">학습 진행률 0%</span>
+  </div>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="목차">
+  <h2>목차</h2>
+  <ol>
+    <li><a href="#overview">강의 개요</a></li>
+    <li><a href="#flow">전체 강의 흐름</a></li>
+    <li><a href="#details">세부 강의 정리</a></li>
+    <li><a href="#concepts">핵심 개념 정리</a></li>
+    <li><a href="#principles">주요 원리와 구조 정리</a></li>
+    <li><a href="#cases">사례·예시·실험·실습 정리</a></li>
+    <li><a href="#comparison">비교 정리</a></li>
+    <li><a href="#exam">시험 대비 핵심 정리</a></li>
+    <li><a href="#questions">강의 내용 기반 예상 문제</a></li>
+    <li><a href="#english">영문 표현 학습 카드</a></li>
+    <li><a href="#summary">최종 요약</a></li>
+    <li><a href="#checklist">누락 가능성 점검</a></li>
+  </ol>
+</nav>
+
+<main id="main">
+<section id="overview" class="card">
+  <button class="section-toggle" aria-expanded="true" aria-controls="overview-content">1. 강의 개요</button>
+  <label class="study-label"><input type="checkbox" class="study-check" data-section="overview"> 학습 완료</label>
+  <div id="overview-content" class="section-content">
+    <div class="uncertain"><strong>[확실하지 않음]</strong> 제공 자료는 MP4 영상이며 별도 자막 파일은 확인되지 않았다. 따라서 본 정리는 영상 화면에 나타난 슬라이드 텍스트와 그림을 중심으로 작성했다. 교수자의 음성 설명 중 화면에 남지 않은 세부 발언은 누락 가능성이 있다.</div>
+    <div class="table-wrap"><table>
+      <tr><th>항목</th><th>내용</th></tr>
+      <tr><td>강의 주제</td><td><strong>Survey of Bacteria</strong>: 세균의 주요 분류군을 계통적·생리적 특징으로 개관한다.</td></tr>
+      <tr><td>핵심 질문</td><td>세균은 <strong>깊은 계통 분기</strong>, <strong>광합성 방식</strong>, <strong>G+C 함량</strong>, <strong>그람 염색 특성</strong>에 따라 어떻게 구분되는가?</td></tr>
+      <tr><td>주요 개념</td><td>Deeply branching bacteria, phototrophic bacteria, cyanobacteria, green sulfur bacteria, green nonsulfur bacteria, purple sulfur bacteria, purple nonsulfur bacteria, Firmicutes, Clostridia, endospores</td></tr>
+      <tr><td>관련 단원</td><td>Chapter 11: Characterizing and Classifying Prokaryotes. 영상 제목상 “Chap11-2 Bacteria part1”.</td></tr>
+      <tr><td>강의 목적</td><td>세균 분류의 큰 틀을 제시하고, 대표 군의 생리적 특징과 시험에 나올 수 있는 구분 기준을 정리한다.</td></tr>
+      <tr><td>시험 중요도</td><td><span class="badge">상</span> 분류 기준과 대표 예시가 표와 목록으로 제시되어 객관식·단답형 출제 가능성이 높다.</td></tr>
+      <tr><td>강의 흐름</td><td>전체 분류 목록 제시 → deeply branching bacteria → phototrophic bacteria → 광합성 세균 비교 → cyanobacteria·purple bacteria 사례 → low G+C Gram-positive bacteria와 Clostridia.</td></tr>
+      <tr><td>자료 유형</td><td>MP4 영상 화면 슬라이드, 교재 그림/표 캡처. 자막·녹취록·별도 PPT 파일은 <strong>[강의에서 언급되지 않음]</strong>.</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section id="flow" class="card">
+  <button class="section-toggle" aria-expanded="true" aria-controls="flow-content">2. 전체 강의 흐름</button>
+  <label class="study-label"><input type="checkbox" class="study-check" data-section="flow"> 학습 완료</label>
+  <div id="flow-content" class="section-content">
+    <div class="mermaid">
+flowchart TD
+  A[Survey of Bacteria 전체 목록] --> B[Deeply Branching Bacteria]
+  B --> C[Aquifex와 Deinococcus]
+  C --> D[Phototrophic Bacteria]
+  D --> E[5개 광합성 세균군 비교]
+  E --> F[Cyanobacteria와 다른 광합성 세균의 구조 비교]
+  F --> G[Purple / Green bacteria의 carbon source와 reducing power]
+  G --> H[Low G+C Gram-positive Bacteria]
+  H --> I[Clostridia: 독소, 질병, endospore]
+    </div>
+    <p>강의는 “세균을 어떤 기준으로 나누는가”라는 질문에서 출발한다. 먼저 세균 조사 범위를 다섯 범주로 제시한다: deeply branching bacteria and phototrophic bacteria, low G+C Gram-positive bacteria, high G+C Gram-positive bacteria, Gram-negative Proteobacteria, other Gram-negative bacteria.</p>
+    <p>이 영상 파트에서는 앞부분 두 범주가 중심이다. <strong>deeply branching bacteria</strong>는 초기 지구 환경과 관련된 오래된 계통의 세균으로 소개되고, <strong>phototrophic bacteria</strong>는 광합성 색소, 전자 공여체, 산소 발생 여부, 황 침전, 운동성 등으로 세분된다.</p>
+    <p>사례와 그림은 분류 기준을 암기하게 하는 역할을 한다. 예를 들어 cyanobacteria는 chlorophyll a와 thylakoids를 가지며 산소발생 광합성을 한다. purple sulfur bacteria는 세포 내부 sulfur deposit 그림으로 구체화된다. 마지막으로 low G+C Gram-positive bacteria 중 <strong>Clostridia</strong>가 질병·산업·내생포자와 연결된다.</p>
+    <p><strong>최종 결론:</strong> 세균 분류는 단순히 그람 염색 하나로 끝나지 않는다. 계통, G+C 함량, 대사 방식, 광합성 전자 공여체, 구조, 질병 관련성까지 함께 보아야 한다.</p>
+  </div>
+</section>
+
+<section id="details" class="card">
+  <button class="section-toggle" aria-expanded="true" aria-controls="details-content">3. 세부 강의 정리</button>
+  <label class="study-label"><input type="checkbox" class="study-check" data-section="details"> 학습 완료</label>
+  <div id="details-content" class="section-content">
+    <h3>3-1. Survey of Bacteria의 전체 범위</h3>
+    <p>슬라이드는 세균 조사를 다섯 범주로 나눈다. I은 <strong>Deeply Branching Bacteria and Phototrophic Bacteria</strong>, II는 <strong>Low G+C Gram-Positive Bacteria</strong>, III는 High G+C Gram-Positive Bacteria, IV는 Gram-Negative Proteobacteria, V는 Other Gram-Negative Bacteria이다.</p>
+    <div class="table-wrap"><table>
+      <tr><th>구분</th><th>내용</th></tr>
+      <tr><td>정의</td><td>세균의 주요 분류군을 계통·염색성·염기 조성·대사 방식으로 개관하는 단원.</td></tr>
+      <tr><td>원리</td><td>16S rRNA, G+C content, 광합성 색소와 전자 공여체, 그람 염색 특성 등이 분류 근거로 사용된다.</td></tr>
+      <tr><td>과정</td><td>큰 분류군 목록을 먼저 제시한 뒤 대표 군과 특징을 순서대로 설명한다.</td></tr>
+      <tr><td>결과</td><td>학습자는 각 군의 대표 특징과 예시 생물을 대응시켜야 한다.</td></tr>
+      <tr><td>의의</td><td>미생물학에서 세균을 기능과 진화 관계로 이해하는 기본 틀을 제공한다.</td></tr>
+      <tr><td>한계</td><td>본 영상에서는 III~V 범주의 세부 내용은 아직 다루지 않는다.</td></tr>
+      <tr><td>시험 포인트</td><td><span class="badge">분류 목록 순서</span>와 각 범주의 핵심 키워드.</td></tr>
+    </table></div>
+
+    <h3>3-2. Deeply Branching Bacteria</h3>
+    <p>Deeply branching bacteria는 과학자들이 <strong>earliest bacteria</strong>와 유사하다고 보는 세균이다. 슬라이드는 이들이 <strong>autotrophic</strong>이며, early Earth에 존재했을 것으로 생각되는 환경과 비슷한 서식지에서 산다고 제시한다.</p>
+    <p><strong>Aquifex</strong>는 bacteria의 earliest branch를 대표하는 것으로 제시된다. <strong>Deinococcus</strong>는 Gram-negative와 유사한 outer membrane을 가지지만 Gram-positive로 염색된다고 설명된다.</p>
+    <div class="table-wrap"><table>
+      <tr><th>구분</th><th>내용</th></tr>
+      <tr><td>정의</td><td>세균 계통수에서 매우 이른 시기에 갈라진 것으로 여겨지는 세균군.</td></tr>
+      <tr><td>원리</td><td>초기 지구와 비슷한 서식지, 자가영양성, 계통수상 위치가 특징이다.</td></tr>
+      <tr><td>과정</td><td>계통수에서 bacteria, archaea, eucarya의 큰 분기와 함께 위치를 이해한다.</td></tr>
+      <tr><td>결과</td><td>Aquifex는 가장 이른 세균 가지의 대표, Deinococcus는 염색성과 막 구조가 혼합적으로 보이는 예시로 기억한다.</td></tr>
+      <tr><td>의의</td><td>현생 세균의 다양성을 진화적 맥락에서 이해하게 한다.</td></tr>
+      <tr><td>한계</td><td>영상 화면에는 구체적 서식 온도, 에너지 대사 경로 등은 제시되지 않았다.</td></tr>
+      <tr><td>시험 포인트</td><td><span class="badge">Aquifex = earliest branch</span> <span class="badge">Deinococcus = Gram-negative-like outer membrane but Gram-positive stain</span></td></tr>
+    </table></div>
+    <div class="table-wrap"><table>
+      <tr><th>항목</th><th>내용</th></tr>
+      <tr><td>강조한 내용</td><td>earliest bacteria, early Earth, autotrophic이라는 표현이 반복된다.</td></tr>
+      <tr><td>반복 설명한 내용</td><td>Aquifex와 Deinococcus의 대표 특징.</td></tr>
+      <tr><td>시험 가능성 높은 내용</td><td>두 대표 생물의 특징 매칭 문제.</td></tr>
+      <tr><td>주의 표현</td><td>“similar to earliest bacteria”는 현재 생물이 곧 원시 세균이라는 뜻이 아니라 유사성이 있다는 의미이다.</td></tr>
+    </table></div>
+    <div class="confusion"><strong>헷갈리기 쉬운 부분:</strong> Deinococcus는 outer membrane 때문에 Gram-negative처럼 보일 수 있으나, 슬라이드의 핵심은 “Gram-positive로 염색된다”는 점이다.</div>
+
+    <h3>3-3. Phototrophic Bacteria</h3>
+    <p>Phototrophic bacteria는 <strong>photosynthetic lamellae</strong>를 포함하는 phototrophs로 제시된다. 슬라이드는 이들이 autotrophic이라고 소개하며, photosynthesis를 위한 <strong>pigments</strong>와 <strong>source of electrons</strong>에 따라 다섯 그룹으로 나뉜다고 설명한다.</p>
+    <p>다섯 그룹은 <strong>blue-green bacteria/cyanobacteria</strong>, green sulfur bacteria, green nonsulfur bacteria, purple sulfur bacteria, purple nonsulfur bacteria이다.</p>
+    <div class="table-wrap"><table>
+      <tr><th>구분</th><th>내용</th></tr>
+      <tr><td>정의</td><td>광에너지를 이용하는 세균. 슬라이드에서는 photosynthetic lamellae와 광합성 색소가 강조된다.</td></tr>
+      <tr><td>원리</td><td>광합성 색소 종류와 전자 공여체가 그룹 구분의 핵심 기준이다.</td></tr>
+      <tr><td>과정</td><td>빛 흡수 → 전자 전달 → 탄소원 및 환원력 사용 → 산소 발생 여부 또는 황 침전 여부 차이 발생.</td></tr>
+      <tr><td>결과</td><td>산소발생형 cyanobacteria와 무산소형 green/purple bacteria를 구분한다.</td></tr>
+      <tr><td>의의</td><td>광합성 세균은 에너지 대사와 분류를 동시에 이해하게 하는 핵심 사례이다.</td></tr>
+      <tr><td>한계</td><td>각 색소의 분자 구조나 광계 I/II의 상세 기전은 영상 화면에 제시되지 않았다.</td></tr>
+      <tr><td>시험 포인트</td><td><span class="badge">5개 그룹 이름</span> <span class="badge">pigments + electron donor</span> <span class="badge">oxygenic vs anoxygenic</span></td></tr>
+    </table></div>
+
+    <h3>3-4. 광합성 세균 비교표</h3>
+    <p>교재 표는 cyanobacteria, Chlorobia, Chloroflexi, γ-proteobacteria, α-proteobacteria를 비교한다. 공통명은 각각 blue-green algae, green sulfur bacteria, green nonsulfur bacteria, purple sulfur bacteria, purple nonsulfur bacteria로 제시된다.</p>
+    <div class="table-wrap"><table>
+      <tr><th>비교 기준</th><th>Cyanobacteria</th><th>Green sulfur</th><th>Green nonsulfur</th><th>Purple sulfur</th><th>Purple nonsulfur</th></tr>
+      <tr><td>주요 색소</td><td>chlorophyll a plus c <span class="uncertain">[확실하지 않음] OCR상 c로 판독됨. 일반 교재 맥락에서는 보조 색소가 함께 제시될 가능성이 있다.</span></td><td>bacteriochlorophyll c, d, or e</td><td>bacteriochlorophylls a and c</td><td>bacteriochlorophyll a or b</td><td>bacteriochlorophyll a or b</td></tr>
+      <tr><td>광합성 유형</td><td>Oxygenic</td><td>Anoxygenic</td><td>Anoxygenic</td><td>Anoxygenic</td><td>Anoxygenic</td></tr>
+      <tr><td>전자 공여체</td><td>H<sub>2</sub>O</td><td>H<sub>2</sub>, H<sub>2</sub>S, or S</td><td>Organic compounds</td><td>H<sub>2</sub>, H<sub>2</sub>S, or S</td><td>Organic compounds</td></tr>
+      <tr><td>황 침전</td><td>None</td><td>Outside of cell</td><td>None</td><td>Inside of cell</td><td>None</td></tr>
+      <tr><td>운동성</td><td>Motile or nonmotile</td><td>Nonmotile</td><td>Gliding</td><td>Motile with polar or peritrichous flagella</td><td>Nonmotile or motile with polar flagella</td></tr>
+      <tr><td>시험 포인트</td><td>물 사용, 산소 발생</td><td>세포 밖 황 침전</td><td>gliding</td><td>세포 안 황 침전</td><td>유기물 전자 공여체</td></tr>
+    </table></div>
+    <p>표 하단에는 무산소 광합성의 예시 반응으로 <strong>12H<sub>2</sub>S + 6CO<sub>2</sub> → C<sub>6</sub>H<sub>12</sub>O<sub>6</sub> + 6H<sub>2</sub>O + 12S</strong>가 제시된다. 이는 H<sub>2</sub>O 대신 H<sub>2</sub>S를 전자 공여체로 사용하면 산소가 아니라 황이 생성될 수 있음을 보여준다.</p>
+
+    <h3>3-5. Phototrophs의 탄소원 구분</h3>
+    <p>슬라이드 흐름도는 phototrophs를 탄소원에 따라 <strong>photoheterotrophs</strong>와 <strong>photoautotrophs</strong>로 나눈다. Organic compounds를 carbon source로 쓰면 photoheterotrophs이고, CO<sub>2</sub>를 carbon source로 쓰면 photoautotrophs이다.</p>
+    <p>흐름도는 “Use H<sub>2</sub>O to reduce CO<sub>2</sub>?”라는 질문으로 cyanobacteria를 구분한다. H<sub>2</sub>O를 이용하면 cyanobacteria 쪽으로, 그렇지 않으면 purple nonsulfur bacteria 등 다른 광합성 세균 쪽으로 흐른다.</p>
+
+    <h3>3-6. Cyanobacteria와 eukaryotic algae/plants 비교</h3>
+    <p>Cyanobacteria와 eukaryotic algae/plants는 모두 <strong>chlorophyll a</strong>와 <strong>thylakoids</strong>를 가진 것으로 제시된다. 차이는 진핵 조류·식물에서는 광합성 구조가 <strong>chloroplast</strong> 안에 있다는 점으로 그림에 표시된다.</p>
+    <div class="supplement"><strong>[보충 설명]</strong> 강의 화면의 비교 의도는 cyanobacteria가 원핵생물이지만 산소발생 광합성 구조를 가진다는 점, 그리고 엽록체와의 기능적 유사성을 보여주는 데 있다.</div>
+
+    <h3>3-7. Cyanobacteria, Green bacteria, Purple bacteria 구조 비교</h3>
+    <p>비교 그림은 cyanobacteria, green/purple bacteria의 색소와 내부 구조를 구분한다. Cyanobacteria는 chlorophyll a와 thylakoids, green bacteria는 bacteriochlorophylls와 chlorosomes, purple bacteria는 bacteriochlorophylls와 intracytoplasmic membranes가 표시된다.</p>
+    <div class="table-wrap"><table>
+      <tr><th>군</th><th>핵심 색소</th><th>관련 구조</th><th>시험 포인트</th></tr>
+      <tr><td>Cyanobacteria</td><td>chlorophyll a</td><td>thylakoids</td><td>oxygenic, aerobic, H<sub>2</sub>O 사용</td></tr>
+      <tr><td>Green bacteria</td><td>bacteriochlorophylls</td><td>chlorosomes</td><td>anoxygenic, 황 관련 전자 공여체 가능</td></tr>
+      <tr><td>Purple bacteria</td><td>bacteriochlorophylls</td><td>intracytoplasmic membranes</td><td>purple sulfur와 purple nonsulfur 구분</td></tr>
+    </table></div>
+
+    <h3>3-8. Purple bacteria와 Green bacteria의 탄소원·환원력</h3>
+    <p>Purple bacteria는 purple nonsulfur bacteria와 purple sulfur bacteria로 나뉜다. 표는 carbon source와 reducing power를 비교한다. Purple nonsulfur bacteria는 carbon source와 reducing power가 organic compounds로 표시된다. Purple sulfur bacteria는 reducing power로 H<sub>2</sub>S 또는 S<sub>2</sub>O<sub>3</sub><sup>2-</sup> (thiosulfate)가 제시된다.</p>
+    <p>Green bacteria도 green nonsulfur bacteria와 sulfur bacteria로 나뉘며, green nonsulfur bacteria는 carbon source와 reducing power가 organic compounds로 표시된다. Green sulfur bacteria는 carbon source가 CO<sub>2</sub>, reducing power가 H<sub>2</sub>S로 제시된다.</p>
+    <div class="uncertain"><strong>[확실하지 않음]</strong> 일부 표의 OCR 판독이 낮아 green bacteria의 세부 칸은 화면 해상도상 완전하지 않다. 다만 “Green Non-Sulfur Bacteria / Sulfur Bacteria”, “carbon source”, “reducing power”, “CO<sub>2</sub>”, “H<sub>2</sub>S”는 확인된다.</div>
+
+    <h3>3-9. Cyanobacteria 성장 형태와 Purple sulfur bacteria 그림</h3>
+    <p>교재 그림 11.14는 cyanobacteria의 서로 다른 growth habits를 보여준다. 그림에는 <strong>vegetative cell</strong>, <strong>heterocyst</strong>, <strong>akinete</strong>, <strong>sheath/glycocalyx</strong>가 표시된다. 그림 11.15는 purple sulfur bacteria 내부의 sulfur deposit을 보여준다.</p>
+    <div class="uncertain"><strong>[확실하지 않음]</strong> 해당 그림은 화면상 설명 텍스트가 제한적이어서 각 구조의 기능 설명은 강의 화면에 직접 제시된 범위 이상으로 단정하지 않는다.</div>
+
+    <h3>3-10. Low G+C Gram-Positive Bacteria와 Clostridia</h3>
+    <p>Low G+C Gram-Positive Bacteria는 <strong>G+C content below 50%</strong>이고, <strong>similar 16S rRNA sequences</strong>를 가지며, <strong>phylum Firmicutes</strong>로 분류된다고 제시된다.</p>
+    <p>Clostridia는 rod-shaped, obligate anaerobes이며 medicine and industry에서 중요하다. 인간 질병을 일으키는 독소를 생산하고, <strong>Clostridium botulinum</strong>은 botulism, <strong>Clostridium tetani</strong>는 tetanus와 연결된다. 또한 endospores survive harsh conditions가 강조된다.</p>
+    <p>Botox 관련 교재 사진에는 purified type A botulinum toxin이 Botox로 판매되며, 매우 작은 용량이 얼굴 근육에 주입되어 주름을 만드는 근육을 마비시키고 피부를 부드럽게 만든다고 쓰여 있다. 효과 유지를 위해 약 6개월마다 반복될 수 있다고 제시된다.</p>
+    <div class="table-wrap"><table>
+      <tr><th>구분</th><th>내용</th></tr>
+      <tr><td>정의</td><td>Low G+C Gram-positive bacteria 중 Clostridia는 막대 모양의 절대혐기성 세균이다.</td></tr>
+      <tr><td>원리</td><td>G+C 함량과 16S rRNA 유사성이 분류 기준으로 사용된다.</td></tr>
+      <tr><td>과정</td><td>Firmicutes로 분류 → Clostridia 설명 → 독소와 질병 예시 → endospore 생존성 강조.</td></tr>
+      <tr><td>결과</td><td>botulinum-botulism, tetani-tetanus, endospore-hard conditions를 매칭해야 한다.</td></tr>
+      <tr><td>의의</td><td>의학·산업적으로 중요한 세균군이며 병원성과 응용 사례를 함께 가진다.</td></tr>
+      <tr><td>한계</td><td>Clostridia의 산업적 이용 예시는 화면에 구체적으로 제시되지 않았다.</td></tr>
+      <tr><td>시험 포인트</td><td><span class="badge">G+C &lt; 50%</span> <span class="badge">Firmicutes</span> <span class="badge">obligate anaerobes</span> <span class="badge">endospores</span></td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section id="concepts" class="card">
+  <button class="section-toggle" aria-expanded="true" aria-controls="concepts-content">4. 핵심 개념 정리</button>
+  <label class="study-label"><input type="checkbox" class="study-check" data-section="concepts"> 학습 완료</label>
+  <div id="concepts-content" class="section-content">
+    <div class="table-wrap"><table>
+      <tr><th>개념</th><th>정의</th><th>작동 원리</th><th>강의 예시</th><th>관련 단원</th><th>시험 포인트</th></tr>
+      <tr><td>Deeply branching bacteria</td><td>초기 세균과 유사하다고 여겨지는 깊은 계통 분기 세균</td><td>계통수상 이른 분기, 초기 지구와 유사한 서식지</td><td>Aquifex, Deinococcus</td><td>I</td><td>Aquifex와 Deinococcus 특징 매칭</td></tr>
+      <tr><td>Phototrophic bacteria</td><td>빛을 이용하는 세균</td><td>광합성 색소와 전자 공여체에 따라 구분</td><td>Cyanobacteria, green sulfur, purple sulfur 등</td><td>I</td><td>5개 그룹 이름과 oxygenic/anoxygenic</td></tr>
+      <tr><td>Cyanobacteria</td><td>blue-green bacteria로 제시된 산소발생 광합성 세균</td><td>H<sub>2</sub>O를 전자 공여체로 사용하고 O<sub>2</sub> 생성</td><td>chlorophyll a, thylakoids</td><td>I</td><td>oxygenic, H<sub>2</sub>O, O<sub>2</sub></td></tr>
+      <tr><td>Green sulfur bacteria</td><td>무산소 광합성 세균 중 황 관련 전자 공여체를 쓰는 군</td><td>H<sub>2</sub>S 등을 사용하고 황 침전이 세포 밖에 생김</td><td>Chlorobia</td><td>I</td><td>outside sulfur deposition</td></tr>
+      <tr><td>Purple sulfur bacteria</td><td>무산소 광합성 purple bacteria 중 황을 이용하는 군</td><td>H<sub>2</sub>S/S/thiosulfate를 환원력으로 사용</td><td>세포 내부 sulfur deposit 그림</td><td>I</td><td>inside sulfur deposition</td></tr>
+      <tr><td>Low G+C Gram-positive bacteria</td><td>G+C 함량이 50% 미만인 그람양성 세균군</td><td>G+C content와 16S rRNA 유사성으로 분류</td><td>Firmicutes</td><td>II</td><td>G+C below 50%, Firmicutes</td></tr>
+      <tr><td>Clostridia</td><td>rod-shaped, obligate anaerobes</td><td>독소 생산, 내생포자 형성</td><td>C. botulinum, C. tetani</td><td>II</td><td>botulism/tetanus/endospore</td></tr>
+    </table></div>
+    <div class="table-wrap"><table>
+      <tr><th>용어</th><th>정의</th><th>강의 맥락</th><th>시험 포인트</th></tr>
+      <tr><td>G+C content</td><td>DNA 염기 중 guanine과 cytosine 비율</td><td>Low G+C Gram-positive bacteria의 기준</td><td>below 50%</td></tr>
+      <tr><td>16S rRNA sequences</td><td>원핵생물 계통 비교에 쓰이는 리보솜 RNA 서열</td><td>Low G+C 군의 유사성 설명</td><td>분류 기준</td></tr>
+      <tr><td>Autotrophic</td><td>무기 탄소원 등을 이용해 유기물을 합성하는 영양 방식</td><td>Deeply branching bacteria와 phototrophic bacteria 설명</td><td>photoautotroph와 구분</td></tr>
+      <tr><td>Photosynthetic lamellae</td><td>광합성과 관련된 막성 구조</td><td>Phototrophic bacteria의 특징</td><td>광합성 세균 구조</td></tr>
+      <tr><td>Bacteriochlorophyll</td><td>무산소 광합성 세균의 주요 광합성 색소</td><td>green/purple bacteria 표</td><td>chlorophyll a와 구분</td></tr>
+      <tr><td>Endospore</td><td>혹독한 조건에서 생존 가능한 내생포자</td><td>Clostridia 설명</td><td>harsh conditions survive</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section id="principles" class="card">
+  <button class="section-toggle" aria-expanded="true" aria-controls="principles-content">5. 주요 원리와 구조 정리</button>
+  <label class="study-label"><input type="checkbox" class="study-check" data-section="principles"> 학습 완료</label>
+  <div id="principles-content" class="section-content">
+    <div class="table-wrap"><table>
+      <tr><th>항목</th><th>정의</th><th>구성 요소</th><th>작동 방식</th><th>적용 사례</th><th>한계</th><th>시험 포인트</th></tr>
+      <tr><td>광합성 세균 분류 원리</td><td>광합성 색소와 전자 공여체를 기준으로 세균군을 나눔</td><td>pigments, electron donor, sulfur deposition, motility</td><td>전자 공여체와 색소가 산소 발생·황 침전·대사 양상을 결정</td><td>Cyanobacteria vs purple sulfur bacteria</td><td>분자 수준 광계 설명은 화면에 없음</td><td>oxygenic/anoxygenic 구분</td></tr>
+      <tr><td>산소발생 광합성</td><td>H<sub>2</sub>O를 전자 공여체로 사용하여 O<sub>2</sub> 생성</td><td>chlorophyll a, thylakoids, H<sub>2</sub>O</td><td>물을 환원력 원천으로 사용</td><td>Cyanobacteria</td><td>세부 반응 단계는 화면에 없음</td><td>H<sub>2</sub>O와 O<sub>2</sub> 매칭</td></tr>
+      <tr><td>무산소 광합성</td><td>산소를 발생시키지 않는 광합성</td><td>bacteriochlorophylls, H<sub>2</sub>S/S/organic compounds</td><td>H<sub>2</sub>O 대신 다른 전자 공여체 사용</td><td>green sulfur, purple sulfur</td><td>각 군의 세부 생태는 화면 제한</td><td>H<sub>2</sub>S 사용 시 S 생성 가능</td></tr>
+      <tr><td>G+C 기반 분류</td><td>DNA 염기 조성으로 세균군을 분류</td><td>guanine, cytosine, 16S rRNA</td><td>G+C 함량과 rRNA 유사성으로 관련성을 판단</td><td>Low G+C Gram-positive bacteria</td><td>단독 기준이 아니라 계통 정보와 함께 사용됨</td><td>G+C below 50%</td></tr>
+      <tr><td>내생포자 생존 원리</td><td>혹독한 환경에서도 생존을 돕는 구조</td><td>endospore</td><td>건조, 열, 화학 스트레스 등 harsh conditions에 견딤</td><td>Clostridia</td><td>형성 단계는 화면에 없음</td><td>endospores survive harsh conditions</td></tr>
+    </table></div>
+    <h3>공식·반응식</h3>
+    <div class="table-wrap"><table>
+      <tr><th>공식</th><th>기호 의미</th><th>사용 조건</th><th>해석</th><th>주의점</th></tr>
+      <tr><td>12H<sub>2</sub>S + 6CO<sub>2</sub> → C<sub>6</sub>H<sub>12</sub>O<sub>6</sub> + 6H<sub>2</sub>O + 12S</td><td>H<sub>2</sub>S: 전자 공여체, CO<sub>2</sub>: 탄소원, S: 생성된 황</td><td>무산소 광합성에서 H<sub>2</sub>S를 전자 공여체로 사용할 때</td><td>산소 대신 황이 생성될 수 있음을 보여준다.</td><td>cyanobacteria의 산소발생 광합성과 혼동하지 않는다.</td></tr>
+    </table></div>
+    <h3>모델·이론</h3>
+    <div class="table-wrap"><table>
+      <tr><th>모델 / 이론</th><th>핵심 가정</th><th>설명 대상</th><th>장점</th><th>한계</th><th>현실 적용 주의점</th></tr>
+      <tr><td>Phylogenetic Tree of Life</td><td>생물은 공통 조상에서 분기했으며 bacteria, archaea, eucarya로 큰 계통을 이룬다.</td><td>deeply branching bacteria의 위치와 의미</td><td>분류를 진화적 맥락으로 이해하게 함</td><td>화면상 세부 계통 관계 판독이 일부 제한됨</td><td>계통수 위치만으로 모든 생리 특성을 단정하지 않는다.</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section id="cases" class="card">
+  <button class="section-toggle" aria-expanded="true" aria-controls="cases-content">6. 사례·예시·실험·실습 정리</button>
+  <label class="study-label"><input type="checkbox" class="study-check" data-section="cases"> 학습 완료</label>
+  <div id="cases-content" class="section-content">
+    <h3>사례 정리</h3>
+    <div class="table-wrap"><table>
+      <tr><th>사례</th><th>사용 개념</th><th>설명 목적</th><th>결론</th><th>시험 포인트</th></tr>
+      <tr><td>Aquifex</td><td>Deeply branching bacteria</td><td>가장 이른 세균 가지를 대표하는 예</td><td>초기 세균과 유사한 특징을 떠올리게 함</td><td>Aquifex = earliest branch</td></tr>
+      <tr><td>Deinococcus</td><td>막 구조와 그람 염색</td><td>outer membrane과 염색 결과의 혼동을 보여줌</td><td>Gram-negative-like outer membrane but Gram-positive stain</td><td>구조와 염색성 혼동 주의</td></tr>
+      <tr><td>Cyanobacteria</td><td>oxygenic photosynthesis</td><td>H<sub>2</sub>O 사용과 O<sub>2</sub> 발생 설명</td><td>chlorophyll a와 thylakoids를 가진 산소발생 광합성 세균</td><td>H<sub>2</sub>O, O<sub>2</sub>, chlorophyll a</td></tr>
+      <tr><td>Purple sulfur bacteria</td><td>anoxygenic photosynthesis, sulfur deposition</td><td>H<sub>2</sub>S 사용 시 황 침전 설명</td><td>세포 내부 sulfur deposit이 관찰됨</td><td>inside of cell</td></tr>
+      <tr><td>Botox</td><td>Clostridium botulinum toxin</td><td>독소가 질병뿐 아니라 응용 사례도 가짐을 제시</td><td>purified type A botulinum toxin은 근육 마비를 통해 주름 완화에 사용됨</td><td>botulinum toxin과 botulism/Botox 연결</td></tr>
+    </table></div>
+    <h3>실험 또는 실습 정리</h3>
+    <div class="table-wrap"><table>
+      <tr><th>항목</th><th>내용</th></tr>
+      <tr><td>목적</td><td>영상 화면에는 실제 실험 수행 절차는 제시되지 않는다. 교재 그림과 표를 통해 구조와 분류 기준을 학습한다.</td></tr>
+      <tr><td>원리</td><td>현미경 사진과 비교표를 통해 세균 구조, 황 침전, 성장 형태를 구분한다.</td></tr>
+      <tr><td>준비물 또는 자료</td><td>교재 그림 11.14 cyanobacteria growth habits, 그림 11.15 purple sulfur bacteria sulfur deposits, 광합성 세균 비교표.</td></tr>
+      <tr><td>절차</td><td>1. 표에서 각 세균군의 색소와 전자 공여체 확인.<br>2. 그림에서 cyanobacteria의 vegetative cell, heterocyst, akinete, sheath/glycocalyx 확인.<br>3. purple sulfur bacteria 사진에서 sulfur deposit의 위치 확인.<br>4. 각 관찰 내용을 분류 기준과 연결.</td></tr>
+      <tr><td>관찰 결과</td><td>Cyanobacteria는 다양한 growth habits를 보이며, purple sulfur bacteria는 sulfur deposit을 가진다.</td></tr>
+      <tr><td>해석</td><td>구조와 대사 산물은 분류군의 생리적 특징을 시각적으로 확인하게 한다.</td></tr>
+      <tr><td>주의점</td><td>그림만으로 기능을 과도하게 확장 설명하지 않는다.</td></tr>
+      <tr><td>시험 포인트</td><td>그림 라벨과 분류 기준을 연결하는 문제에 대비한다.</td></tr>
+    </table></div>
+    <h3>문제 풀이 정리</h3>
+    <div class="table-wrap"><table>
+      <tr><th>항목</th><th>내용</th></tr>
+      <tr><td>문제 유형</td><td>영상 화면에는 별도 계산 문제나 풀이 문제는 제시되지 않는다.</td></tr>
+      <tr><td>주어진 조건</td><td>표와 그림의 분류 기준: carbon source, reducing power, electron donor, oxygenic/anoxygenic, G+C content.</td></tr>
+      <tr><td>사용 개념</td><td>광합성 세균 비교, Firmicutes와 Clostridia의 특징.</td></tr>
+      <tr><td>풀이 과정</td><td>조건 분석 → 개념 선택 → 세균군 매칭 → 정답 도출 → 유사 개념과 오답 점검.</td></tr>
+      <tr><td>정답</td><td>[강의에서 언급되지 않음] 실제 문제 정답은 제시되지 않음.</td></tr>
+      <tr><td>오답 포인트</td><td>cyanobacteria와 purple/green bacteria의 산소 발생 여부 혼동, green sulfur와 purple sulfur의 sulfur deposition 위치 혼동.</td></tr>
+      <tr><td>시험 포인트</td><td>표 기반 매칭형 문제를 대비한다.</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section id="comparison" class="card">
+  <button class="section-toggle" aria-expanded="true" aria-controls="comparison-content">7. 비교 정리</button>
+  <label class="study-label"><input type="checkbox" class="study-check" data-section="comparison"> 학습 완료</label>
+  <div id="comparison-content" class="section-content">
+    <div class="table-wrap"><table>
+      <tr><th>비교 항목</th><th>개념 A</th><th>개념 B</th><th>핵심 차이</th><th>시험 포인트</th></tr>
+      <tr><td>광합성 유형</td><td>Oxygenic photosynthesis</td><td>Anoxygenic photosynthesis</td><td>산소 발생 여부. Oxygenic은 H<sub>2</sub>O 사용, anoxygenic은 H<sub>2</sub>S/S/organic compounds 등 사용.</td><td>Cyanobacteria만 oxygenic으로 제시됨</td></tr>
+      <tr><td>전자 공여체</td><td>Cyanobacteria</td><td>Green/Purple sulfur bacteria</td><td>Cyanobacteria는 H<sub>2</sub>O, sulfur bacteria는 H<sub>2</sub>S 또는 S 계열 사용.</td><td>H<sub>2</sub>O vs H<sub>2</sub>S</td></tr>
+      <tr><td>황 침전 위치</td><td>Green sulfur bacteria</td><td>Purple sulfur bacteria</td><td>Green sulfur는 outside of cell, purple sulfur는 inside of cell.</td><td>위치 매칭</td></tr>
+      <tr><td>광합성 구조</td><td>Cyanobacteria</td><td>Purple bacteria</td><td>Cyanobacteria는 thylakoids, purple bacteria는 intracytoplasmic membranes.</td><td>구조 명칭 구분</td></tr>
+      <tr><td>광합성 구조</td><td>Green bacteria</td><td>Purple bacteria</td><td>Green bacteria는 chlorosomes, purple bacteria는 intracytoplasmic membranes.</td><td>chlorosomes vs intracytoplasmic membranes</td></tr>
+      <tr><td>세균 분류 기준</td><td>Low G+C Gram-positive bacteria</td><td>Deeply branching bacteria</td><td>Low G+C는 염기 조성과 16S rRNA, deeply branching은 계통수상 이른 분기가 중심.</td><td>기준이 다름</td></tr>
+      <tr><td>Clostridium species</td><td>C. botulinum</td><td>C. tetani</td><td>botulinum은 botulism/Botox와 연결, tetani는 tetanus와 연결.</td><td>질병명 매칭</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section id="exam" class="card">
+  <button class="section-toggle" aria-expanded="true" aria-controls="exam-content">8. 시험 대비 핵심 정리</button>
+  <label class="study-label"><input type="checkbox" class="study-check" data-section="exam"> 학습 완료</label>
+  <div id="exam-content" class="section-content">
+    <h3>반드시 외울 개념</h3>
+    <div class="table-wrap"><table>
+      <tr><th>개념</th><th>이유</th><th>암기 포인트</th></tr>
+      <tr><td>Deeply branching bacteria</td><td>세균 계통 분류의 출발점</td><td>Aquifex, Deinococcus, early Earth, autotrophic</td></tr>
+      <tr><td>Phototrophic bacteria 5그룹</td><td>표 기반 매칭 문제가 쉬움</td><td>Cyanobacteria, green sulfur, green nonsulfur, purple sulfur, purple nonsulfur</td></tr>
+      <tr><td>Oxygenic vs anoxygenic</td><td>광합성 세균 구분의 핵심</td><td>H<sub>2</sub>O/O<sub>2</sub> vs H<sub>2</sub>S/S</td></tr>
+      <tr><td>Low G+C Gram-positive bacteria</td><td>G+C와 Firmicutes가 직접 제시됨</td><td>G+C below 50%, similar 16S rRNA</td></tr>
+      <tr><td>Clostridia</td><td>의학적 예시와 질병명이 연결됨</td><td>obligate anaerobes, toxins, endospores</td></tr>
+    </table></div>
+    <h3>서술형 예상 포인트</h3>
+    <div class="table-wrap"><table>
+      <tr><th>서술형 예상 문제</th><th>답안 핵심</th><th>포함 키워드</th></tr>
+      <tr><td>Phototrophic bacteria를 광합성 유형과 전자 공여체 기준으로 설명하라.</td><td>빛 이용 세균 → pigment와 electron donor 기준 → cyanobacteria oxygenic, 나머지 주요 군 anoxygenic.</td><td>pigments, electron donor, oxygenic, anoxygenic</td></tr>
+      <tr><td>Deeply branching bacteria의 의미와 예를 설명하라.</td><td>초기 세균과 유사한 계통 → early Earth 유사 환경 → Aquifex와 Deinococcus 특징.</td><td>earliest bacteria, Aquifex, Deinococcus</td></tr>
+      <tr><td>Clostridia가 의학적으로 중요한 이유를 설명하라.</td><td>독소 생산, 인간 질병 유발, botulinum/tetani, endospore 생존성.</td><td>toxin, botulism, tetanus, endospore</td></tr>
+    </table></div>
+    <h3>객관식 함정 표현</h3>
+    <div class="table-wrap"><table>
+      <tr><th>객관식 함정 표현</th><th>왜 틀렸는가</th><th>올바른 개념</th></tr>
+      <tr><td>모든 광합성 세균은 산소를 발생시킨다.</td><td>Green/purple bacteria는 anoxygenic으로 제시됨.</td><td>Cyanobacteria가 oxygenic.</td></tr>
+      <tr><td>Purple sulfur bacteria의 황 침전은 세포 밖에 있다.</td><td>표는 inside of cell로 제시함.</td><td>Green sulfur = outside, purple sulfur = inside.</td></tr>
+      <tr><td>Low G+C Gram-positive bacteria는 G+C content가 50% 이상이다.</td><td>슬라이드는 below 50%라고 제시함.</td><td>below 50%.</td></tr>
+      <tr><td>Clostridia는 산소가 있어야 자라는 세균이다.</td><td>obligate anaerobes로 제시됨.</td><td>절대혐기성.</td></tr>
+      <tr><td>Deinococcus는 Gram-negative로 염색된다.</td><td>outer membrane은 Gram-negative와 유사하지만 stains Gram-positive라고 제시됨.</td><td>막 구조와 염색 결과를 구분.</td></tr>
+    </table></div>
+    <h3>시험 직전 체크포인트</h3>
+    <div class="table-wrap"><table>
+      <tr><th>체크 항목</th><th>확인 내용</th></tr>
+      <tr><td>핵심 정의 설명 가능 여부</td><td>deeply branching, phototrophic, low G+C, Clostridia를 한 문장으로 말할 수 있는가?</td></tr>
+      <tr><td>개념 간 차이 구분 가능 여부</td><td>oxygenic/anoxygenic, green sulfur/purple sulfur, cyanobacteria/purple bacteria를 구분하는가?</td></tr>
+      <tr><td>공식·원리 적용 가능 여부</td><td>H<sub>2</sub>S 반응식에서 산소 대신 sulfur가 생성됨을 설명할 수 있는가?</td></tr>
+      <tr><td>교수자 강조점 기억 여부</td><td>earliest bacteria, G+C below 50%, endospore survive harsh conditions를 기억하는가?</td></tr>
+      <tr><td>대표 예시 설명 가능 여부</td><td>Aquifex, Deinococcus, Clostridium botulinum, Clostridium tetani를 매칭하는가?</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section id="questions" class="card">
+  <button class="section-toggle" aria-expanded="true" aria-controls="questions-content">9. 강의 내용 기반 예상 문제</button>
+  <label class="study-label"><input type="checkbox" class="study-check" data-section="questions"> 학습 완료</label>
+  <div id="questions-content" class="section-content">
+    <h3>객관식 10문제</h3>
+    <ol>
+      <li>Deeply branching bacteria에 대한 설명으로 가장 적절한 것은?
+        <ol><li>모두 진핵생물이다.</li><li>초기 세균과 유사한 것으로 여겨진다.</li><li>항상 산소발생 광합성을 한다.</li><li>G+C content가 반드시 50% 이상이다.</li></ol>
+        <strong>정답:</strong> 2. <strong>해설:</strong> 슬라이드는 이들을 earliest bacteria와 유사하다고 설명한다.
+      </li>
+      <li>Aquifex는 무엇의 대표 예로 제시되었는가?
+        <ol><li>earliest branch of bacteria</li><li>purple nonsulfur bacteria</li><li>Clostridia</li><li>high G+C Gram-positive bacteria</li></ol>
+        <strong>정답:</strong> 1. <strong>해설:</strong> Aquifex는 가장 이른 세균 가지를 대표하는 것으로 제시된다.
+      </li>
+      <li>Deinococcus의 특징으로 옳은 것은?
+        <ol><li>chloroplast를 가진다.</li><li>outer membrane은 Gram-negative와 유사하지만 Gram-positive로 염색된다.</li><li>반드시 H<sub>2</sub>O로 CO<sub>2</sub>를 환원한다.</li><li>G+C content below 50%로만 설명된다.</li></ol>
+        <strong>정답:</strong> 2. <strong>해설:</strong> 구조와 염색성의 혼동을 묻는 문제이다.
+      </li>
+      <li>Phototrophic bacteria를 다섯 그룹으로 나누는 기준으로 제시된 것은?
+        <ol><li>세포벽 두께와 핵막 유무</li><li>pigments와 source of electrons</li><li>포자 크기와 운동성만</li><li>질병 이름</li></ol>
+        <strong>정답:</strong> 2. <strong>해설:</strong> 광합성 색소와 전자 공여체가 핵심 기준이다.
+      </li>
+      <li>다음 중 oxygenic photosynthesis로 제시된 군은?
+        <ol><li>Cyanobacteria</li><li>Green sulfur bacteria</li><li>Purple sulfur bacteria</li><li>Purple nonsulfur bacteria</li></ol>
+        <strong>정답:</strong> 1. <strong>해설:</strong> cyanobacteria는 H<sub>2</sub>O를 사용하고 산소를 발생시킨다.
+      </li>
+      <li>Green sulfur bacteria와 purple sulfur bacteria의 황 침전 위치 비교로 옳은 것은?
+        <ol><li>둘 다 세포 내부</li><li>둘 다 세포 외부</li><li>Green sulfur는 세포 밖, purple sulfur는 세포 안</li><li>Green sulfur는 황 침전 없음</li></ol>
+        <strong>정답:</strong> 3. <strong>해설:</strong> 표의 대표 함정이다.
+      </li>
+      <li>Cyanobacteria와 eukaryotic algae/plants의 공통점으로 화면에 제시된 것은?
+        <ol><li>bacteriochlorophyll만 가진다.</li><li>chlorophyll a와 thylakoids가 표시된다.</li><li>둘 다 Clostridia이다.</li><li>둘 다 endospore를 만든다.</li></ol>
+        <strong>정답:</strong> 2. <strong>해설:</strong> 비교 그림에 공통 요소가 표시된다.
+      </li>
+      <li>Low G+C Gram-positive bacteria에 대한 설명으로 옳은 것은?
+        <ol><li>G+C content above 80%</li><li>G+C content below 50%</li><li>모두 Gram-negative Proteobacteria</li><li>모두 chlorosomes를 가진다.</li></ol>
+        <strong>정답:</strong> 2. <strong>해설:</strong> 슬라이드에 직접 제시된 수치이다.
+      </li>
+      <li>Clostridia의 특징으로 옳지 않은 것은?
+        <ol><li>rod-shaped</li><li>obligate anaerobes</li><li>endospores survive harsh conditions</li><li>oxygenic photosynthesis를 대표한다.</li></ol>
+        <strong>정답:</strong> 4. <strong>해설:</strong> Clostridia는 저 G+C 그람양성 세균으로 제시되며 광합성 세균 대표가 아니다.
+      </li>
+      <li>Clostridium tetani와 연결되는 질병은?
+        <ol><li>botulism</li><li>tetanus</li><li>malaria</li><li>influenza</li></ol>
+        <strong>정답:</strong> 2. <strong>해설:</strong> 슬라이드에 Clostridium tetani [tetanus]로 제시된다.
+      </li>
+    </ol>
+    <h3>단답형 10문제</h3>
+    <div class="table-wrap"><table>
+      <tr><th>문제</th><th>정답</th><th>해설</th></tr>
+      <tr><td>earliest branch of bacteria를 대표하는 것으로 제시된 세균은?</td><td>Aquifex</td><td>Deeply branching bacteria의 대표 예.</td></tr>
+      <tr><td>Gram-negative와 유사한 outer membrane을 가지지만 Gram-positive로 염색되는 세균은?</td><td>Deinococcus</td><td>구조와 염색성의 차이를 묻는다.</td></tr>
+      <tr><td>Phototrophic bacteria는 무엇과 무엇을 기준으로 다섯 그룹으로 나뉘는가?</td><td>pigments와 source of electrons</td><td>슬라이드 핵심 문장.</td></tr>
+      <tr><td>Blue-green bacteria의 다른 이름은?</td><td>Cyanobacteria</td><td>표에서 common name으로 제시.</td></tr>
+      <tr><td>산소발생 광합성의 전자 공여체로 제시된 물질은?</td><td>H<sub>2</sub>O</td><td>Cyanobacteria의 특징.</td></tr>
+      <tr><td>무산소 광합성 반응에서 H<sub>2</sub>S 사용 시 생성될 수 있는 물질은?</td><td>S, sulfur</td><td>반응식의 생성물.</td></tr>
+      <tr><td>Low G+C Gram-positive bacteria의 G+C 기준은?</td><td>below 50%</td><td>직접 제시된 수치.</td></tr>
+      <tr><td>Low G+C Gram-positive bacteria가 분류되는 phylum은?</td><td>Firmicutes</td><td>슬라이드에 명시.</td></tr>
+      <tr><td>Clostridia는 산소 요구성 측면에서 무엇인가?</td><td>obligate anaerobes</td><td>절대혐기성.</td></tr>
+      <tr><td>Clostridium botulinum이 일으키는 질병은?</td><td>botulism</td><td>botulinum-botulism 매칭.</td></tr>
+    </table></div>
+    <h3>서술형 5문제</h3>
+    <div class="table-wrap"><table>
+      <tr><th>문제</th><th>답안 구조</th><th>핵심 키워드</th></tr>
+      <tr><td>Deeply branching bacteria의 특징과 예시를 설명하라.</td><td>정의 → 초기 세균과의 유사성 → early Earth 유사 서식지 → Aquifex/Deinococcus 예시 → 시험상 주의점.</td><td>earliest bacteria, autotrophic, Aquifex, Deinococcus</td></tr>
+      <tr><td>Phototrophic bacteria의 다섯 그룹과 구분 기준을 설명하라.</td><td>정의 → pigments/electron donor 기준 → 다섯 그룹 열거 → oxygenic/anoxygenic 차이.</td><td>cyanobacteria, green sulfur, purple sulfur, electron donor</td></tr>
+      <tr><td>Cyanobacteria와 purple sulfur bacteria를 비교하라.</td><td>탄소원/전자 공여체 → 산소 발생 여부 → 색소와 구조 → 황 침전 여부.</td><td>H<sub>2</sub>O, O<sub>2</sub>, H<sub>2</sub>S, sulfur deposit</td></tr>
+      <tr><td>Low G+C Gram-positive bacteria와 Clostridia의 특징을 설명하라.</td><td>G+C below 50% → similar 16S rRNA → Firmicutes → Clostridia 특징 → 질병 예시와 endospore.</td><td>G+C content, Firmicutes, obligate anaerobes, endospores</td></tr>
+      <tr><td>Botulinum toxin 사례가 Clostridia 단원에서 갖는 의미를 설명하라.</td><td>Clostridium botulinum → toxin → botulism → purified type A toxin/Botox → 근육 마비와 응용 사례.</td><td>toxin, Botox, paralysis, botulism</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section id="english" class="card">
+  <button class="section-toggle" aria-expanded="true" aria-controls="english-content">10. 영문 표현 학습 카드</button>
+  <label class="study-label"><input type="checkbox" class="study-check" data-section="english"> 학습 완료</label>
+  <div id="english-content" class="section-content">
+    <p>아래 표현은 영상 화면에 실제 등장한 영어 표현을 우선 선별했다.</p>
+    <div class="table-wrap"><table>
+      <tr><th>번호</th><th>난이도</th><th>영문 표현</th><th>한국어 뜻</th><th>강의 속 맥락</th><th>예문</th><th>활용 포인트</th></tr>
+      <tr><td>1</td><td>Basic</td><td>Survey of Bacteria</td><td>세균 개관</td><td>강의 제목</td><td>This lecture is a survey of bacteria.</td><td>단원 전체 주제 표현</td></tr>
+      <tr><td>2</td><td>Intermediate</td><td>Deeply branching bacteria</td><td>깊게 분기한 세균</td><td>초기 세균과 유사한 군</td><td>Aquifex is discussed as deeply branching bacteria.</td><td>계통수 설명</td></tr>
+      <tr><td>3</td><td>Intermediate</td><td>Phototrophic bacteria</td><td>광영양 세균</td><td>빛을 이용하는 세균</td><td>Phototrophic bacteria are divided by pigments and electron donors.</td><td>대사 방식 설명</td></tr>
+      <tr><td>4</td><td>Basic</td><td>Autotrophic</td><td>자가영양성</td><td>deeply branching bacteria와 phototrophs 설명</td><td>Some bacteria are autotrophic.</td><td>영양 방식</td></tr>
+      <tr><td>5</td><td>Advanced</td><td>Source of electrons</td><td>전자 공여체의 원천</td><td>광합성 세균 분류 기준</td><td>The source of electrons distinguishes phototrophic groups.</td><td>표 비교 핵심</td></tr>
+      <tr><td>6</td><td>Intermediate</td><td>Oxygenic photosynthesis</td><td>산소발생 광합성</td><td>Cyanobacteria의 광합성</td><td>Cyanobacteria perform oxygenic photosynthesis.</td><td>H2O/O2 연결</td></tr>
+      <tr><td>7</td><td>Intermediate</td><td>Anoxygenic photosynthesis</td><td>무산소 광합성</td><td>green/purple bacteria의 광합성</td><td>Purple sulfur bacteria perform anoxygenic photosynthesis.</td><td>산소 미발생 강조</td></tr>
+      <tr><td>8</td><td>Basic</td><td>Electron donor</td><td>전자 공여체</td><td>H2O, H2S, organic compounds 비교</td><td>H2S can be an electron donor.</td><td>반응식 해석</td></tr>
+      <tr><td>9</td><td>Intermediate</td><td>Sulfur deposition</td><td>황 침전</td><td>green sulfur와 purple sulfur 비교</td><td>Sulfur deposition occurs inside purple sulfur bacteria.</td><td>위치 문제 대비</td></tr>
+      <tr><td>10</td><td>Advanced</td><td>Intracytoplasmic membranes</td><td>세포질 내막</td><td>purple bacteria 구조</td><td>Purple bacteria have intracytoplasmic membranes.</td><td>구조 명칭 암기</td></tr>
+      <tr><td>11</td><td>Advanced</td><td>G+C content below 50%</td><td>G+C 함량 50% 미만</td><td>Low G+C Gram-positive bacteria 기준</td><td>Firmicutes have G+C content below 50% in this slide.</td><td>분류 수치</td></tr>
+      <tr><td>12</td><td>Advanced</td><td>Similar 16S rRNA sequences</td><td>유사한 16S rRNA 서열</td><td>Low G+C 군의 분류 근거</td><td>These bacteria have similar 16S rRNA sequences.</td><td>계통 분류 근거</td></tr>
+      <tr><td>13</td><td>Intermediate</td><td>Obligate anaerobes</td><td>절대혐기성 생물</td><td>Clostridia 특징</td><td>Clostridia are rod-shaped obligate anaerobes.</td><td>산소 요구성</td></tr>
+      <tr><td>14</td><td>Intermediate</td><td>Endospores survive harsh conditions</td><td>내생포자는 혹독한 조건에서 생존한다</td><td>Clostridia 강조점</td><td>Endospores survive harsh conditions.</td><td>그대로 암기 가치 높음</td></tr>
+      <tr><td>15</td><td>Advanced</td><td>Purified type A botulinum toxin</td><td>정제된 A형 보툴리눔 독소</td><td>Botox 사례</td><td>Purified type A botulinum toxin is marketed as Botox.</td><td>응용 사례 설명</td></tr>
+    </table></div>
+    <div class="flash-tools">
+      <label>난이도
+        <select id="levelFilter" aria-label="영문 카드 난이도 필터">
+          <option value="all">전체</option>
+          <option value="Basic">Basic</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
+      </label>
+      <label>카드 검색
+        <input id="cardSearch" type="search" placeholder="표현·뜻·맥락 검색" aria-label="영문 카드 검색">
+      </label>
+      <span id="memoryCount">암기 완료 0 / 15</span>
+    </div>
+    <div class="flashcard-grid" id="flashcardGrid">
+      <div class="flashcard" tabindex="0" data-level="Basic" data-text="Survey of Bacteria 세균 개관 강의 제목"><div class="flashcard-inner"><div class="flashcard-front"><strong>Survey of Bacteria</strong><span>Basic</span></div><div class="flashcard-back">뜻: 세균 개관<br>맥락: 강의 제목<br>예문: This lecture is a survey of bacteria.<div class="mem-row"><label><input type="checkbox" class="memorized-check" data-card="card1"> 암기 완료</label></div></div></div></div>
+      <div class="flashcard" tabindex="0" data-level="Intermediate" data-text="Deeply branching bacteria 깊게 분기한 세균 초기 세균"><div class="flashcard-inner"><div class="flashcard-front"><strong>Deeply branching bacteria</strong><span>Intermediate</span></div><div class="flashcard-back">뜻: 깊게 분기한 세균<br>맥락: 초기 세균과 유사한 군<br>예문: Aquifex is discussed as deeply branching bacteria.<div class="mem-row"><label><input type="checkbox" class="memorized-check" data-card="card2"> 암기 완료</label></div></div></div></div>
+      <div class="flashcard" tabindex="0" data-level="Intermediate" data-text="Phototrophic bacteria 광영양 세균 빛"><div class="flashcard-inner"><div class="flashcard-front"><strong>Phototrophic bacteria</strong><span>Intermediate</span></div><div class="flashcard-back">뜻: 광영양 세균<br>맥락: 빛을 이용하는 세균<br>예문: Phototrophic bacteria are divided by pigments and electron donors.<div class="mem-row"><label><input type="checkbox" class="memorized-check" data-card="card3"> 암기 완료</label></div></div></div></div>
+      <div class="flashcard" tabindex="0" data-level="Basic" data-text="Autotrophic 자가영양성"><div class="flashcard-inner"><div class="flashcard-front"><strong>Autotrophic</strong><span>Basic</span></div><div class="flashcard-back">뜻: 자가영양성<br>맥락: deeply branching bacteria와 phototrophs 설명<br>예문: Some bacteria are autotrophic.<div class="mem-row"><label><input type="checkbox" class="memorized-check" data-card="card4"> 암기 완료</label></div></div></div></div>
+      <div class="flashcard" tabindex="0" data-level="Advanced" data-text="Source of electrons 전자 공여체 원천"><div class="flashcard-inner"><div class="flashcard-front"><strong>Source of electrons</strong><span>Advanced</span></div><div class="flashcard-back">뜻: 전자 공여체의 원천<br>맥락: 광합성 세균 분류 기준<br>예문: The source of electrons distinguishes phototrophic groups.<div class="mem-row"><label><input type="checkbox" class="memorized-check" data-card="card5"> 암기 완료</label></div></div></div></div>
+      <div class="flashcard" tabindex="0" data-level="Intermediate" data-text="Oxygenic photosynthesis 산소발생 광합성 cyanobacteria"><div class="flashcard-inner"><div class="flashcard-front"><strong>Oxygenic photosynthesis</strong><span>Intermediate</span></div><div class="flashcard-back">뜻: 산소발생 광합성<br>맥락: Cyanobacteria의 광합성<br>예문: Cyanobacteria perform oxygenic photosynthesis.<div class="mem-row"><label><input type="checkbox" class="memorized-check" data-card="card6"> 암기 완료</label></div></div></div></div>
+      <div class="flashcard" tabindex="0" data-level="Intermediate" data-text="Anoxygenic photosynthesis 무산소 광합성"><div class="flashcard-inner"><div class="flashcard-front"><strong>Anoxygenic photosynthesis</strong><span>Intermediate</span></div><div class="flashcard-back">뜻: 무산소 광합성<br>맥락: green/purple bacteria의 광합성<br>예문: Purple sulfur bacteria perform anoxygenic photosynthesis.<div class="mem-row"><label><input type="checkbox" class="memorized-check" data-card="card7"> 암기 완료</label></div></div></div></div>
+      <div class="flashcard" tabindex="0" data-level="Basic" data-text="Electron donor 전자 공여체"><div class="flashcard-inner"><div class="flashcard-front"><strong>Electron donor</strong><span>Basic</span></div><div class="flashcard-back">뜻: 전자 공여체<br>맥락: H2O, H2S, organic compounds 비교<br>예문: H2S can be an electron donor.<div class="mem-row"><label><input type="checkbox" class="memorized-check" data-card="card8"> 암기 완료</label></div></div></div></div>
+      <div class="flashcard" tabindex="0" data-level="Intermediate" data-text="Sulfur deposition 황 침전 inside outside"><div class="flashcard-inner"><div class="flashcard-front"><strong>Sulfur deposition</strong><span>Intermediate</span></div><div class="flashcard-back">뜻: 황 침전<br>맥락: green sulfur와 purple sulfur 비교<br>예문: Sulfur deposition occurs inside purple sulfur bacteria.<div class="mem-row"><label><input type="checkbox" class="memorized-check" data-card="card9"> 암기 완료</label></div></div></div></div>
+      <div class="flashcard" tabindex="0" data-level="Advanced" data-text="Intracytoplasmic membranes 세포질 내막 purple bacteria"><div class="flashcard-inner"><div class="flashcard-front"><strong>Intracytoplasmic membranes</strong><span>Advanced</span></div><div class="flashcard-back">뜻: 세포질 내막<br>맥락: purple bacteria 구조<br>예문: Purple bacteria have intracytoplasmic membranes.<div class="mem-row"><label><input type="checkbox" class="memorized-check" data-card="card10"> 암기 완료</label></div></div></div></div>
+      <div class="flashcard" tabindex="0" data-level="Advanced" data-text="G+C content below 50% G+C 함량 50 미만"><div class="flashcard-inner"><div class="flashcard-front"><strong>G+C content below 50%</strong><span>Advanced</span></div><div class="flashcard-back">뜻: G+C 함량 50% 미만<br>맥락: Low G+C Gram-positive bacteria 기준<br>예문: This group has G+C content below 50%.<div class="mem-row"><label><input type="checkbox" class="memorized-check" data-card="card11"> 암기 완료</label></div></div></div></div>
+      <div class="flashcard" tabindex="0" data-level="Advanced" data-text="Similar 16S rRNA sequences 유사한 16S rRNA 서열"><div class="flashcard-inner"><div class="flashcard-front"><strong>Similar 16S rRNA sequences</strong><span>Advanced</span></div><div class="flashcard-back">뜻: 유사한 16S rRNA 서열<br>맥락: Low G+C 군의 분류 근거<br>예문: These bacteria have similar 16S rRNA sequences.<div class="mem-row"><label><input type="checkbox" class="memorized-check" data-card="card12"> 암기 완료</label></div></div></div></div>
+      <div class="flashcard" tabindex="0" data-level="Intermediate" data-text="Obligate anaerobes 절대혐기성 Clostridia"><div class="flashcard-inner"><div class="flashcard-front"><strong>Obligate anaerobes</strong><span>Intermediate</span></div><div class="flashcard-back">뜻: 절대혐기성 생물<br>맥락: Clostridia 특징<br>예문: Clostridia are rod-shaped obligate anaerobes.<div class="mem-row"><label><input type="checkbox" class="memorized-check" data-card="card13"> 암기 완료</label></div></div></div></div>
+      <div class="flashcard" tabindex="0" data-level="Intermediate" data-text="Endospores survive harsh conditions 내생포자 혹독한 조건 생존"><div class="flashcard-inner"><div class="flashcard-front"><strong>Endospores survive harsh conditions</strong><span>Intermediate</span></div><div class="flashcard-back">뜻: 내생포자는 혹독한 조건에서 생존한다<br>맥락: Clostridia 강조점<br>예문: Endospores survive harsh conditions.<div class="mem-row"><label><input type="checkbox" class="memorized-check" data-card="card14"> 암기 완료</label></div></div></div></div>
+      <div class="flashcard" tabindex="0" data-level="Advanced" data-text="Purified type A botulinum toxin 정제된 A형 보툴리눔 독소 Botox"><div class="flashcard-inner"><div class="flashcard-front"><strong>Purified type A botulinum toxin</strong><span>Advanced</span></div><div class="flashcard-back">뜻: 정제된 A형 보툴리눔 독소<br>맥락: Botox 사례<br>예문: Purified type A botulinum toxin is marketed as Botox.<div class="mem-row"><label><input type="checkbox" class="memorized-check" data-card="card15"> 암기 완료</label></div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="summary" class="card">
+  <button class="section-toggle" aria-expanded="true" aria-controls="summary-content">11. 최종 요약</button>
+  <label class="study-label"><input type="checkbox" class="study-check" data-section="summary"> 학습 완료</label>
+  <div id="summary-content" class="section-content">
+    <h3>한 문장 요약</h3>
+    <p>이 강의는 세균을 계통, 광합성 방식, 전자 공여체, G+C 함량, 의학적 특징으로 구분하며, 특히 deeply branching bacteria, phototrophic bacteria, low G+C Gram-positive bacteria의 대표 예와 시험용 구분 기준을 정리한다.</p>
+    <h3>핵심 키워드 10개</h3>
+    <div class="table-wrap"><table>
+      <tr><th>번호</th><th>키워드</th><th>의미</th></tr>
+      <tr><td>1</td><td>Survey of Bacteria</td><td>세균 주요 분류군 개관</td></tr>
+      <tr><td>2</td><td>Deeply branching bacteria</td><td>초기 세균과 유사한 깊은 계통 분기 세균</td></tr>
+      <tr><td>3</td><td>Aquifex</td><td>earliest branch of bacteria 대표 예</td></tr>
+      <tr><td>4</td><td>Deinococcus</td><td>Gram-negative-like outer membrane, Gram-positive stain</td></tr>
+      <tr><td>5</td><td>Phototrophic bacteria</td><td>빛을 이용하는 세균</td></tr>
+      <tr><td>6</td><td>Cyanobacteria</td><td>산소발생 광합성, H<sub>2</sub>O 사용</td></tr>
+      <tr><td>7</td><td>Anoxygenic photosynthesis</td><td>산소를 발생시키지 않는 광합성</td></tr>
+      <tr><td>8</td><td>G+C content below 50%</td><td>Low G+C Gram-positive bacteria의 기준</td></tr>
+      <tr><td>9</td><td>Clostridia</td><td>rod-shaped, obligate anaerobes</td></tr>
+      <tr><td>10</td><td>Endospores</td><td>harsh conditions에서 생존하는 구조</td></tr>
+    </table></div>
+    <h3>시험 직전 3분 요약</h3>
+    <div class="table-wrap"><table>
+      <tr><th>순서</th><th>내용</th></tr>
+      <tr><td>1</td><td><strong>핵심 개념:</strong> 세균 분류는 계통, 대사, 염기 조성, 염색성, 질병 관련성을 함께 본다.</td></tr>
+      <tr><td>2</td><td><strong>주요 원리:</strong> Phototrophic bacteria는 pigment와 electron donor로 나뉜다.</td></tr>
+      <tr><td>3</td><td><strong>비교 포인트:</strong> Cyanobacteria는 oxygenic, green/purple bacteria는 주로 anoxygenic으로 제시된다.</td></tr>
+      <tr><td>4</td><td><strong>시험 함정:</strong> sulfur deposition 위치, Deinococcus의 염색성, Clostridia의 산소 요구성을 혼동하지 않는다.</td></tr>
+      <tr><td>5</td><td><strong>마지막 암기:</strong> Aquifex-earliest branch, G+C below 50%, Firmicutes, botulinum-botulism, tetani-tetanus.</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section id="checklist" class="card">
+  <button class="section-toggle" aria-expanded="true" aria-controls="checklist-content">12. 누락 가능성 점검</button>
+  <label class="study-label"><input type="checkbox" class="study-check" data-section="checklist"> 학습 완료</label>
+  <div id="checklist-content" class="section-content">
+    <div class="table-wrap"><table>
+      <tr><th>점검 항목</th><th>확인 여부</th></tr>
+      <tr><td>강의 흐름을 빠짐없이 정리했는가</td><td>화면에 나타난 큰 흐름은 반영함. 음성 전용 설명은 <strong>[확실하지 않음]</strong>.</td></tr>
+      <tr><td>교수자 강조점을 표시했는가</td><td>반복 슬라이드와 표 기반 핵심을 시험 포인트로 표시함.</td></tr>
+      <tr><td>핵심 개념을 표로 정리했는가</td><td>핵심 개념, 용어, 비교표, 원리표로 정리함.</td></tr>
+      <tr><td>사례·실험·실습·문제 풀이를 정리했는가</td><td>사례와 그림은 정리함. 실제 실습·문제 풀이는 <strong>[강의에서 언급되지 않음]</strong>.</td></tr>
+      <tr><td>비교 개념을 표로 정리했는가</td><td>oxygenic/anoxygenic, green/purple, Clostridium 종 비교를 반영함.</td></tr>
+      <tr><td>시험 포인트를 정리했는가</td><td>각 섹션과 시험 대비 섹션에 badge로 표시함.</td></tr>
+      <tr><td>예상 문제를 생성했는가</td><td>객관식 10개, 단답형 10개, 서술형 5개 포함.</td></tr>
+      <tr><td>영문 표현 카드를 만들었는가</td><td>영상 화면에 등장한 영어 표현 중심으로 15개 카드 작성.</td></tr>
+      <tr><td>[확실하지 않음]을 표시했는가</td><td>자막 부재, OCR 판독 제한, 일부 표 세부 칸에 표시함.</td></tr>
+      <tr><td>[보충 설명]을 구분했는가</td><td>강의 화면 밖의 해석은 보충 설명으로 분리함.</td></tr>
+      <tr><td>강의에 없는 내용을 단정하지 않았는가</td><td>실험 절차와 일부 기능 설명은 강의에서 직접 제시된 범위로 제한함.</td></tr>
+      <tr><td>자막/녹취록 주요 흐름 반영 여부</td><td>자막/녹취록 파일은 없음. 화면 슬라이드 중심으로 반영.</td></tr>
+      <tr><td>PPT/판서/표/이미지 내용 반영 여부</td><td>슬라이드 표, 계통수, 교재 그림, Botox 사진 설명을 반영.</td></tr>
+      <tr><td>실습/실험/문제 풀이 절차 반영 여부</td><td>실제 절차는 미제시. 그림 관찰 절차로 학습 방식만 정리.</td></tr>
+      <tr><td>예시와 교수자 부연 설명 반영 여부</td><td>화면에 보이는 예시와 반복 목록은 반영. 음성 부연은 확인 불가.</td></tr>
+      <tr><td>반복 설명을 강조점으로 기록했는지 여부</td><td>deeply branching, phototrophic bacteria, Clostridia 슬라이드 반복을 반영.</td></tr>
+      <tr><td>판독 불가/불확실 내용을 표시했는지 여부</td><td>해상도와 OCR 제한이 있는 부분에 표시.</td></tr>
+      <tr><td>압축·통합한 내용이 원래 의미를 잃지 않았는지 여부</td><td>반복 슬라이드는 통합하되 표의 분류 기준과 대표 예시는 보존함.</td></tr>
+    </table></div>
+  </div>
+</section>
+</main>
+</div>
+
+<button id="toTop" type="button" aria-label="맨 위로 이동">↑</button>
+<footer>
+  <p>학습 상태와 다크 모드, 암기 체크는 브라우저 localStorage에 저장된다. 검색은 현재 페이지 안에서만 동작한다.</p>
+</footer>
+
+<script>
+(function(){
+  const KEY='lecture-study-survey-bacteria-part1-';
+  const safeGet=(k)=>{try{return localStorage.getItem(KEY+k)}catch(e){return null}};
+  const safeSet=(k,v)=>{try{localStorage.setItem(KEY+k,v)}catch(e){}};
+  const body=document.body;
+  const darkToggle=document.getElementById('darkToggle');
+  if(safeGet('dark')==='1') body.classList.add('dark-mode');
+  darkToggle.addEventListener('click',()=>{body.classList.toggle('dark-mode');safeSet('dark',body.classList.contains('dark-mode')?'1':'0')});
+
+  const sections=[...document.querySelectorAll('section.card')];
+  const contents=[...document.querySelectorAll('.section-content')];
+  const originalHTML=new Map();
+  contents.forEach(c=>originalHTML.set(c.id,c.innerHTML));
+
+  function setSection(section, open){
+    const btn=section.querySelector('.section-toggle');
+    const content=section.querySelector('.section-content');
+    content.classList.toggle('collapsed',!open);
+    btn.setAttribute('aria-expanded',open?'true':'false');
+  }
+  document.querySelectorAll('.section-toggle').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const section=btn.closest('section');
+      const content=section.querySelector('.section-content');
+      setSection(section, content.classList.contains('collapsed'));
+    });
+  });
+  document.getElementById('expandAll').addEventListener('click',()=>sections.forEach(s=>setSection(s,true)));
+  document.getElementById('collapseAll').addEventListener('click',()=>sections.forEach(s=>setSection(s,false)));
+
+  const checks=[...document.querySelectorAll('.study-check')];
+  checks.forEach(ch=>{
+    const saved=safeGet('study-'+ch.dataset.section);
+    if(saved==='1') ch.checked=true;
+    ch.addEventListener('change',()=>{safeSet('study-'+ch.dataset.section,ch.checked?'1':'0');updateProgress()});
+  });
+  function updateProgress(){
+    const done=checks.filter(c=>c.checked).length;
+    const pct=Math.round((done/checks.length)*100);
+    document.getElementById('progressBar').style.width=pct+'%';
+    document.getElementById('progressText').textContent='학습 진행률 '+pct+'% ('+done+'/'+checks.length+')';
+  }
+  updateProgress();
+
+  const search=document.getElementById('globalSearch');
+  const searchCount=document.getElementById('searchCount');
+  const escapeReg=(s)=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  function applySearch(){
+    const q=search.value.trim();
+    sections.forEach(s=>s.classList.remove('search-hit'));
+    contents.forEach(c=>{c.innerHTML=originalHTML.get(c.id)});
+    if(!q){searchCount.textContent='검색 결과 0개'; bindDynamicEvents(); return;}
+    const re=new RegExp(escapeReg(q),'gi');
+    let count=0;
+    contents.forEach(c=>{
+      const text=c.textContent;
+      const matches=text.match(re);
+      if(matches){count+=matches.length; c.closest('section').classList.add('search-hit'); setSection(c.closest('section'),true);}
+      c.innerHTML=c.innerHTML.replace(re,(m)=>'<span class="highlight">'+m+'</span>');
+    });
+    searchCount.textContent='검색 결과 '+count+'개';
+    bindDynamicEvents();
+  }
+  search.addEventListener('input',applySearch);
+
+  document.querySelectorAll('.toc a').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const target=document.querySelector(a.getAttribute('href'));
+      if(target){e.preventDefault(); target.scrollIntoView({behavior:'smooth',block:'start'});}
+    });
+  });
+
+  const toTop=document.getElementById('toTop');
+  window.addEventListener('scroll',()=>{toTop.style.display=window.scrollY>400?'block':'none'});
+  toTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+  function bindDynamicEvents(){
+    const cards=[...document.querySelectorAll('.flashcard')];
+    cards.forEach(card=>{
+      if(card.dataset.bound==='1') return;
+      card.dataset.bound='1';
+      card.addEventListener('click',e=>{if(e.target.closest('input,label')) return; card.classList.toggle('flipped')});
+      card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault(); card.classList.toggle('flipped')}});
+    });
+    const mem=[...document.querySelectorAll('.memorized-check')];
+    mem.forEach(ch=>{
+      if(ch.dataset.memBound==='1') return;
+      ch.dataset.memBound='1';
+      if(safeGet('mem-'+ch.dataset.card)==='1') ch.checked=true;
+      ch.addEventListener('click',e=>e.stopPropagation());
+      ch.addEventListener('change',()=>{safeSet('mem-'+ch.dataset.card,ch.checked?'1':'0'); updateMemory()});
+    });
+    filterCards();
+    updateMemory();
+  }
+  const levelFilter=document.getElementById('levelFilter');
+  const cardSearch=document.getElementById('cardSearch');
+  function filterCards(){
+    if(!levelFilter||!cardSearch) return;
+    const level=levelFilter.value;
+    const q=cardSearch.value.trim().toLowerCase();
+    document.querySelectorAll('.flashcard').forEach(card=>{
+      const okLevel=level==='all'||card.dataset.level===level;
+      const okText=!q || (card.dataset.text||'').toLowerCase().includes(q);
+      card.style.display=(okLevel&&okText)?'block':'none';
+    });
+  }
+  function updateMemory(){
+    const mem=[...document.querySelectorAll('.memorized-check')];
+    const done=mem.filter(c=>c.checked).length;
+    const node=document.getElementById('memoryCount');
+    if(node) node.textContent='암기 완료 '+done+' / '+mem.length;
+  }
+  if(levelFilter) levelFilter.addEventListener('change',filterCards);
+  if(cardSearch) cardSearch.addEventListener('input',filterCards);
+  bindDynamicEvents();
+
+  if(window.mermaid){try{mermaid.initialize({startOnLoad:true,theme:body.classList.contains('dark-mode')?'dark':'default'});}catch(e){}}
+})();
+</script>
+</body>
+</html>
