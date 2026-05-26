@@ -1,0 +1,1646 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>4조 16S rRNA 시퀀싱 결과 발표 슬라이드</title>
+  <meta name="description" content="4조 장화굽 시료 16S rRNA 시퀀싱 결과를 설명하는 6장 발표용 HTML 슬라이드">
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: "Open Sans Local";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("fonts/open-sans/OpenSans-Regular.ttf") format("truetype");
+      unicode-range: U+0000-00FF, U+0100-024F, U+1E00-1EFF;
+    }
+
+    @font-face {
+      font-family: "Open Sans Local";
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url("fonts/open-sans/OpenSans-Medium.ttf") format("truetype");
+      unicode-range: U+0000-00FF, U+0100-024F, U+1E00-1EFF;
+    }
+
+    @font-face {
+      font-family: "Open Sans Local";
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url("fonts/open-sans/OpenSans-SemiBold.ttf") format("truetype");
+      unicode-range: U+0000-00FF, U+0100-024F, U+1E00-1EFF;
+    }
+
+    @font-face {
+      font-family: "Open Sans Local";
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url("fonts/open-sans/OpenSans-Bold.ttf") format("truetype");
+      unicode-range: U+0000-00FF, U+0100-024F, U+1E00-1EFF;
+    }
+
+    @font-face {
+      font-family: "Open Sans Local";
+      font-style: normal;
+      font-weight: 800;
+      font-display: swap;
+      src: url("fonts/open-sans/OpenSans-ExtraBold.ttf") format("truetype");
+      unicode-range: U+0000-00FF, U+0100-024F, U+1E00-1EFF;
+    }
+
+    @font-face {
+      font-family: "Open Sans Local";
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+      src: url("fonts/open-sans/OpenSans-Italic.ttf") format("truetype");
+      unicode-range: U+0000-00FF, U+0100-024F, U+1E00-1EFF;
+    }
+
+    @font-face {
+      font-family: "Open Sans Local";
+      font-style: italic;
+      font-weight: 500;
+      font-display: swap;
+      src: url("fonts/open-sans/OpenSans-MediumItalic.ttf") format("truetype");
+      unicode-range: U+0000-00FF, U+0100-024F, U+1E00-1EFF;
+    }
+
+    @font-face {
+      font-family: "Open Sans Local";
+      font-style: italic;
+      font-weight: 600;
+      font-display: swap;
+      src: url("fonts/open-sans/OpenSans-SemiBoldItalic.ttf") format("truetype");
+      unicode-range: U+0000-00FF, U+0100-024F, U+1E00-1EFF;
+    }
+
+    @font-face {
+      font-family: "Open Sans Local";
+      font-style: italic;
+      font-weight: 700;
+      font-display: swap;
+      src: url("fonts/open-sans/OpenSans-BoldItalic.ttf") format("truetype");
+      unicode-range: U+0000-00FF, U+0100-024F, U+1E00-1EFF;
+    }
+
+    @font-face {
+      font-family: "Open Sans Local";
+      font-style: italic;
+      font-weight: 800;
+      font-display: swap;
+      src: url("fonts/open-sans/OpenSans-ExtraBoldItalic.ttf") format("truetype");
+      unicode-range: U+0000-00FF, U+0100-024F, U+1E00-1EFF;
+    }
+
+    :root {
+      --paper: #F8F6F0;
+      --paper-deep: #EEE8DC;
+      --panel: rgba(255, 253, 248, 0.88);
+      --ink: #2C2C2C;
+      --muted: #6B6B6B;
+      --blue: #3B5FA0;
+      --blue-soft: #DDE6F5;
+      --sage: #52756D;
+      --sage-soft: #E0EAE2;
+      --gold: #B08A45;
+      --gold-soft: #F0E4C8;
+      --line: #D5CFBF;
+      --shadow: 0 24px 70px rgba(51, 45, 33, 0.14);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Open Sans Local", "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      letter-spacing: 0;
+      overflow: auto;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .deck-shell {
+      display: grid;
+      min-height: 100vh;
+      min-width: 1360px;
+      place-items: center;
+      padding: 44px 40px 74px;
+    }
+
+    .deck-frame {
+      height: 720px;
+      position: relative;
+      width: 1280px;
+    }
+
+    .slide {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: none;
+      height: 720px;
+      inset: 0;
+      overflow: hidden;
+      padding: 46px 58px 40px;
+      position: absolute;
+      width: 1280px;
+    }
+
+    .slide.active {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .slide::before {
+      background: linear-gradient(90deg, var(--blue), rgba(59, 95, 160, 0.06));
+      content: "";
+      height: 5px;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .slide-head {
+      align-items: end;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      min-height: 86px;
+      padding-bottom: 22px;
+    }
+
+    .slide-head h2,
+    .cover h1 {
+      letter-spacing: 0;
+      line-height: 1.16;
+      margin: 0;
+    }
+
+    .slide-head h2 {
+      font-size: 40px;
+      font-weight: 800;
+    }
+
+    .kicker {
+      color: var(--blue);
+      display: inline-flex;
+      font-size: 15px;
+      font-weight: 700;
+      gap: 10px;
+      line-height: 1;
+      margin-bottom: 13px;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      background: var(--blue);
+      border-radius: 999px;
+      content: "";
+      height: 11px;
+      width: 11px;
+    }
+
+    .page-chip,
+    .counter {
+      background: rgba(255, 253, 248, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 700;
+      min-width: 82px;
+      padding: 10px 15px;
+      text-align: center;
+    }
+
+    .slide-body {
+      min-height: 0;
+      padding-top: 28px;
+    }
+
+    .slide-foot {
+      align-items: center;
+      color: var(--muted);
+      display: none;
+      font-size: 13px;
+      justify-content: space-between;
+      min-height: 34px;
+      padding-top: 14px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .accent {
+      color: var(--blue);
+    }
+
+    .sage {
+      color: var(--sage);
+    }
+
+    .taxon {
+      font-family: "Open Sans Local", "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-style: italic;
+    }
+
+    .eyebrow {
+      background: var(--blue-soft);
+      border: 1px solid rgba(59, 95, 160, 0.24);
+      border-radius: 999px;
+      color: var(--blue);
+      display: inline-flex;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 7px 13px;
+    }
+
+    .card,
+    .table-wrap,
+    .note-panel,
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .card {
+      padding: 22px;
+    }
+
+    .cover {
+      grid-template-rows: 1fr auto;
+      padding: 0;
+    }
+
+    .cover::before {
+      display: none;
+    }
+
+    .cover-band {
+      background: transparent;
+      color: var(--ink);
+      height: 258px;
+      padding: 56px 72px 44px;
+    }
+
+    .cover-band .eyebrow {
+      background: var(--blue-soft);
+      border-color: rgba(59, 95, 160, 0.24);
+      color: var(--blue);
+      margin-bottom: 26px;
+    }
+
+    .cover h1 {
+      color: var(--blue);
+      font-size: 64px;
+      font-weight: 800;
+      max-width: 900px;
+    }
+
+    .cover-body {
+      display: grid;
+      gap: 30px;
+      grid-template-columns: 1.1fr 0.9fr;
+      padding: 42px 72px 46px;
+    }
+
+    .cover-meta {
+      display: grid;
+      gap: 14px;
+    }
+
+    .cover-meta strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    .cover-meta p,
+    .cover-summary p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .sample-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .sample-pill {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      display: grid;
+      gap: 5px;
+      min-width: 232px;
+      padding: 14px 17px;
+    }
+
+    .sample-pill span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .sample-pill b {
+      font-size: 18px;
+    }
+
+    .cover-summary {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      display: grid;
+      gap: 18px;
+      padding: 26px;
+    }
+
+    .cover-summary h3 {
+      font-size: 17px;
+      margin: 0;
+    }
+
+    .cover-result {
+      display: grid;
+      gap: 12px;
+    }
+
+    .cover-result strong {
+      background: var(--blue-soft);
+      border-radius: 4px;
+      color: var(--blue);
+      display: block;
+      font-size: 22px;
+      padding: 14px 16px;
+    }
+
+    .cover-result strong:last-child {
+      background: var(--sage-soft);
+      color: var(--sage);
+    }
+
+    .cover-foot {
+      align-items: center;
+      display: none;
+      justify-content: space-between;
+      padding: 0 72px 24px;
+    }
+
+    .id-card h3 {
+      font-size: 22px;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .id-card p {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.62;
+      margin: 0;
+    }
+
+    .conclusion-item .index {
+      align-items: center;
+      background: var(--blue);
+      border-radius: 999px;
+      color: #fff;
+      display: inline-flex;
+      font-size: 22px;
+      font-weight: 800;
+      height: 54px;
+      justify-content: center;
+      width: 54px;
+    }
+
+    .gel-result-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: 420px 1fr;
+      height: 100%;
+    }
+
+    .gel-visual {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      display: grid;
+      gap: 16px;
+      grid-template-rows: auto 1fr auto;
+      padding: 22px;
+    }
+
+    .gel-visual h3 {
+      font-size: 20px;
+      line-height: 1.32;
+      margin: 0;
+      text-align: center;
+    }
+
+    .gel-panel {
+      background:
+        linear-gradient(90deg, rgba(59, 95, 160, 0.06), rgba(82, 117, 109, 0.08)),
+        #fffdf8;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      display: block;
+      min-height: 310px;
+      padding: 0;
+    }
+
+    .gel-lane {
+      align-items: center;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      justify-items: center;
+      min-width: 0;
+      position: relative;
+    }
+
+    .lane-track {
+      background: rgba(238, 232, 220, 0.58);
+      border: 1px solid rgba(213, 207, 191, 0.72);
+      border-radius: 999px;
+      height: 238px;
+      position: relative;
+      width: 56px;
+    }
+
+    .band {
+      border-radius: 999px;
+      left: 50%;
+      position: absolute;
+      transform: translateX(-50%);
+    }
+
+    .band.main {
+      background: var(--blue);
+      height: 14px;
+      top: 62px;
+      width: 82px;
+    }
+
+    .gel-lane.extra .band.main {
+      background: var(--sage);
+      opacity: 0.72;
+      width: 62px;
+    }
+
+    .band.small {
+      background: var(--gold);
+      bottom: 22px;
+      height: 8px;
+      width: 46px;
+    }
+
+    .gel-lane.extra .band.small {
+      opacity: 0.72;
+      width: 38px;
+    }
+
+    .marker-ticks {
+      display: grid;
+      gap: 17px;
+      left: 50%;
+      position: absolute;
+      top: 34px;
+      transform: translateX(-50%);
+    }
+
+    .marker-ticks i {
+      background: rgba(44, 44, 44, 0.42);
+      border-radius: 999px;
+      display: block;
+      height: 5px;
+      width: 38px;
+    }
+
+    .lane-label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .bp-callout {
+      align-items: center;
+      display: grid;
+      gap: 14px;
+      grid-template-columns: minmax(0, 1.38fr) minmax(0, 1fr);
+    }
+
+    .bp-pill {
+      background: var(--blue-soft);
+      border-radius: var(--radius);
+      color: var(--blue);
+      font-size: 21px;
+      font-weight: 800;
+      padding: 16px 12px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .bp-pill:nth-child(2) {
+      background: var(--gold-soft);
+      color: #7D642F;
+      font-size: 18px;
+    }
+
+    .gel-table th:nth-child(1) { width: 25%; }
+    .gel-table th:nth-child(2) { width: 37.5%; }
+    .gel-table th:nth-child(3) { width: 37.5%; }
+
+    .gel-table th,
+    .gel-table td {
+      font-size: 15px;
+      line-height: 1.42;
+      text-align: center;
+    }
+
+    .gel-table td:first-child,
+    .gel-table th:first-child {
+      text-align: left;
+    }
+
+    .overview-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-rows: 112px 1fr;
+      height: 100%;
+    }
+
+    .kpis {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .kpi {
+      display: grid;
+      gap: 6px;
+      padding: 17px 20px;
+    }
+
+    .kpi b {
+      color: var(--blue);
+      font-size: 36px;
+      line-height: 1;
+    }
+
+    .kpi span {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .table-wrap {
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    table {
+      border-collapse: collapse;
+      height: 100%;
+      table-layout: fixed;
+      width: 100%;
+    }
+
+    th {
+      background: rgba(59, 95, 160, 0.12);
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 14px 13px;
+      text-align: left;
+    }
+
+    td {
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.48;
+      padding: 13px;
+      vertical-align: middle;
+    }
+
+    thead tr {
+      height: 15%;
+    }
+
+    tbody tr {
+      height: 21.25%;
+    }
+
+    .overview-table th:nth-child(1) { width: 20%; }
+    .overview-table th:nth-child(2) { width: 8%; }
+    .overview-table th:nth-child(3) { width: 14%; }
+    .overview-table th:nth-child(4) { width: 12%; }
+    .overview-table th:nth-child(5) { width: 10%; }
+    .overview-table th:nth-child(6) { width: 36%; }
+
+    .overview-table th {
+      padding: 11px 12px;
+    }
+
+    .overview-table td {
+      font-size: 13px;
+      line-height: 1.35;
+      padding: 10px 12px;
+    }
+
+    .overview-table .label {
+      margin-bottom: 0;
+    }
+
+    .blast-table th,
+    .blast-table td {
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .blast-table td {
+      font-size: 15px;
+    }
+
+    .label {
+      border-radius: 999px;
+      display: inline-flex;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      padding: 5px 9px;
+    }
+
+    .label.blue {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .label.sage {
+      background: var(--sage-soft);
+      color: var(--sage);
+    }
+
+    .quality-note {
+      align-items: center;
+      background: rgba(240, 228, 200, 0.56);
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      display: flex;
+      font-size: 13px;
+      gap: 10px;
+      min-height: 38px;
+      padding: 0 16px;
+    }
+
+    .blast-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: 640px 1fr;
+      height: 100%;
+    }
+
+    .blast-table th:nth-child(1) { width: 13%; }
+    .blast-table th:nth-child(2) { width: 9%; }
+    .blast-table th:nth-child(3) { width: 33%; }
+    .blast-table th:nth-child(4) { width: 22%; }
+    .blast-table th:nth-child(5) { width: 12%; }
+    .blast-table th:nth-child(6) { width: 11%; }
+
+    .blast-table th,
+    .blast-table td {
+      padding-left: 14px;
+      padding-right: 14px;
+    }
+
+    .blast-rail {
+      display: grid;
+      gap: 12px;
+      grid-template-rows: auto auto 1fr;
+    }
+
+    .chart {
+      display: grid;
+      gap: 10px;
+      padding: 18px;
+    }
+
+    .chart h3,
+    .note-panel h3,
+    .tree-panel h3 {
+      font-size: 19px;
+      margin: 0;
+    }
+
+    .bar-row {
+      display: grid;
+      gap: 5px;
+    }
+
+    .bar-row strong {
+      display: flex;
+      font-size: 14px;
+      justify-content: space-between;
+    }
+
+    .bar {
+      background: var(--paper-deep);
+      border-radius: 999px;
+      height: 12px;
+      overflow: hidden;
+    }
+
+    .bar i {
+      background: linear-gradient(90deg, var(--blue), #6684BE);
+      border-radius: inherit;
+      display: block;
+      height: 100%;
+    }
+
+    .bar-row:nth-of-type(4) .bar i,
+    .bar-row:nth-of-type(5) .bar i {
+      background: linear-gradient(90deg, var(--sage), #78A097);
+    }
+
+    .note-panel {
+      display: grid;
+      gap: 6px;
+      padding: 14px 16px;
+    }
+
+    .note-panel p,
+    .taxonomy p,
+    .tree-note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.48;
+      margin: 0;
+    }
+
+    .blast-readout {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .micro-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      display: grid;
+      gap: 4px;
+      padding: 10px 12px;
+    }
+
+    .micro-card b {
+      color: var(--blue);
+      font-size: 21px;
+    }
+
+    .micro-card span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .identification-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: 390px 1fr;
+      height: 100%;
+    }
+
+    .id-stack {
+      display: grid;
+      gap: 16px;
+      grid-template-rows: 1fr 1fr;
+    }
+
+    .id-card {
+      align-content: center;
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+      padding: 18px 20px;
+      text-align: center;
+    }
+
+    .id-card .label {
+      justify-content: center;
+      justify-self: stretch;
+      text-align: center;
+    }
+
+    .id-card mark {
+      background: transparent;
+      color: var(--blue);
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1.2;
+      padding: 0;
+      text-align: center;
+    }
+
+    .id-card p {
+      font-size: 15px;
+      line-height: 1.52;
+      text-align: center;
+    }
+
+    .id-card:nth-child(2) mark {
+      color: var(--sage);
+    }
+
+    .taxonomy {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .taxonomy span {
+      background: rgba(59, 95, 160, 0.08);
+      border: 1px solid rgba(59, 95, 160, 0.2);
+      border-radius: 999px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 9px;
+    }
+
+    .id-card:nth-child(2) .taxonomy span {
+      background: rgba(82, 117, 109, 0.1);
+      border-color: rgba(82, 117, 109, 0.24);
+      color: var(--sage);
+    }
+
+    .tree-panel {
+      display: grid;
+      gap: 12px;
+      grid-template-rows: auto 1fr auto;
+      padding: 20px 22px;
+    }
+
+    .tree-panel > div:first-child {
+      text-align: center;
+    }
+
+    .tree {
+      align-items: center;
+      display: grid;
+      column-gap: 84px;
+      grid-template-columns: 170px 1fr;
+      min-height: 220px;
+      padding: 8px 4px;
+      position: relative;
+    }
+
+    .tree-root,
+    .tree-branch,
+    .tree-leaf {
+      position: relative;
+    }
+
+    .tree-lines {
+      height: 100%;
+      inset: 0;
+      overflow: visible;
+      pointer-events: none;
+      position: absolute;
+      width: 100%;
+      z-index: 0;
+    }
+
+    .tree-lines path {
+      fill: none;
+      stroke: var(--line);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 2;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .tree-root,
+    .tree-leaves {
+      z-index: 1;
+    }
+
+    .tree-root .node,
+    .tree-branch .node,
+    .tree-leaf .node {
+      align-items: center;
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      display: grid;
+      gap: 5px;
+      justify-items: center;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .tree-root .node {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+      text-align: center;
+    }
+
+    .tree-root::after {
+      display: none;
+    }
+
+    .tree-branch {
+      display: none;
+    }
+
+    .tree-branch::before {
+      display: none;
+    }
+
+    .tree-branch::after {
+      display: none;
+    }
+
+    .tree-leaves {
+      display: grid;
+      gap: 24px;
+    }
+
+    .tree-leaf {
+      padding-left: 0;
+    }
+
+    .tree-leaf::before {
+      display: none;
+    }
+
+    .tree-leaf .node {
+      grid-template-columns: 150px 1fr;
+    }
+
+    .tree-leaf b {
+      color: var(--blue);
+      font-size: 16px;
+    }
+
+    .tree-leaf:nth-child(2) b {
+      color: var(--sage);
+    }
+
+    .tree-leaf small,
+    .tree-root small {
+      color: inherit;
+      font-size: 12px;
+      line-height: 1.45;
+      opacity: 0.82;
+    }
+
+    .tree-note {
+      font-size: 13px;
+      line-height: 1.48;
+      text-align: center;
+    }
+
+    .leaf-hits {
+      color: var(--muted);
+      display: block;
+      font-size: 13px;
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    .conclusion-list {
+      margin: 0;
+      padding: 0;
+    }
+
+    .conclusion-grid {
+      display: grid;
+      gap: 26px;
+      grid-template-columns: 1fr 336px;
+      height: 100%;
+    }
+
+    .conclusion-list {
+      display: grid;
+      gap: 15px;
+    }
+
+    .conclusion-item {
+      align-items: center;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 54px 1fr;
+      list-style: none;
+      padding: 16px 20px;
+    }
+
+    .conclusion-item:nth-child(2) .index {
+      background: var(--sage);
+    }
+
+    .conclusion-item:nth-child(3) .index {
+      background: var(--gold);
+    }
+
+    .conclusion-item strong {
+      display: block;
+      font-size: 20px;
+      line-height: 1.4;
+      margin-bottom: 4px;
+    }
+
+    .conclusion-item p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .report-box {
+      background: var(--blue);
+      border-radius: var(--radius);
+      color: #fff;
+      display: grid;
+      gap: 16px;
+      padding: 28px;
+    }
+
+    .report-box h3 {
+      font-size: 21px;
+      margin: 0;
+    }
+
+    .report-box p {
+      border-top: 1px solid rgba(255, 255, 255, 0.22);
+      font-size: 17px;
+      line-height: 1.7;
+      margin: 0;
+      padding-top: 14px;
+    }
+
+    .controls {
+      align-items: center;
+      bottom: -58px;
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      left: 0;
+      position: absolute;
+      right: 0;
+    }
+
+    .nav-button {
+      align-items: center;
+      background: rgba(255, 253, 248, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink);
+      cursor: pointer;
+      display: inline-flex;
+      font-size: 28px;
+      font-weight: 700;
+      height: 48px;
+      justify-content: center;
+      padding: 0;
+      transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+      width: 48px;
+    }
+
+    .nav-button:hover,
+    .nav-button:focus-visible {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+      outline: none;
+    }
+
+    .nav-button:disabled {
+      color: #A7A093;
+      cursor: default;
+      opacity: 0.55;
+    }
+
+    .nav-button:disabled:hover {
+      background: rgba(255, 253, 248, 0.94);
+      border-color: var(--line);
+      color: #A7A093;
+    }
+
+    .key-hint {
+      color: var(--muted);
+      font-size: 13px;
+      margin-left: 4px;
+    }
+
+    @media print {
+      @page {
+        margin: 0;
+        size: 1280px 720px;
+      }
+
+      body {
+        background: var(--paper);
+        overflow: visible;
+      }
+
+      .deck-shell {
+        display: block;
+        min-height: auto;
+        min-width: auto;
+        padding: 0;
+      }
+
+      .deck-frame {
+        height: auto;
+        width: auto;
+      }
+
+      .slide,
+      .slide.active {
+        border-radius: 0;
+        box-shadow: none;
+        break-after: page;
+        display: grid;
+        page-break-after: always;
+        position: relative;
+      }
+
+      .cover,
+      .cover.active {
+        display: grid;
+      }
+
+      .controls {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck-shell" aria-label="4조 16S rRNA 시퀀싱 결과 발표">
+    <div class="deck-frame">
+      <section class="slide cover active" data-title="표지" aria-label="표지 슬라이드">
+        <div>
+          <div class="cover-band">
+            <span class="eyebrow">16S rRNA Sequencing</span>
+            <h1>장화굽 시료
+의<br>세균 동정 결과</h1>
+          </div>
+          <div class="cover-body">
+            <div class="cover-meta">
+              <div>
+                <strong>4조 발표 자료</strong>
+                <p>2 samples · 4 reads · BLAST</p>
+              </div>
+              <div class="sample-row">
+                <div class="sample-pill">
+                  <span>Sample_3-4-2</span>
+                  <b>s균</b>
+                </div>
+                <div class="sample-pill">
+                  <span>Sample_3-4-1</span>
+                  <b>b균</b>
+                </div>
+              </div>
+            </div>
+            <aside class="cover-summary" aria-label="발표 핵심 요약">
+              <h3>핵심 동정 결과</h3>
+              <div class="cover-result">
+                <strong>s균: <em class="taxon">Staphylococcus</em> sp.</strong>
+                <strong>b균: <em class="taxon">Bacillus cereus</em> group</strong>
+              </div>
+              <p>2026.05.27</p>
+            </aside>
+          </div>
+        </div>
+        <footer class="cover-foot">
+          <span class="muted">분자생물학 실험 결과 발표</span>
+          <span class="page-chip">1 / 6</span>
+        </footer>
+      </section>
+
+      <section class="slide" data-title="Gel 전기영동 결과" aria-label="Gel 전기영동 결과 슬라이드">
+        <header class="slide-head">
+          <div>
+            <span class="kicker">Gel electrophoresis</span>
+            <h2>두 시료 모두 16S 크기 band 확인</h2>
+          </div>
+          <span class="page-chip">2 / 6</span>
+        </header>
+        <div class="slide-body">
+          <div class="gel-result-grid">
+            <aside class="gel-visual" aria-label="전기영동 band 도식">
+              <h3>좌측 두 레인 loading</h3>
+              <div class="gel-panel" aria-label="Gel 실제 사진 삽입 빈 공간"></div>
+              <div class="bp-callout">
+                <div class="bp-pill">1,400~1,500 bp</div>
+                <div class="bp-pill">+ 100 bp band</div>
+              </div>
+            </aside>
+            <div class="table-wrap">
+              <table class="gel-table" aria-label="Gel 전기영동 관찰 결과 표">
+                <thead>
+                  <tr>
+                    <th>관찰 항목</th>
+                    <th>s균</th>
+                    <th>b균</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>주요 band 위치</td>
+                    <td>1,600 bp 바로 하단</td>
+                    <td>1,600 bp 바로 하단</td>
+                  </tr>
+                  <tr>
+                    <td>추정 크기</td>
+                    <td>약 1,400~1,500 bp</td>
+                    <td>약 1,400~1,500 bp</td>
+                  </tr>
+                  <tr>
+                    <td>band 강도</td>
+                    <td><b>상대적으로 강함</b></td>
+                    <td>상대적으로 약함</td>
+                  </tr>
+                  <tr>
+                    <td>추가 band</td>
+                    <td>약 100 bp 부근</td>
+                    <td>약 100 bp 부근</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <footer class="slide-foot">
+          <span>UV 조사 전후 모두 동일 위치의 주요 band 확인</span>
+          <span>Gel result</span>
+        </footer>
+      </section>
+
+      <section class="slide" data-title="시퀀싱 결과 개요" aria-label="시퀀싱 결과 개요 슬라이드">
+        <header class="slide-head">
+          <div>
+            <span class="kicker">Overview</span>
+            <h2>Read 품질 요약</h2>
+          </div>
+          <span class="page-chip">3 / 6</span>
+        </header>
+        <div class="slide-body">
+          <div class="overview-grid">
+            <div class="kpis" aria-label="시퀀싱 요약 지표">
+              <article class="card kpi"><b>2</b><span>분석 시료 수</span></article>
+              <article class="card kpi"><b>4</b><span>F/R read 수</span></article>
+              <article class="card kpi"><b>761 bp</b><span>평균 SEQ length</span></article>
+              <article class="card kpi"><b>0</b><span>전체 N count</span></article>
+            </div>
+            <div class="table-wrap">
+              <table class="overview-table" aria-label="시료별 시퀀싱 결과 요약 표">
+                <thead>
+                  <tr>
+                    <th>시료</th>
+                    <th>Read</th>
+                    <th>Query length</th>
+                    <th>GC content</th>
+                    <th>N count</th>
+                    <th>BLAST 방향</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="label blue">s균</span></td>
+                    <td>F</td>
+                    <td>773 bp</td>
+                    <td>51.10%</td>
+                    <td>0</td>
+                    <td><em class="taxon">Staphylococcus</em> · 98%</td>
+                  </tr>
+                  <tr>
+                    <td><span class="label blue">s균</span></td>
+                    <td>R</td>
+                    <td>1179 bp</td>
+                    <td>50.89%</td>
+                    <td>0</td>
+                    <td><em class="taxon">Staphylococcus</em> · 97%</td>
+                  </tr>
+                  <tr>
+                    <td><span class="label sage">b균</span></td>
+                    <td>F</td>
+                    <td>440 bp</td>
+                    <td>53.41%</td>
+                    <td>0</td>
+                    <td><em class="taxon">Bacillus</em> · 99%</td>
+                  </tr>
+                  <tr>
+                    <td><span class="label sage">b균</span></td>
+                    <td>R</td>
+                    <td>652 bp</td>
+                    <td>53.68%</td>
+                    <td>0</td>
+                    <td><em class="taxon">Bacillus</em> group · 99%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <footer class="slide-foot">
+          <span>Q-score 미제공 · N count는 모두 0</span>
+          <span>순서: 3-4-2 → 3-4-1</span>
+        </footer>
+      </section>
+
+      <section class="slide" data-title="BLAST 결과" aria-label="BLAST 결과 슬라이드">
+        <header class="slide-head">
+          <div>
+            <span class="kicker">BLAST</span>
+            <h2>BLAST top hit</h2>
+          </div>
+          <span class="page-chip">4 / 6</span>
+        </header>
+        <div class="slide-body">
+          <div class="blast-grid">
+            <div class="table-wrap">
+              <table class="blast-table" aria-label="상위 BLAST hit 표">
+                <thead>
+                  <tr>
+                    <th>Sample</th>
+                    <th>Read</th>
+                    <th>Top hit</th>
+                    <th>Accession</th>
+                    <th>Identity</th>
+                    <th>E-value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>s균</td>
+                    <td>F</td>
+                    <td><b><em class="taxon">S. haemolyticus</em></b></td>
+                    <td>MN704523.1</td>
+                    <td class="accent"><b>98%</b></td>
+                    <td>0.0</td>
+                  </tr>
+                  <tr>
+                    <td>s균</td>
+                    <td>R</td>
+                    <td><b><em class="taxon">Staphylococcus</em> sp.</b></td>
+                    <td>MW345973.1</td>
+                    <td class="accent"><b>97%</b></td>
+                    <td>0.0</td>
+                  </tr>
+                  <tr>
+                    <td>b균</td>
+                    <td>F</td>
+                    <td><b><em class="taxon">B. cereus</em></b></td>
+                    <td>MN227491.1</td>
+                    <td class="sage"><b>99%</b></td>
+                    <td>0.0</td>
+                  </tr>
+                  <tr>
+                    <td>b균</td>
+                    <td>R</td>
+                    <td><b><em class="taxon">B. paramycoides</em></b></td>
+                    <td>OR394251.1</td>
+                    <td class="sage"><b>99%</b></td>
+                    <td>0.0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <aside class="blast-rail" aria-label="BLAST 유사도 차트와 해석">
+              <div class="card chart">
+                <h3>Top-hit identity</h3>
+                <div class="bar-row">
+                  <strong><span>s균 F</span><span>754/770</span></strong>
+                  <div class="bar"><i style="width:98%"></i></div>
+                </div>
+                <div class="bar-row">
+                  <strong><span>s균 R</span><span>1137/1173</span></strong>
+                  <div class="bar"><i style="width:97%"></i></div>
+                </div>
+                <div class="bar-row">
+                  <strong><span>b균 F</span><span>429/432</span></strong>
+                  <div class="bar"><i style="width:99%"></i></div>
+                </div>
+                <div class="bar-row">
+                  <strong><span>b균 R</span><span>625/629</span></strong>
+                  <div class="bar"><i style="width:99%"></i></div>
+                </div>
+              </div>
+              <div class="blast-readout">
+                <div class="micro-card"><b>0.0</b><span>네 read의 E-value</span></div>
+                <div class="micro-card"><b>1951</b><span>최대 bit score</span></div>
+              </div>
+              <div class="note-panel">
+                <h3>Point</h3>
+                <p><b>Uncultured clone</b> = 참고 hit</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+        <footer class="slide-foot">
+          <span>Score 범위: 782 bits ~ 1951 bits</span>
+          <span>Accessions shown from supplied BLAST reports</span>
+        </footer>
+      </section>
+
+      <section class="slide" data-title="동정 결과" aria-label="동정 결과 슬라이드">
+        <header class="slide-head">
+          <div>
+            <span class="kicker">Identification</span>
+            <h2>동정 결과</h2>
+          </div>
+          <span class="page-chip">5 / 6</span>
+        </header>
+        <div class="slide-body">
+          <div class="identification-grid">
+            <div class="id-stack" aria-label="최종 동정 정보">
+              <article class="card id-card">
+                <span class="label blue">Sample_3-4-2 · s균</span>
+                <mark><em class="taxon">Staphylococcus</em> sp.</mark>
+                <p>F/R 같은 속</p>
+                <div class="taxonomy">
+                  <span>Bacteria</span><span>Bacillales</span><span><em class="taxon">Staphylococcus</em></span>
+                </div>
+              </article>
+              <article class="card id-card">
+                <span class="label sage">Sample_3-4-1 · b균</span>
+                <mark><em class="taxon">Bacillus cereus</em> group</mark>
+                <p>근연 group 보고</p>
+                <div class="taxonomy">
+                  <span>Bacteria</span><span>Bacillales</span><span><em class="taxon">Bacillus</em> group</span>
+                </div>
+              </article>
+            </div>
+            <aside class="panel tree-panel" aria-label="BLAST 기반 계통 요약">
+              <div>
+                <span class="eyebrow">계통수 요약</span>
+                <h3>공통 가지</h3>
+              </div>
+              <div class="tree">
+                <svg class="tree-lines" viewBox="0 0 614 230" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                  <path d="M170 115 H222 M222 68 V162 M222 68 H254 M222 162 H254"></path>
+                </svg>
+                <div class="tree-root">
+                  <div class="node">
+                    <b>16S query</b>
+                    <small>F/R read</small>
+                  </div>
+                </div>
+                <div class="tree-leaves">
+                  <div class="tree-leaf">
+                    <div class="node">
+                      <b><em class="taxon">Staphylococcus</em></b>
+                      <span class="leaf-hits"><em class="taxon">S. haemolyticus</em><br><em class="taxon">Staphylococcus</em> sp.</span>
+                    </div>
+                  </div>
+                  <div class="tree-leaf">
+                    <div class="node">
+                      <b><em class="taxon">Bacillus cereus</em> group</b>
+                      <span class="leaf-hits"><em class="taxon">B. cereus</em><br><em class="taxon">B. paramycoides</em></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="tree-note">BLAST 상위 hit 분포 요약</p>
+            </aside>
+          </div>
+        </div>
+        <footer class="slide-foot">
+          <span>16S rRNA 기반 · 보수적 보고</span>
+          <span>Phylogenetic summary</span>
+        </footer>
+      </section>
+
+      <section class="slide" data-title="결론" aria-label="결론 슬라이드">
+        <header class="slide-head">
+          <div>
+            <span class="kicker">Conclusion</span>
+            <h2>결론</h2>
+          </div>
+          <span class="page-chip">6 / 6</span>
+        </header>
+        <div class="slide-body">
+          <div class="conclusion-grid">
+            <ol class="conclusion-list">
+              <li class="conclusion-item">
+                <span class="index">01</span>
+                <div>
+                  <strong>N count = 0</strong>
+                  <p>4 reads</p>
+                </div>
+              </li>
+              <li class="conclusion-item">
+                <span class="index">02</span>
+                <div>
+                  <strong>3-4-2 s균: <em class="taxon">Staphylococcus</em></strong>
+                  <p>F/R 일치</p>
+                </div>
+              </li>
+              <li class="conclusion-item">
+                <span class="index">03</span>
+                <div>
+                  <strong>3-4-1 b균: <em class="taxon">Bacillus</em> group</strong>
+                  <p>99% identity</p>
+                </div>
+              </li>
+              <li class="conclusion-item">
+                <span class="index">04</span>
+                <div>
+                  <strong>속/group 수준 보고</strong>
+                  <p>종 확정 보류</p>
+                </div>
+              </li>
+            </ol>
+            <aside class="report-box" aria-label="보고서 문장 예시">
+              <h3>Final call</h3>
+              <p>3-4-2<br><b><em class="taxon">Staphylococcus</em> sp.</b></p>
+              <p>3-4-1<br><b><em class="taxon">Bacillus cereus</em> group</b></p>
+            </aside>
+          </div>
+        </div>
+        <footer class="slide-foot">
+          <span>핵심: “어떤 수치로 어떤 수준까지 말할 수 있는가”</span>
+          <span>Take-home message</span>
+        </footer>
+      </section>
+
+      <nav class="controls" aria-label="슬라이드 전환">
+        <button class="nav-button" id="prevSlide" type="button" aria-label="이전 슬라이드">&#8592;</button>
+        <output class="counter" id="slideCounter" aria-live="polite">1 / 6</output>
+        <button class="nav-button" id="nextSlide" type="button" aria-label="다음 슬라이드">&#8594;</button>
+        <span class="key-hint">키보드 방향키로 전환</span>
+      </nav>
+    </div>
+  </main>
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const previousButton = document.getElementById("prevSlide");
+    const nextButton = document.getElementById("nextSlide");
+    const slideCounter = document.getElementById("slideCounter");
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      currentSlide = Math.max(0, Math.min(index, slides.length - 1));
+      slides.forEach((slide, slideIndex) => {
+        slide.classList.toggle("active", slideIndex === currentSlide);
+        slide.setAttribute("aria-hidden", slideIndex === currentSlide ? "false" : "true");
+      });
+      slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+      previousButton.disabled = currentSlide === 0;
+      nextButton.disabled = currentSlide === slides.length - 1;
+      document.title = `4조 16S rRNA 시퀀싱 결과 발표 슬라이드 - ${slides[currentSlide].dataset.title}`;
+    }
+
+    previousButton.addEventListener("click", () => showSlide(currentSlide - 1));
+    nextButton.addEventListener("click", () => showSlide(currentSlide + 1));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") {
+        showSlide(currentSlide - 1);
+      }
+      if (event.key === "ArrowRight") {
+        showSlide(currentSlide + 1);
+      }
+      if (event.key === "Home") {
+        showSlide(0);
+      }
+      if (event.key === "End") {
+        showSlide(slides.length - 1);
+      }
+    });
+
+    showSlide(0);
+  </script>
+</body>
+</html>
