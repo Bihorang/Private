@@ -1,0 +1,2615 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>미생물학 시험 복습 정리</title>
+  <style>
+    :root {
+      --bg: #f7f4ee;
+      --paper: #fffdf8;
+      --ink: #202124;
+      --muted: #5e625f;
+      --line: #ded8cc;
+      --teal: #0f766e;
+      --blue: #2563eb;
+      --rose: #be123c;
+      --amber: #b45309;
+      --green: #15803d;
+      --shadow: 0 14px 34px rgba(55, 48, 38, 0.09);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+      line-height: 1.68;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: end;
+      padding: 34px 0 24px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 5vw, 4.1rem);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 840px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .source-note {
+      max-width: 420px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #f9fafb;
+      color: #374151;
+      font-size: 0.92rem;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 253, 248, 0.96);
+      backdrop-filter: blur(12px);
+    }
+
+    .toolbar-inner {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 0;
+    }
+
+    .search {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 11px 13px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 1rem;
+    }
+
+    .search:focus-visible,
+    button:focus-visible {
+      outline: 3px solid rgba(37, 99, 235, 0.28);
+      outline-offset: 2px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    button,
+    .chip {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 8px 11px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:hover,
+    .chip:hover {
+      border-color: #a8a095;
+      background: #f5f1e8;
+    }
+
+    button:active,
+    .chip:active {
+      transform: translateY(1px);
+    }
+
+    .chip[aria-pressed="true"] {
+      border-color: var(--teal);
+      background: #e6f4f1;
+      color: #064e3b;
+      font-weight: 700;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    nav.toc {
+      padding: 18px 0 8px;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .toc a {
+      display: block;
+      min-height: 70px;
+      padding: 12px 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      text-decoration: none;
+    }
+
+    .toc strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 1.05rem;
+    }
+
+    .toc span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    main {
+      padding: 26px 0 54px;
+    }
+
+    section.chapter,
+    section.study-map {
+      margin: 0 0 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      overflow: clip;
+    }
+
+    .chapter-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: start;
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--line);
+      background: #fffaf0;
+    }
+
+    .chapter:nth-of-type(3n) .chapter-head {
+      background: #eff6ff;
+    }
+
+    .chapter:nth-of-type(3n + 1) .chapter-head {
+      background: #f0fdf4;
+    }
+
+    .chapter:nth-of-type(3n + 2) .chapter-head {
+      background: #fff7ed;
+    }
+
+    h2 {
+      margin: 0 0 6px;
+      font-size: clamp(1.55rem, 3vw, 2.25rem);
+      letter-spacing: 0;
+    }
+
+    .chapter-head p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #111827;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .content {
+      padding: 8px 24px 24px;
+    }
+
+    details {
+      border-bottom: 1px solid var(--line);
+      padding: 13px 0;
+    }
+
+    details:last-child {
+      border-bottom: 0;
+    }
+
+    summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 1.08rem;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::before {
+      content: "+";
+      display: inline-grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--teal);
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    details[open] summary::before {
+      content: "-";
+    }
+
+    h3 {
+      margin: 22px 0 8px;
+      font-size: 1.16rem;
+      letter-spacing: 0;
+    }
+
+    h4 {
+      margin: 18px 0 6px;
+      font-size: 1rem;
+      color: #111827;
+    }
+
+    p,
+    ul,
+    ol {
+      margin: 9px 0;
+    }
+
+    ul {
+      padding-left: 22px;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 12px 0 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid #ebe6dc;
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: #f3efe7;
+      color: #27231f;
+      font-weight: 800;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    code {
+      border-radius: 5px;
+      background: #f1f5f9;
+      padding: 1px 5px;
+      color: #0f172a;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .note {
+      margin: 14px 0;
+      padding: 12px 14px;
+      border-left: 4px solid var(--amber);
+      background: #fff7ed;
+      color: #431407;
+    }
+
+    .exam {
+      margin: 16px 0;
+      padding: 12px 14px;
+      border-left: 4px solid var(--teal);
+      background: #ecfdf5;
+      color: #052e16;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .hide {
+      display: none !important;
+    }
+
+    mark {
+      background: #fde68a;
+      color: inherit;
+      padding: 0 2px;
+      border-radius: 3px;
+    }
+
+    footer {
+      padding: 28px 0 46px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+    }
+
+    @media (max-width: 900px) {
+      .top,
+      .toolbar-inner,
+      .chapter-head {
+        grid-template-columns: 1fr;
+      }
+
+      .toc-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .actions {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .wrap {
+        width: min(100% - 22px, 1180px);
+      }
+
+      .toc-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .content,
+      .chapter-head {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      table {
+        min-width: 680px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .toolbar,
+      nav.toc,
+      .actions {
+        display: none;
+      }
+
+      section.chapter,
+      section.study-map {
+        break-inside: avoid;
+        box-shadow: none;
+      }
+
+      details {
+        border-bottom: 1px solid #bbb;
+      }
+
+      details:not([open]) > *:not(summary) {
+        display: block;
+      }
+    }
+
+    .review-questions {
+      border-bottom: 0;
+      padding-top: 18px;
+    }
+
+    .review-questions h3 {
+      margin: 18px 0 10px;
+      font-size: 18px;
+      color: var(--ink);
+    }
+
+    .qa-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .qa-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 12px 14px;
+      break-inside: avoid;
+    }
+
+    .qa-item h4 {
+      margin: 0 0 8px;
+      color: #111827;
+      font-size: 15px;
+    }
+
+    .qa-item p {
+      margin: 0;
+    }
+
+    .choices {
+      margin: 8px 0 10px;
+      padding-left: 24px;
+    }
+
+    .choices li {
+      margin: 3px 0;
+    }
+
+    .choices span {
+      font-weight: 700;
+      color: var(--teal);
+    }
+
+    .answer-box {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-left: 4px solid var(--teal);
+      background: #ecfdf5;
+      color: #052e16;
+    }
+
+    .answer-box strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .matching-options {
+      margin-top: 10px;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap top">
+      <div>
+        <h1>미생물학 시험 복습 정리</h1>
+        <p class="subtitle">Ch 9, Ch 10, Ch 11, Ch 12, Ch 25 자료를 요청한 분류 구조에 맞춰 다시 묶은 단일 HTML 노트입니다. Ch 11은 분류별 대표 균, 특징, 질병 연결을 표로 별도 정리했습니다.</p>
+      </div>
+      <aside class="source-note">
+        <strong>자료 기준</strong><br>
+        Obsidian 미생물학 폴더의 챕터 노트, PDF 추출본, 주차별 정리 및 녹취 정리본을 통합했습니다. 기존 파일은 수정하지 않았습니다.
+      </aside>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="wrap toolbar-inner">
+      <input id="search" class="search" type="search" placeholder="검색: 예) endospore, MRSA, Helicobacter, food intoxication" aria-label="본문 검색">
+      <div class="chips" aria-label="챕터 필터">
+        <button class="chip" data-filter="all" aria-pressed="true">전체</button>
+        <button class="chip" data-filter="9" aria-pressed="false">Ch 9</button>
+        <button class="chip" data-filter="10" aria-pressed="false">Ch 10</button>
+        <button class="chip" data-filter="11" aria-pressed="false">Ch 11</button>
+        <button class="chip" data-filter="12" aria-pressed="false">Ch 12</button>
+        <button class="chip" data-filter="25" aria-pressed="false">Ch 25</button>
+      </div>
+      <div class="actions">
+        <button id="expandAll" type="button">펼치기</button>
+        <button id="collapseAll" type="button">접기</button>
+        <button type="button" onclick="window.print()">인쇄</button>
+      </div>
+    </div>
+  </div>
+
+  <nav class="wrap toc" aria-label="목차">
+    <div class="toc-grid">
+      <a href="#ch9"><strong>Ch 9</strong><span>미생물 성장 제어: 물리적 방법과 화학적 방법</span></a>
+      <a href="#ch10"><strong>Ch 10</strong><span>항미생물제 역사, 작용기전 I-VI, 선택 기준, 내성</span></a>
+      <a href="#ch11"><strong>Ch 11</strong><span>원핵생물 형태, 생식, Archaea, Bacteria survey</span></a>
+      <a href="#ch12"><strong>Ch 12</strong><span>유핵 미생물, protozoa, fungi, algae, molds</span></a>
+      <a href="#ch25"><strong>Ch 25</strong><span>식품 미생물학, 발효, 부패, 보존, 식중독</span></a>
+    </div>
+  </nav>
+
+  <main class="wrap" id="main">
+    <section class="study-map">
+      <div class="chapter-head">
+        <div>
+          <h2>시험 전 전체 지도</h2>
+          <p>각 챕터는 서로 연결됩니다. Ch 9는 외부 환경 제어, Ch 10은 체내 치료, Ch 11은 표적이 되는 미생물 분류, Ch 12는 유핵 미생물, Ch 25는 식품 응용입니다.</p>
+        </div>
+        <span class="badge">High-yield</span>
+      </div>
+      <div class="content">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>챕터</th>
+                <th>핵심 질문</th>
+                <th>시험 답안 키워드</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ch 9</td>
+                <td>환경, 표면, 기구, 식품에서 미생물을 어떻게 줄이는가?</td>
+                <td>sterilization, disinfection, moist heat, autoclave, filtration, UV, phenolics, alcohols, halogens, oxidizers</td>
+              </tr>
+              <tr>
+                <td>Ch 10</td>
+                <td>체내 감염 치료 약물은 무엇을 표적으로 삼는가?</td>
+                <td>selective toxicity, beta-lactam, 70S ribosome, ergosterol, folate pathway, DNA gyrase, resistance</td>
+              </tr>
+              <tr>
+                <td>Ch 11</td>
+                <td>원핵생물은 어떤 모양, 생식, 분류, 병원성을 보이는가?</td>
+                <td>endospore, Bacillus, Clostridium, Archaea, low/high G+C, Proteobacteria, Chlamydia, Spirochetes</td>
+              </tr>
+              <tr>
+                <td>Ch 12</td>
+                <td>유핵 미생물은 어떻게 생식하고 분류되는가?</td>
+                <td>mitosis, meiosis, cytokinesis, coenocyte, schizogony, trophozoite, cyst, 18S rRNA</td>
+              </tr>
+              <tr>
+                <td>Ch 25</td>
+                <td>미생물은 식품을 어떻게 만들고 망치며 질병을 일으키는가?</td>
+                <td>fermentation, spoilage, starter culture, milk fermentation, alcoholic fermentation, food infection, food intoxication</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter" id="ch9" data-chapter="9">
+      <div class="chapter-head">
+        <div>
+          <h2>Ch 9. Physical and Chemical Methods of Microbial Control</h2>
+          <p>환경에서 미생물을 줄이거나 제거하는 방법입니다. 시험에서는 방법 이름보다 작용 원리, 적용 대상, 한계를 함께 묻기 쉽습니다.</p>
+        </div>
+        <span class="badge">Control</span>
+      </div>
+      <div class="content">
+        <details open>
+          <summary>1. 기본 제어 수준</summary>
+          <ul>
+            <li><strong>Sterilization</strong>: 세포, 바이러스, 내생포자까지 포함해 모든 생명체를 제거하려는 가장 강한 수준입니다.</li>
+            <li><strong>Disinfection</strong>: 무생물 표면의 병원성 미생물을 줄이는 과정입니다. 항상 endospore 제거를 의미하지 않습니다.</li>
+            <li><strong>Antisepsis</strong>: 피부, 점막, 상처 같은 생체 조직에 적용하는 제어입니다.</li>
+            <li><strong>Degerming</strong>: 손 씻기, 주사 부위 문지르기처럼 표면 미생물을 물리적으로 제거합니다.</li>
+            <li><strong>Sanitization</strong>: 식기, 식품 처리 시설 등에서 공중보건 기준에 맞게 미생물 수를 낮춥니다.</li>
+          </ul>
+          <div class="exam">효과를 결정하는 변수: 초기 미생물 수, 미생물 종류, endospore 또는 biofilm 여부, 유기물 존재, 온도, pH, 습도, 농도, 접촉 시간, 처리 대상의 재질.</div>
+        </details>
+
+        <details open>
+          <summary>2. Physical Methods of Microbial Control</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>분류</th>
+                  <th>작용 원리</th>
+                  <th>상세 내용과 예시</th>
+                  <th>시험 포인트</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Heat-related methods</td>
+                  <td>단백질 변성, 막 손상, 핵산 기능 저해. 습열은 단백질 응고와 변성을 통해 건열보다 보통 효율적입니다.</td>
+                  <td>끓이기, autoclave, pasteurization, dry heat, incineration. Autoclave의 대표 조건은 121도, 15 psi, 15분입니다. Pasteurization은 병원성/부패 미생물 감소이지 멸균이 아닙니다.</td>
+                  <td>TDP는 특정 시간 안에 사멸시키는 최저 온도, TDT는 특정 온도에서 필요한 시간, D value는 90% 감소 시간입니다.</td>
+                </tr>
+                <tr>
+                  <td>Refrigeration and freezing</td>
+                  <td>대사와 증식 속도를 낮춥니다.</td>
+                  <td>냉장과 냉동은 보존에 유용하지만 해동 후 생존 세포가 다시 증식할 수 있습니다. Listeria는 냉장 온도에서도 문제가 될 수 있습니다.</td>
+                  <td>주로 growth inhibition입니다. 멸균으로 쓰면 오답입니다.</td>
+                </tr>
+                <tr>
+                  <td>Desiccation and lyophilization</td>
+                  <td>물 제거로 대사와 증식을 막습니다.</td>
+                  <td>Desiccation은 건조, lyophilization은 동결건조입니다. 동결건조는 미생물 보존에도 쓰입니다.</td>
+                  <td>사멸보다 억제/보존의 의미가 큽니다. 포자와 건조 저항성 세균은 오래 생존할 수 있습니다.</td>
+                </tr>
+                <tr>
+                  <td>Filtration</td>
+                  <td>미생물을 물리적으로 걸러냅니다.</td>
+                  <td>Membrane filter는 열에 약한 액체, 항생제 용액, 효소, 혈청에 사용됩니다. HEPA filter는 공기 중 입자를 제거해 생물안전작업대와 병원 환경에 쓰입니다.</td>
+                  <td>구멍보다 작은 물질, 용해 독소, 이미 분비된 toxin까지 제거한다고 보면 안 됩니다.</td>
+                </tr>
+                <tr>
+                  <td>Osmotic pressure</td>
+                  <td>고장성 환경으로 물을 세포 밖으로 빼내 plasmolysis를 유도합니다.</td>
+                  <td>소금, 설탕, 절임, 잼, 염장 식품 보존이 해당합니다.</td>
+                  <td>내염성 또는 내당성 미생물이 견딜 수 있으므로 절대 멸균법이 아닙니다.</td>
+                </tr>
+                <tr>
+                  <td>Radiation</td>
+                  <td>DNA 손상, 이온화, free radical 형성으로 증식을 막거나 사멸시킵니다.</td>
+                  <td>UV는 nonionizing radiation으로 thymine dimer를 만들지만 침투력이 약합니다. Electron beam, gamma ray, X ray는 ionizing radiation으로 식품과 의료 물품 처리에 사용됩니다.</td>
+                  <td>UV는 표면, 공기, 물의 직접 노출 부위에 적합합니다. 내부 오염에는 약합니다.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details open>
+          <summary>3. Chemical Methods of Microbial Control</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>화학제</th>
+                  <th>작용 원리</th>
+                  <th>사용 예시</th>
+                  <th>주의점</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Phenol and phenolics</td>
+                  <td>단백질 변성, 세포막 파괴.</td>
+                  <td>의료 환경, 실험실, 가정 표면 소독. Phenol은 DNA 추출에서 단백질 제거와 세포 성분 분리 예시로도 연결됩니다.</td>
+                  <td>유기물 존재에서도 비교적 안정하지만 냄새, 독성, 신경계 영향 가능성이 있습니다.</td>
+                </tr>
+                <tr>
+                  <td>Alcohols</td>
+                  <td>단백질 변성, cytoplasmic membrane 파괴.</td>
+                  <td>Ethanol, isopropanol. 손 소독, 주사 전 피부 degerming, 표면 소독.</td>
+                  <td>포자에는 약하고 증발이 빠르므로 접촉 시간이 필요합니다. 너무 높은 순도보다 적절히 희석된 농도가 단백질 변성에 유리할 수 있습니다.</td>
+                </tr>
+                <tr>
+                  <td>Halogens</td>
+                  <td>단백질 변성, 산화 손상.</td>
+                  <td>Iodine, iodophor, chlorine, sodium hypochlorite, chloramines, bromine, fluoride. 수돗물, 수영장, 표백제, 피부 소독, 치약 예시.</td>
+                  <td>Iodophor는 iodine을 서서히 방출합니다. Fluoride의 충치 예방은 일반 소독제 사용과 구분합니다.</td>
+                </tr>
+                <tr>
+                  <td>Oxidizing agents</td>
+                  <td>미생물 효소와 세포 성분 산화.</td>
+                  <td>Hydrogen peroxide, ozone, peracetic acid. Ozone은 음용수 처리, peracetic acid는 sporicide와 장비 멸균에 연결됩니다.</td>
+                  <td>Hydrogen peroxide는 catalase 때문에 열린 상처 치료에는 유용하지 않을 수 있습니다.</td>
+                </tr>
+                <tr>
+                  <td>Surfactants</td>
+                  <td>표면장력을 낮추고 막을 교란합니다.</td>
+                  <td>Soap, detergent, quaternary ammonium compounds. Soap은 degerming에 좋고, quats는 low-level disinfectant로 의료/산업 현장에 사용됩니다.</td>
+                  <td>Soap 자체는 강한 antimicrobial이라기보다 제거를 돕는 역할입니다. Quats는 포자와 일부 비외피 바이러스에 약할 수 있습니다.</td>
+                </tr>
+                <tr>
+                  <td>Heavy metals</td>
+                  <td>중금속 이온이 단백질을 변성합니다.</td>
+                  <td>1% silver nitrate는 과거 N. gonorrhoeae에 의한 신생아 실명 예방에 사용, thimerosal은 백신 보존, copper는 algae control에 연결됩니다.</td>
+                  <td>정균/정진균 수준인 경우가 많고, mercury 같은 중금속 독성은 미나마타병과 연결해 주의합니다.</td>
+                </tr>
+                <tr>
+                  <td>Aldehydes</td>
+                  <td>단백질과 핵산의 functional group을 cross-linking하여 불활성화합니다.</td>
+                  <td>Glutaraldehyde는 소독과 멸균에 사용됩니다. Formalin은 37% formaldehyde이며 방부, 실내/기구 소독 예시입니다.</td>
+                  <td>강하지만 독성, 환기, 잔류 관리가 중요합니다.</td>
+                </tr>
+                <tr>
+                  <td>Gaseous agents</td>
+                  <td>밀폐 chamber에서 단백질과 DNA를 cross-linking하여 microbicidal, sporicidal 효과를 냅니다.</td>
+                  <td>병원과 치과에서 열에 약한 물품 멸균에 사용됩니다. Ethylene oxide 같은 가스 멸균제가 대표적입니다.</td>
+                  <td>인체 위해, 폭발성, 독성, 발암 가능성, 통기 시간이 핵심 한계입니다.</td>
+                </tr>
+                <tr>
+                  <td>Enzymes</td>
+                  <td>특정 미생물 구조를 효소적으로 분해합니다.</td>
+                  <td>Lysozyme은 peptidoglycan을 분해하며 눈물에도 존재합니다. 치즈에서 세균 수 감소, prionzyme은 의료기구의 prion 제거 예시로 연결됩니다.</td>
+                  <td>표적 구조가 있을 때 효과가 있습니다. 모든 미생물에 보편적 멸균제로 작용하지 않습니다.</td>
+                </tr>
+                <tr>
+                  <td>Antimicrobials</td>
+                  <td>항생제, 반합성, 합성 화학물질을 이용해 미생물 성장을 억제하거나 사멸시킵니다.</td>
+                  <td>보통 질병 치료에 쓰이지만 일부는 체외 antimicrobial control에도 사용됩니다.</td>
+                  <td>체내 치료와 외부 소독은 선택독성, 독성 허용 범위, 적용 대상이 다릅니다. 이 내용이 Ch 10으로 이어집니다.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <!-- review-questions-start ch9 -->
+        <details open class="review-questions">
+          <summary>교재 문제: 정답과 해설</summary>
+          <p class="muted">첨부한 Questions for Review를 챕터 마지막에 배치했습니다. 각 문항 바로 아래에 정답과 시험용 해설을 붙였습니다.</p>
+          <h3>Multiple Choice</h3>
+          <div class="qa-list">
+              <article class="qa-item">
+                <h4>객관식 1</h4>
+                <p>In practical terms everyday use, which of the following statements provides the definition of sterilization?</p>
+                <ol class="choices" type="a"><li><span>a.</span> Sterilization eliminates organisms and their spores or endospores.</li><li><span>b.</span> Sterilization eliminates harmful microorganisms and viruses.</li><li><span>c.</span> Sterilization eliminates prions.</li><li><span>d.</span> Sterilization eliminates hyperthermophiles.</li></ol>
+                <div class="answer-box"><strong>정답: a. Sterilization eliminates organisms and their spores or endospores.</strong><span>Sterilization은 vegetative cell뿐 아니라 spore/endospore까지 제거하는 수준의 처리입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 2</h4>
+                <p>Which of the following substances or processes kills microorganisms on laboratory surfaces?</p>
+                <ol class="choices" type="a"><li><span>a.</span> antiseptics</li><li><span>b.</span> disinfectants</li><li><span>c.</span> degerm</li><li><span>d.</span> pasteurization</li></ol>
+                <div class="answer-box"><strong>정답: b. disinfectants</strong><span>Laboratory surface처럼 생체 조직이 아닌 표면에는 disinfectant를 사용합니다. Antiseptic은 살아 있는 조직용입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 3</h4>
+                <p>Which of the following terms best describes the disinfecting of cafeteria plates?</p>
+                <ol class="choices" type="a"><li><span>a.</span> pasteurization</li><li><span>b.</span> antisepsis</li><li><span>c.</span> sterilization</li><li><span>d.</span> sanitization</li></ol>
+                <div class="answer-box"><strong>정답: d. sanitization</strong><span>식기처럼 병원체 수를 공중보건 기준 이하로 낮추는 처리는 sanitization입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 4</h4>
+                <p>The microbial death rate is used to measure ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> the efficiency of a detergent</li><li><span>b.</span> the efficiency of an antiseptic</li><li><span>c.</span> the efficiency of sanitization techniques</li><li><span>d.</span> all of the above</li></ol>
+                <div class="answer-box"><strong>정답: d. all of the above</strong><span>Microbial death rate는 detergent, antiseptic, sanitization 등 처리 조건의 효율을 비교할 때 사용됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 5</h4>
+                <p>Which of the following types of nonionizing radiation is most suitable as an antimicrobial agent?</p>
+                <ol class="choices" type="a"><li><span>a.</span> ultraviolet light</li><li><span>b.</span> visible light</li><li><span>c.</span> infrared radiation</li><li><span>d.</span> radio waves</li></ol>
+                <div class="answer-box"><strong>정답: a. ultraviolet light</strong><span>Nonionizing radiation 중 DNA의 thymine dimer를 만드는 UV가 대표적인 antimicrobial radiation입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 6</h4>
+                <p>The endospores of which organism are used as a biological indicator of sterilization?</p>
+                <ol class="choices" type="a"><li><span>a.</span> Bacillus stearothermophilus</li><li><span>b.</span> Salmonella enterica</li><li><span>c.</span> Mycobacterium tuberculosis</li><li><span>d.</span> Staphylococcus aureus</li></ol>
+                <div class="answer-box"><strong>정답: a. Bacillus stearothermophilus</strong><span>Autoclave biological indicator로 내열성 endospore를 가진 Bacillus stearothermophilus, 현재 Geobacillus stearothermophilus가 사용됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 7</h4>
+                <p>A company that manufactures an antimicrobial cleaner for kitchen counters claims that its product is effective when used in a 50% water solution. By what means might scientists best verify this statement?</p>
+                <ol class="choices" type="a"><li><span>a.</span> disk-diffusion test</li><li><span>b.</span> phenol coefficient</li><li><span>c.</span> filter paper test</li><li><span>d.</span> in-use test</li></ol>
+                <div class="answer-box"><strong>정답: d. in-use test</strong><span>제품이 실제 사용 농도와 조건에서 효과가 있는지 보려면 in-use test가 가장 직접적입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 8</h4>
+                <p>What is the function of the cytoplasmic membrane beneath a cell wall?</p>
+                <ol class="choices" type="a"><li><span>a.</span> to contain the cytoplasm</li><li><span>b.</span> to control the passage of chemicals in and out of the cell</li><li><span>c.</span> to prevent leakage of the cytoplasmic contents</li><li><span>d.</span> both a and b</li></ol>
+                <div class="answer-box"><strong>정답: d. both a and b</strong><span>Cytoplasmic membrane은 cytoplasm을 둘러싸고 물질 출입을 조절합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 9</h4>
+                <p>Notably, which types of cells are preserved using lyophilization and freeze drying?</p>
+                <ol class="choices" type="a"><li><span>a.</span> bacteria</li><li><span>b.</span> plant</li><li><span>c.</span> mammalian cells</li><li><span>d.</span> none of the above</li></ol>
+                <div class="answer-box"><strong>정답: a. bacteria</strong><span>Lyophilization은 특히 bacterial culture를 장기간 보존하는 대표 방법입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 10</h4>
+                <p>Which of the following types of radiation is more widely used as an antimicrobial technique?</p>
+                <ol class="choices" type="a"><li><span>a.</span> electron beams</li><li><span>b.</span> visible light</li><li><span>c.</span> radio waves</li><li><span>d.</span> microwaves</li></ol>
+                <div class="answer-box"><strong>정답: a. electron beams</strong><span>전자빔은 식품, 의료 물품 등에 비교적 널리 쓰이는 ionizing radiation 기반 antimicrobial technique입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 11</h4>
+                <p>Which of the following substances would most effectively inhibit anaerobes?</p>
+                <ol class="choices" type="a"><li><span>a.</span> phenol</li><li><span>b.</span> silver</li><li><span>c.</span> ethanol</li><li><span>d.</span> hydrogen peroxide</li></ol>
+                <div class="answer-box"><strong>정답: d. hydrogen peroxide</strong><span>Hydrogen peroxide는 reactive oxygen species를 만들어 산소에 취약한 anaerobe 억제에 효과적입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 12</h4>
+                <p>Which of the following adjectives best describes a surgical procedure that is free of microbial contaminants?</p>
+                <ol class="choices" type="a"><li><span>a.</span> disinfected</li><li><span>b.</span> sanitized</li><li><span>c.</span> degermed</li><li><span>d.</span> aseptic</li></ol>
+                <div class="answer-box"><strong>정답: d. aseptic</strong><span>Aseptic은 미생물 오염이 배제된 상태나 기법을 뜻합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 13</h4>
+                <p>What are the side effects of phenol and phenolic compounds when used as antimicrobial agents?</p>
+                <ol class="choices" type="a"><li><span>a.</span> they kill bacteria</li><li><span>b.</span> they denature protein</li><li><span>c.</span> they irritate skin</li><li><span>d.</span> all of the above</li></ol>
+                <div class="answer-box"><strong>정답: c. they irritate skin</strong><span>Phenol/phenolics는 단백질 변성과 막 손상을 일으키지만, 인체 사용 시 중요한 부작용은 피부와 점막 자극입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 14</h4>
+                <p>A sample of E. coli has been subjected to heat for a specified time, and 90% of the cells have been destroyed. Which of the following terms best describes this event?</p>
+                <ol class="choices" type="a"><li><span>a.</span> thermal death point</li><li><span>b.</span> thermal death time</li><li><span>c.</span> decimal reduction time</li><li><span>d.</span> none of the above</li></ol>
+                <div class="answer-box"><strong>정답: c. decimal reduction time</strong><span>90% 감소, 즉 1 log 감소에 필요한 시간은 decimal reduction time입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 15</h4>
+                <p>Which of the following substances is least toxic to humans?</p>
+                <ol class="choices" type="a"><li><span>a.</span> carbolic acid</li><li><span>b.</span> glutaraldehyde</li><li><span>c.</span> hydrogen peroxide</li><li><span>d.</span> formalin</li></ol>
+                <div class="answer-box"><strong>정답: c. hydrogen peroxide</strong><span>Hydrogen peroxide는 분해 산물이 물과 산소라 phenol, glutaraldehyde, formalin보다 상대적으로 독성이 낮습니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 16</h4>
+                <p>Which of the following chemicals is active against bacterial endospores?</p>
+                <ol class="choices" type="a"><li><span>a.</span> copper ions</li><li><span>b.</span> ethylene oxide</li><li><span>c.</span> ethanol</li><li><span>d.</span> triclosan</li></ol>
+                <div class="answer-box"><strong>정답: b. ethylene oxide</strong><span>Ethylene oxide는 단백질과 핵산을 alkylation/cross-linking하여 endospore까지 사멸시킬 수 있는 gas sterilant입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 17</h4>
+                <p>Which of the following disinfectants acts against cell membranes?</p>
+                <ol class="choices" type="a"><li><span>a.</span> phenol</li><li><span>b.</span> peracetic acid</li><li><span>c.</span> silver nitrate</li><li><span>d.</span> glutaraldehyde</li></ol>
+                <div class="answer-box"><strong>정답: a. phenol</strong><span>Phenol은 세포막 지질을 손상시키고 단백질을 변성시킵니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 18</h4>
+                <p>Which of the following disinfectants contains alcohol?</p>
+                <ol class="choices" type="a"><li><span>a.</span> an iodophor</li><li><span>b.</span> a quat</li><li><span>c.</span> formalin</li><li><span>d.</span> a tincture of bromine</li></ol>
+                <div class="answer-box"><strong>정답: d. a tincture of bromine</strong><span>Tincture는 alcohol을 용매로 쓰는 제형입니다. 따라서 tincture 형태의 소독제는 alcohol을 포함합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 19</h4>
+                <p>Which antimicrobial chemical has been used to sterilize spacecraft?</p>
+                <ol class="choices" type="a"><li><span>a.</span> phenol</li><li><span>b.</span> alcohol</li><li><span>c.</span> heavy metal</li><li><span>d.</span> ethylene oxide</li></ol>
+                <div class="answer-box"><strong>정답: d. ethylene oxide</strong><span>Ethylene oxide는 밀폐 chamber에서 열에 약한 물품이나 spacecraft 같은 장비 멸균에 사용되어 왔습니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 20</h4>
+                <p>Which class of surfactant is most soluble in water?</p>
+                <ol class="choices" type="a"><li><span>a.</span> quaternary ammonium compounds</li><li><span>b.</span> alcohols</li><li><span>c.</span> soaps</li><li><span>d.</span> peracetic acids</li></ol>
+                <div class="answer-box"><strong>정답: c. soaps</strong><span>Soaps는 anionic surfactant로 물에 잘 녹아 기름과 오염물을 유화하여 제거합니다.</span></div>
+              </article>
+          </div>
+          <h3>Short Answer</h3>
+          <div class="qa-list">
+              <article class="qa-item">
+                <h4>단답형 1</h4>
+                <p>Describe three types of microbes that are extremely resistant to antimicrobial treatment, and explain why they are resistant.</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>대표적으로 bacterial endospore, mycobacteria, prion을 들 수 있습니다. Endospore는 탈수된 core, cortex, spore coat, dipicolinic acid 때문에 열과 화학물질에 강하고, mycobacteria는 mycolic acid가 많은 waxy cell wall 때문에 건조와 소독제에 강합니다. Prion은 핵산이나 대사 표적이 없는 잘못 접힌 단백질이라 일반 소독과 멸균 조건에 매우 저항적입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 2</h4>
+                <p>Compare and contrast four tests that have been developed to measure the effectiveness of disinfectants.</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Phenol coefficient는 phenol과 비교한 상대 효력을 수치화합니다. Disk-diffusion/filter paper test는 inhibition zone 크기로 후보 물질을 비교하지만 실제 사용 조건을 완전히 반영하지 못합니다. Use-dilution test는 표준화된 표면에 미생물을 묻힌 뒤 소독제가 실제로 사멸시키는지 봅니다. In-use test는 제품이 실제 사용 농도와 현장 조건에서 효과가 있는지 확인합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 3</h4>
+                <p>Why is it necessary to use strong disinfectants in areas exposed to tuberculosis patients?</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Mycobacterium tuberculosis는 mycolic acid가 풍부한 waxy cell wall을 가져 건조와 여러 소독제에 잘 견딥니다. 따라서 결핵 환자에게 노출된 공간은 일반 세정보다 강한 disinfectant와 충분한 접촉 시간이 필요합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 4</h4>
+                <p>Why do warm disinfectant chemicals generally work better than cool ones?</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>온도가 올라가면 화학 반응 속도와 막 투과, 단백질 변성 속도가 증가합니다. 그래서 같은 농도라도 따뜻한 disinfectant가 차가운 조건보다 빠르게 미생물 구조를 손상시키는 경우가 많습니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 5</h4>
+                <p>Why are Gram-negative bacteria more susceptible to heat than Gram-positive bacteria?</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Gram-negative bacteria는 peptidoglycan층이 얇고 외막 지질 성분이 열에 의해 손상되기 쉽습니다. 반면 Gram-positive bacteria는 두꺼운 peptidoglycan층과 일부 내열성이 더 큰 구조 때문에 같은 조건에서 상대적으로 더 견디는 경우가 있습니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 6</h4>
+                <p>Describe five physical methods of microbial control.</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>물리적 방법에는 heat-related methods, refrigeration/freezing, desiccation/lyophilization, filtration, osmotic pressure, radiation이 있습니다. 열은 단백질과 막을 손상시키고, 저온은 대사를 늦추며, 건조와 삼투압은 이용 가능한 물을 줄이고, filtration은 물리적으로 제거하며, radiation은 DNA와 세포 구성요소를 손상시킵니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 7</h4>
+                <p>Which aldehyde compounds are used to control microbes? Explain how these compounds are used.</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>주요 aldehyde는 formaldehyde/formalin과 glutaraldehyde입니다. 이들은 단백질과 핵산의 functional group을 cross-linking하여 효소와 유전물질을 불활성화합니다. Glutaraldehyde는 열에 약한 의료기구의 high-level disinfection/chemical sterilization에, formalin은 보존과 실내 또는 기구 소독에 사용됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 8</h4>
+                <p>Defend the following statement: “Pasteurization is not sterilization.”</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Pasteurization은 병원성 미생물과 부패균 수를 줄여 안전성과 보존성을 높이는 처리입니다. 하지만 모든 미생물과 endospore를 제거하지 않으므로 sterilization은 아닙니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 9</h4>
+                <p>High pressure is an important factor in efficient sterilization. Why?</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>압력이 높아지면 물의 끓는점이 올라가 100°C보다 높은 온도의 saturated steam을 만들 수 있습니다. Autoclave가 121°C 전후에서 작동하는 이유가 이것이며, 고온 수증기는 건열보다 잘 침투해 단백질을 효과적으로 응고시킵니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 10</h4>
+                <p>Compare and contrast the action of alcohols, halogens, and oxidizing agents in controlling microbial growth.</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Alcohols는 단백질을 변성시키고 지질막을 용해합니다. Halogens는 iodine이나 chlorine처럼 단백질과 효소를 산화 또는 iodination/chlorination하여 불활성화합니다. Oxidizing agents는 peroxide, ozone, peracetic acid처럼 reactive oxygen을 통해 효소와 막, DNA를 손상시킵니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 11</h4>
+                <p>During their use in microbial control, heavy metals react with which amino acid in protein molecules?</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Heavy metals는 단백질의 sulfhydryl group과 잘 반응하므로 cysteine 잔기를 가진 단백질을 불활성화합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 12</h4>
+                <p>Why are alcohols more effective in a 70% solution than in a 100% solution?</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>70% alcohol에는 물이 충분해 단백질 응고와 세포 내 침투가 잘 일어납니다. 100% alcohol은 너무 빨리 증발하고 표면 단백질을 빠르게 탈수시켜 내부 침투가 제한될 수 있습니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 13</h4>
+                <p>Contrast the structures and actions of soaps and quats.</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Soaps는 anionic surfactant로 기름과 오염물을 유화하여 물리적으로 제거하는 degerming 효과가 중심입니다. Quats는 cationic surfactant로 음전하를 띠는 세포 표면에 붙어 membrane permeability를 무너뜨리는 low-level disinfectant입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 14</h4>
+                <p>Which enzyme is used to remove prions from medical instruments?</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Prionzyme이 prion 제거용 효소로 언급됩니다. 일반 단백질 오염과 달리 prion은 매우 안정하므로 전용 효소와 엄격한 처리 조건이 필요합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 15</h4>
+                <p>How can campers effectively treat stream water to remove pathogenic protozoa, bacteria, and viruses?</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>가장 확실한 방법은 끓이기이며, protozoa와 bacteria 제거에는 적절한 pore size의 filtration도 효과적입니다. Virus는 일부 필터를 통과할 수 있으므로 boiling, iodine/chlorine 계열 화학 처리, 또는 UV 처리를 함께 사용하는 것이 안전합니다.</span></div>
+              </article>
+          </div>
+        </details>
+        <!-- review-questions-end ch9 -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch10" data-chapter="10">
+      <div class="chapter-head">
+        <div>
+          <h2>Ch 10. Antimicrobial Drugs</h2>
+          <p>체내 감염 치료에서 항미생물제를 어떻게 고르고, 어떻게 작용하며, 왜 내성이 생기는지 정리합니다.</p>
+        </div>
+        <span class="badge">Drugs</span>
+      </div>
+      <div class="content">
+        <details open>
+          <summary>1. The History of Antimicrobial Agents</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>개념</th>
+                  <th>내용</th>
+                  <th>시험 연결</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Magic bullet</td>
+                  <td>Paul Ehrlich의 개념으로, 숙주를 크게 해치지 않고 병원체를 선택적으로 공격하는 치료제를 뜻합니다.</td>
+                  <td>선택독성(selective toxicity)의 역사적 출발점.</td>
+                </tr>
+                <tr>
+                  <td>Antibiotic</td>
+                  <td>원래는 미생물이 자연적으로 생산한 항미생물 물질입니다. 현재는 넓은 의미로 항생제를 가리킵니다.</td>
+                  <td>자연 항생제와 반합성/합성 약물 구분.</td>
+                </tr>
+                <tr>
+                  <td>Penicillin</td>
+                  <td>Alexander Fleming의 발견에서 출발해 2차 세계대전 전후 임상적 사용과 대량 생산이 확대되었습니다.</td>
+                  <td>Beta-lactam, cell wall synthesis inhibition과 연결.</td>
+                </tr>
+                <tr>
+                  <td>Semisynthetic drugs</td>
+                  <td>자연 항생제를 화학적으로 변형해 산 안정성, 흡수율, 내성 회피, 작용 범위를 개선합니다.</td>
+                  <td>Methicillin, imipenem, cephalosporin 변형 약물과 연결.</td>
+                </tr>
+                <tr>
+                  <td>Synthetic drugs</td>
+                  <td>실험실에서 완전 합성된 항미생물제입니다.</td>
+                  <td>자연물 직접 유래가 아니라는 점.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details open>
+          <summary>2. Mechanisms of Antimicrobial Action I-VI</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>번호</th>
+                  <th>메커니즘</th>
+                  <th>작용 원리</th>
+                  <th>대표 약물/예시</th>
+                  <th>특징과 주의점</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>I</td>
+                  <td>Inhibition of cell wall synthesis</td>
+                  <td>Peptidoglycan의 NAG-NAM chain과 NAM 사이 peptide cross-link 형성을 방해합니다. 세포벽 강도가 약해져 삼투압을 견디지 못하고 lysis될 수 있습니다.</td>
+                  <td>Beta-lactams, penicillin, methicillin, cephalosporin, carbapenem/imipenem. Vancomycin, cycloserine은 NAM bridge 관련 단계, bacitracin은 NAG/NAM 운반, isoniazid/ethambutol은 mycolic acid 형성과 연결됩니다. Echinocandins는 fungal wall glucan 합성 효소 억제.</td>
+                  <td>성장 중인 세균에 특히 효과적입니다. 이미 만들어진 peptidoglycan 자체를 제거하는 약은 아닙니다. 사람 세포에는 peptidoglycan이 없어 선택독성이 큽니다.</td>
+                </tr>
+                <tr>
+                  <td>II</td>
+                  <td>Inhibition of protein synthesis</td>
+                  <td>세균 70S ribosome(30S, 50S)을 표적으로 translation을 방해합니다.</td>
+                  <td>Aminoglycosides는 30S 모양 변화나 misreading, tetracycline은 tRNA docking 방해, chloramphenicol은 peptide bond 형성 억제, macrolides/lincosamides는 50S에서 mRNA 이동을 방해합니다.</td>
+                  <td>진핵 세포질 리보솜은 80S라 선택성이 있지만, 사람 mitochondria는 70S 유사 리보솜을 가져 독성 가능성이 있습니다.</td>
+                </tr>
+                <tr>
+                  <td>III</td>
+                  <td>Disruption of cytoplasmic membranes</td>
+                  <td>세포막에 channel 또는 pore를 만들어 막 무결성을 무너뜨립니다.</td>
+                  <td>Amphotericin B는 fungal membrane의 ergosterol에 결합해 pore를 형성합니다.</td>
+                  <td>사람 세포막의 cholesterol이 ergosterol과 유사해 숙주 독성 가능성이 있습니다. 세균은 sterol이 없어 amphotericin B 표적이 되기 어렵습니다.</td>
+                </tr>
+                <tr>
+                  <td>IV</td>
+                  <td>Inhibition of metabolic pathways</td>
+                  <td>병원체와 숙주의 대사 경로 차이를 이용해 필수 대사산물 합성을 막습니다.</td>
+                  <td>Sulfonamides는 PABA 유사체로 folic acid 합성을 방해합니다. Trimethoprim은 dihydrofolic acid를 THF로 전환하는 효소를 억제합니다. Amantadine, rimantadine은 viral uncoating, protease inhibitors는 HIV 단백질 처리 효소와 연결됩니다.</td>
+                  <td>사람은 folic acid를 식이로 얻으므로 세균 folate synthesis 표적이 선택독성을 가집니다. 같은 경로의 다른 지점을 조합하면 상승효과가 가능합니다.</td>
+                </tr>
+                <tr>
+                  <td>V</td>
+                  <td>Inhibition of nucleic acid synthesis</td>
+                  <td>DNA replication, RNA transcription, nucleic acid function을 방해합니다.</td>
+                  <td>Quinolones/fluoroquinolones는 prokaryotic DNA gyrase, rifampin은 RNA polymerase, nucleoside/nucleotide analogs는 핵산 합성을 왜곡합니다. Reverse transcriptase inhibitors는 HIV 효소를 표적으로 합니다.</td>
+                  <td>핵산 표적은 숙주 세포에도 영향을 줄 수 있어 독성 고려가 큽니다. 바이러스와 빠르게 분열하는 세포 표적으로 자주 연결됩니다.</td>
+                </tr>
+                <tr>
+                  <td>VI</td>
+                  <td>Prevention of virus attachment and entry</td>
+                  <td>바이러스가 숙주 receptor에 붙거나 세포 안으로 들어가는 단계를 막습니다.</td>
+                  <td>Attachment antagonists, arildone, pleconaril, enfuvirtide 같은 entry/fusion inhibitor 예시.</td>
+                  <td>바이러스는 숙주세포 대사를 이용하므로 독립 표적이 적습니다. 부착/진입 차단은 감염 초기 단계 표적이라는 점이 중요합니다.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details open>
+          <summary>3. Ideal Antimicrobial Agent</summary>
+          <ul>
+            <li>Readily available, inexpensive, chemically stable, easily administered.</li>
+            <li>Nontoxic and nonallergenic.</li>
+            <li>가능하면 wide range of pathogens에 선택적으로 독성을 가져야 합니다.</li>
+            <li>현실에서는 감염 부위 도달성, 환자 상태, 독성, 알레르기, 내성 위험, 정상 microbiota 교란까지 같이 봅니다.</li>
+          </ul>
+        </details>
+
+        <details open>
+          <summary>4. Spectrum, Effectiveness, Safety and Side Effects</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>항목</th>
+                  <th>상세 내용</th>
+                  <th>시험 포인트</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Spectrum of action</td>
+                  <td>Narrow-spectrum은 적은 범위의 병원체에 작용하고 정상균총 손상을 줄입니다. Broad-spectrum은 많은 병원체에 작용해 원인균 불명 또는 혼합 감염에 유용합니다.</td>
+                  <td>Broad-spectrum은 normal flora를 죽여 microbial antagonism을 줄이고 secondary/superinfection을 허용할 수 있습니다.</td>
+                </tr>
+                <tr>
+                  <td>Effectiveness</td>
+                  <td>Kirby-Bauer diffusion test는 zone of inhibition을 봅니다. MIC는 visible growth를 억제하는 최소 농도, MBC는 실제 살균 최소 농도입니다. Etest는 diffusion과 MIC 성격을 결합합니다.</td>
+                  <td>MIC와 MBC는 다릅니다. 실제 임상효과는 감염 부위 농도, 면역상태, biofilm 여부에 따라 달라질 수 있습니다.</td>
+                </tr>
+                <tr>
+                  <td>Routes of administration</td>
+                  <td>Topical, oral, intramuscular, intravenous route가 있습니다. 약물이 감염 조직에 어떻게 분포하는지 알아야 합니다.</td>
+                  <td>중증 감염과 혈중 농도 필요성에 따라 IV가 필요할 수 있습니다.</td>
+                </tr>
+                <tr>
+                  <td>Safety and side effects</td>
+                  <td>Toxicity는 kidney, liver, nerve에 문제를 줄 수 있습니다. 임신부 처방에는 추가 고려가 필요합니다. Allergy는 드물어도 anaphylactic shock처럼 생명을 위협할 수 있습니다.</td>
+                  <td>정상 microbiota 교란은 secondary infection과 superinfection으로 이어질 수 있습니다. 병원 환자에서 특히 중요합니다.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details open>
+          <summary>5. Resistance to Antimicrobial Drugs</summary>
+          <ul>
+            <li>항생제는 내성을 직접 만들어내는 것이 아니라, 이미 존재하던 내성 세포나 새 변이를 선택해 남기는 압력으로 작용합니다.</li>
+            <li>세균은 chromosomal mutation 또는 R plasmid 획득으로 내성을 얻습니다.</li>
+            <li>R plasmid는 transformation, transduction, conjugation으로 이동할 수 있습니다.</li>
+            <li>Multi-drug resistance는 적어도 세 가지 antimicrobial agents에 저항성을 보이는 경우로 정리합니다.</li>
+            <li>Cross resistance는 하나의 내성 기전이 비슷한 약물군에 동시에 저항성을 주는 현상입니다.</li>
+          </ul>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>내성 기전</th>
+                  <th>작동 방식</th>
+                  <th>예시/연결</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Drug destruction or deactivation</td>
+                  <td>효소가 약물을 분해하거나 비활성화합니다.</td>
+                  <td>Beta-lactamase 또는 penicillinase가 beta-lactam ring을 절단합니다.</td>
+                </tr>
+                <tr>
+                  <td>Slow or prevent entry</td>
+                  <td>막 통로, porin, 외막 특성 변화로 약물이 들어오지 못하게 합니다.</td>
+                  <td>Gram-negative bacteria의 외막/porin 변화.</td>
+                </tr>
+                <tr>
+                  <td>Alter target</td>
+                  <td>약물이 결합하는 PBP, ribosome, enzyme 등의 구조가 바뀝니다.</td>
+                  <td>MRSA는 beta-lactam 표적 변화와 연결해 기억합니다.</td>
+                </tr>
+                <tr>
+                  <td>Alter metabolic chemistry</td>
+                  <td>막힌 대사 경로 대신 우회 경로를 쓰거나 필요한 산물을 외부에서 얻습니다.</td>
+                  <td>Folate pathway 억제제 회피.</td>
+                </tr>
+                <tr>
+                  <td>Efflux pump</td>
+                  <td>약물이 작용하기 전에 세포 밖으로 배출합니다.</td>
+                  <td>Tetracycline 등 여러 약물군에서 중요합니다.</td>
+                </tr>
+                <tr>
+                  <td>Biofilm resistance</td>
+                  <td>Matrix, 느린 대사, 약물 침투 제한, persister cell 때문에 약효가 떨어집니다.</td>
+                  <td>Catheter, implant 감염.</td>
+                </tr>
+                <tr>
+                  <td>Resistance spread</td>
+                  <td>Mutation과 horizontal gene transfer로 내성 유전자가 퍼집니다.</td>
+                  <td>R plasmid, transformation, transduction, conjugation.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="exam">내성 지연 전략: 필요한 경우에만 사용, 충분한 농도와 기간 유지, narrow-spectrum으로 전환, 병용요법, synergism 활용, amoxicillin-clavulanic acid 같은 inhibitor 조합, 새 약물 개발, bacteriocin 탐색, 감염관리와 손위생.</div>
+        </details>
+
+        <!-- review-questions-start ch10 -->
+        <details open class="review-questions">
+          <summary>교재 문제: 정답과 해설</summary>
+          <p class="muted">첨부한 Questions for Review를 챕터 마지막에 배치했습니다. 각 문항 바로 아래에 정답과 시험용 해설을 붙였습니다.</p>
+          <h3>Multiple Choice</h3>
+          <div class="qa-list">
+              <article class="qa-item">
+                <h4>객관식 1</h4>
+                <p>Diffusion and dilution tests that expose pathogens to antimicrobials are designed to ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> determine the spectrum of action of a drug</li><li><span>b.</span> determine which drug is most effective against a particular pathogen</li><li><span>c.</span> determine the amount of a drug to use against a particular pathogen</li><li><span>d.</span> both b and c</li></ol>
+                <div class="answer-box"><strong>정답: d. both b and c</strong><span>Diffusion/dilution tests는 어떤 약물이 효과적인지와 어느 농도에서 억제되는지 판단하기 위해 설계됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 2</h4>
+                <p>In a Kirby-Bauer susceptibility test, the presence of a zone of inhibition around disks containing antimicrobial agents indicates ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> that the microbe does not grow in the presence of the agent</li><li><span>b.</span> that the microbe grows well in the presence of the agents</li><li><span>c.</span> the smallest amount of the agent that will inhibit the growth of the microbe</li><li><span>d.</span> the minimum amount of an agent that kills the microbe in question</li></ol>
+                <div class="answer-box"><strong>정답: a. that the microbe does not grow in the presence of the agent</strong><span>Zone of inhibition은 해당 antimicrobial agent가 확산된 영역에서 미생물이 자라지 못했다는 뜻입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 3</h4>
+                <p>The key to successful chemotherapy is ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> selective toxicity</li><li><span>b.</span> a diffusion test</li><li><span>c.</span> the minimum inhibitory concentration test</li><li><span>d.</span> the spectrum of action</li></ol>
+                <div class="answer-box"><strong>정답: a. selective toxicity</strong><span>Chemotherapy의 핵심은 host에는 해를 최소화하면서 pathogen에는 독성을 나타내는 selective toxicity입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 4</h4>
+                <p>Which was the first practical antimicrobial agent that was efficacious in treating a wide array of bacterial infections?</p>
+                <ol class="choices" type="a"><li><span>a.</span> penicillin</li><li><span>b.</span> sulfanilamide</li><li><span>c.</span> arsenic</li><li><span>d.</span> erythromycin</li></ol>
+                <div class="answer-box"><strong>정답: b. sulfanilamide</strong><span>Sulfanilamide는 sulfa drug로서 넓은 범위의 bacterial infection 치료에 실용적으로 쓰인 초기 항미생물제입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 5</h4>
+                <p>Cross resistance is ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> the deactivation of an antimicrobial agent by a bacterial enzyme</li><li><span>b.</span> alteration of the resistant cells so that an antimicrobial agent cannot attach</li><li><span>c.</span> the mutation of genes that affect the cytoplasmic membrane channels so that antimicrobial agents cannot cross into the cell’s interior</li><li><span>d.</span> resistance to one antimicrobial agent because of its similarity to another antimicrobial agent</li></ol>
+                <div class="answer-box"><strong>정답: d. resistance to one antimicrobial agent because of its similarity to another antimicrobial agent</strong><span>Cross resistance는 한 약물에 대한 내성이 구조나 작용이 비슷한 다른 약물에도 내성으로 나타나는 현상입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 6</h4>
+                <p>Multiple-drug-resistant microbes ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> are resistant to all antimicrobial agents</li><li><span>b.</span> respond to new antimicrobials by developing resistance</li><li><span>c.</span> frequently develop in hospitals</li><li><span>d.</span> all of the above</li></ol>
+                <div class="answer-box"><strong>정답: c. frequently develop in hospitals</strong><span>Multiple-drug-resistant microbes는 병원처럼 antimicrobial selection pressure가 큰 환경에서 자주 발생합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 7</h4>
+                <p>The difference between naturally occurring antimicrobials and semisynthetic antimicrobials is that the latter are ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> more effective</li><li><span>b.</span> longer lasting</li><li><span>c.</span> easier to administer</li><li><span>d.</span> all of the above</li></ol>
+                <div class="answer-box"><strong>정답: d. all of the above</strong><span>Semisynthetic antimicrobials는 자연 항생제를 화학적으로 변형해 효능, 지속성, 투여 편의성을 개선한 것입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 8</h4>
+                <p>Drugs that act against protein synthesis include ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> beta-lactams</li><li><span>b.</span> trimethoprim</li><li><span>c.</span> polymyxin</li><li><span>d.</span> aminoglycosides</li></ol>
+                <div class="answer-box"><strong>정답: d. aminoglycosides</strong><span>Aminoglycosides는 70S ribosome에 작용해 bacterial protein synthesis를 방해합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 9</h4>
+                <p>Beta-lactams include all the following except ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> penicillin</li><li><span>b.</span> cephalosporins</li><li><span>c.</span> carbapenem</li><li><span>d.</span> tetracycline</li></ol>
+                <div class="answer-box"><strong>정답: d. tetracycline</strong><span>Tetracycline은 protein synthesis inhibitor이며 beta-lactam ring을 가진 약물이 아닙니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 10</h4>
+                <p>How does the antibacterial drug Gramicidin function?</p>
+                <ol class="choices" type="a"><li><span>a.</span> disrupts the cytoplasmic membrane of the targeted cell</li><li><span>b.</span> inhibits some of the metabolic pathways of the targeted cell</li><li><span>c.</span> inhibits nucleic acid synthesis in the targeted cell</li><li><span>d.</span> all of the above</li><li><span>e.</span> none of the above</li></ol>
+                <div class="answer-box"><strong>정답: a. disrupts the cytoplasmic membrane of the targeted cell</strong><span>Gramicidin은 cytoplasmic membrane에 channel을 형성해 ion gradient와 막 기능을 무너뜨립니다.</span></div>
+              </article>
+          </div>
+        </details>
+        <!-- review-questions-end ch10 -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch11" data-chapter="11">
+      <div class="chapter-head">
+        <div>
+          <h2>Ch 11. Prokaryotic Organisms</h2>
+          <p>형태, 배열, 생식, endospore, Archaea, Bacteria survey를 하나로 묶습니다. 이 챕터의 핵심은 분류와 질병 연결입니다.</p>
+        </div>
+        <span class="badge">Taxonomy</span>
+      </div>
+      <div class="content">
+        <details open>
+          <summary>1. General Characteristics: Shape</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Shape</th>
+                  <th>의미</th>
+                  <th>기억 포인트</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Coccus</td><td>구형 세포.</td><td>Diplococcus, streptococcus, staphylococcus 같은 배열과 자주 함께 나옵니다.</td></tr>
+                <tr><td>Coccobacillus</td><td>구균과 간균의 중간처럼 짧은 막대형.</td><td>형태가 애매할 수 있으므로 staining과 배열, 분자분류를 함께 봅니다.</td></tr>
+                <tr><td>Bacillus</td><td>막대형 세포.</td><td>Bacillus속과 형태명 bacillus를 구분합니다.</td></tr>
+                <tr><td>Vibrio</td><td>굽은 막대 또는 쉼표형.</td><td>운동성과 함께 기억하기 쉽습니다.</td></tr>
+                <tr><td>Spirillum</td><td>비교적 단단한 나선형.</td><td>Spirochete와 구분합니다.</td></tr>
+                <tr><td>Spirochete</td><td>유연한 나선형 세균.</td><td>Treponema, Borrelia처럼 질병과 연결됩니다.</td></tr>
+                <tr><td>Pleomorphic</td><td>형태가 일정하지 않음.</td><td>Mycoplasma, Corynebacterium과 연결합니다.</td></tr>
+                <tr><td>Star</td><td>별 모양 형태.</td><td>특이 형태는 형태만으로 분류를 끝내지 않고 rRNA/생리 특성과 함께 봅니다.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details open>
+          <summary>2. Endospore</summary>
+          <ul>
+            <li><strong>Produced by</strong>: Gram-positive bacteria인 <strong>Bacillus</strong>와 <strong>Clostridium</strong>이 대표적입니다.</li>
+            <li>각 vegetative cell은 하나의 endospore로 변하고, 각 endospore는 조건이 좋아지면 하나의 vegetative cell로 germination합니다.</li>
+            <li>Endospore는 번식 구조가 아니라 불리한 환경에서 살아남기 위한 <strong>defensive survival strategy</strong>입니다.</li>
+            <li>열, 건조, 화학제에 강해 food processors, health care professionals, governments에게 중요한 관리 대상입니다.</li>
+            <li>Ch 9의 autoclave, sporicide, 멸균 검증과 직접 연결됩니다.</li>
+          </ul>
+        </details>
+
+        <details open>
+          <summary>3. Reproduction of Prokaryotic Cells</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>방법</th>
+                  <th>상세 내용</th>
+                  <th>대표 연결</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Binary fission</td><td>DNA 복제, 세포 신장, septum 형성, 딸세포 분리로 이어지는 가장 흔한 무성생식입니다.</td><td>원핵생물 기본 생식.</td></tr>
+                <tr><td>Snapping division</td><td>세포벽의 오래된 바깥층이 한쪽에서 hinge처럼 남아 세포가 꺾이듯 분열합니다.</td><td>Corynebacterium diphtheriae, V-shape, palisade.</td></tr>
+                <tr><td>Reproductive spores</td><td>번식과 분산을 위한 포자입니다.</td><td>Actinomycetes의 spores. Endospore와 구분.</td></tr>
+                <tr><td>Budding</td><td>모세포의 작은 돌기에서 새 세포가 자랍니다.</td><td>일반 binary fission과 비교.</td></tr>
+                <tr><td>Fragmentation</td><td>Filament가 조각나 각각 새 개체로 자랍니다.</td><td>Actinomycetes.</td></tr>
+                <tr><td>Viviparity</td><td>죽은 모세포 안에서 live offspring이 나오는 특수 방식입니다.</td><td>Epulopiscium과 relatives.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details open>
+          <summary>4. Arrangements of Prokaryotic Cells</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>배열</th>
+                  <th>설명</th>
+                  <th>관찰 포인트</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Diplo-</td><td>두 개씩 붙음.</td><td>Diplococcus, diplobacillus.</td></tr>
+                <tr><td>Strepto-</td><td>사슬 모양.</td><td>Streptococcus, streptobacillus.</td></tr>
+                <tr><td>Tetrads</td><td>네 개가 한 묶음.</td><td>두 분열면 후 분리되지 않은 배열.</td></tr>
+                <tr><td>Sarcina</td><td>입방체 모양 묶음.</td><td>여러 분열면과 분리 지연.</td></tr>
+                <tr><td>Staphylo-</td><td>포도송이 모양 불규칙 배열.</td><td>Staphylococcus.</td></tr>
+                <tr><td>Palisade</td><td>울타리처럼 나란한 막대 배열.</td><td>Corynebacterium의 snapping division과 연결.</td></tr>
+                <tr><td>V-shape</td><td>V자 모양으로 꺾인 배열.</td><td>Snapping division의 결과.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="note">형태는 개별 세포의 모양이고, 배열은 분열 후 세포가 어떻게 붙어 남는지입니다. 시험에서 둘을 혼동하지 않는 것이 중요합니다.</div>
+        </details>
+
+        <details open>
+          <summary>5. Survey of Archaea</summary>
+          <h3>Common features</h3>
+          <ul>
+            <li>True peptidoglycan이 없습니다. 일부는 pseudopeptidoglycan 또는 S-layer를 가집니다.</li>
+            <li>Cell membrane lipids는 branched hydrocarbon chains와 ether linkage를 가집니다.</li>
+            <li>AUG codon은 methionine을 지정합니다.</li>
+            <li>두 주요 phyla는 <strong>Crenarchaeota</strong>와 <strong>Euryarchaeota</strong>입니다.</li>
+            <li>Binary fission, budding, fragmentation으로 생식합니다.</li>
+            <li>Cocci, bacilli, spirals, pleomorphic 형태가 가능합니다.</li>
+            <li>자료 기준으로 <strong>질병을 일으키는 것으로 알려져 있지 않습니다.</strong></li>
+          </ul>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>분류</th>
+                  <th>대표 균/군</th>
+                  <th>특징</th>
+                  <th>질병 연결</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>I. Extremophiles - Thermophiles</td>
+                  <td>Geogemma, Pyrodictium. 강의 연결 예시로 Thermus aquaticus의 Taq polymerase가 PCR과 연결됩니다.</td>
+                  <td>45도 아래에서는 DNA, RNA, 막, 단백질 기능이 제대로 작동하지 않을 수 있습니다. Hyperthermophile은 80도 이상을 요구합니다. 열안정성 효소는 recombinant DNA technology와 세제 첨가물 등에 응용됩니다.</td>
+                  <td>Archaea 자체는 자료 기준 질병 원인으로 제시되지 않았습니다.</td>
+                </tr>
+                <tr>
+                  <td>I. Extremophiles - Halophiles</td>
+                  <td>Halobacterium salinarium.</td>
+                  <td>매우 염분 높은 환경에 서식합니다. 9% 이상 NaCl이 세포벽/세포 구조 유지에 필요할 수 있습니다. 붉거나 주황색 pigment를 가져 햇빛 보호와 연결됩니다.</td>
+                  <td>자료 기준 질병 없음. 고염 환경 적응이 핵심입니다.</td>
+                </tr>
+                <tr>
+                  <td>II. Methanogens</td>
+                  <td>Methanogen 전체 군. 반추동물 위, 동물 대장, 늪, 호수/해양 퇴적층, 하수 처리 시설의 혐기 환경.</td>
+                  <td>Archaea 중 가장 큰 그룹으로 정리됩니다. CO2, H2, organic acids를 methane gas로 전환합니다. 하수 슬러지 소화, biogas, 환경 methane, greenhouse effect와 연결됩니다.</td>
+                  <td>자료 기준 질병 없음. 환경과 에너지 회수, 온실가스가 핵심입니다.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details open>
+          <summary>6. Survey of Bacteria: 5 Major Groups</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>번호</th>
+                  <th>큰 분류</th>
+                  <th>핵심 기준</th>
+                  <th>대표 예시</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>I</td><td>Deeply branching bacteria and phototrophic bacteria</td><td>초기 분기 세균, 빛 에너지 이용.</td><td>Aquifex, Deinococcus, cyanobacteria, green sulfur, purple sulfur.</td></tr>
+                <tr><td>II</td><td>Low G+C Gram-positive bacteria</td><td>G+C content below 50%, phylum Firmicutes 중심.</td><td>Clostridium, Mycoplasma, Bacillus, Listeria, Lactobacillus, Streptococcus, Enterococcus, Staphylococcus.</td></tr>
+                <tr><td>III</td><td>High G+C Gram-positive bacteria</td><td>G+C content above 50%, Actinobacteria 계열.</td><td>Corynebacterium, Mycobacterium, Actinomycetes, Actinomyces, Nocardia, Streptomyces.</td></tr>
+                <tr><td>IV</td><td>Gram-negative Proteobacteria</td><td>가장 크고 다양한 Gram-negative group, alpha/beta/gamma/delta/epsilon class.</td><td>Rhizobium, Neisseria, Legionella, Desulfovibrio, Campylobacter, Helicobacter.</td></tr>
+                <tr><td>V</td><td>Other Gram-negative bacteria</td><td>Proteobacteria가 아닌 주요 Gram-negative 세균군.</td><td>Chlamydia, Spirochetes, Treponema, Borrelia, Bacteroides, Cytophaga.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details open>
+          <summary>7. I. Deeply Branching and Phototrophic Bacteria</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>분류</th>
+                  <th>대표 균/군</th>
+                  <th>특징</th>
+                  <th>질병/의의</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Deeply branching bacteria</td><td>Aquifex</td><td>계통수 초기 분기와 연결됩니다. 초기 지구와 유사한 고온, 혐기, 강한 자외선 환경과 연관해 이해합니다. Autotrophic 성향.</td><td>자료 기준 병원성보다 진화/초기 지구 환경 이해가 핵심입니다.</td></tr>
+                <tr><td>Deeply branching bacteria</td><td>Deinococcus</td><td>Gram-negative와 비슷한 outer membrane을 가지지만 Gram-positive처럼 염색되는 특징이 자료에 제시됩니다.</td><td>질병보다 극한 저항성/분류 예시로 기억합니다.</td></tr>
+                <tr><td>Phototrophic bacteria</td><td>Cyanobacteria</td><td>Blue-green bacteria. 물을 전자공여체로 사용해 oxygenic photosynthesis를 하며 O2를 방출합니다. Heterocyst는 질소고정, akinete는 휴면/저항성 구조와 연결됩니다.</td><td>지구 대기 산소 증가, 수계 일차생산, bloom과 독소 문제가 핵심입니다. 일반 감염병보다는 수질/독소 위험으로 정리합니다.</td></tr>
+                <tr><td>Phototrophic bacteria</td><td>Green sulfur bacteria</td><td>H2S 같은 황 화합물을 이용하는 anoxygenic photosynthesis와 연결됩니다.</td><td>자료 기준 인체 질병보다 황 순환과 광합성 방식.</td></tr>
+                <tr><td>Phototrophic bacteria</td><td>Green nonsulfur bacteria</td><td>색소와 전자공여체 차이로 나뉘는 광합성 세균군 중 하나입니다.</td><td>질병 특정 없음.</td></tr>
+                <tr><td>Phototrophic bacteria</td><td>Purple sulfur bacteria</td><td>H2S를 산화해 sulfur deposit을 만들 수 있습니다. 호수, 습지, 해양의 sulfur-rich zone과 연결됩니다.</td><td>질병보다 phototrophy와 sulfur cycle.</td></tr>
+                <tr><td>Phototrophic bacteria</td><td>Purple nonsulfur bacteria</td><td>광합성 색소와 전자공여체 차이로 구분되는 그룹입니다.</td><td>질병 특정 없음.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details open>
+          <summary>8. II. Low G+C Gram-positive Bacteria</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>균/군</th>
+                  <th>분류/특징</th>
+                  <th>질병/연결</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Clostridium</td><td>Low G+C Gram-positive, obligate anaerobe, rod-shaped, endospore 형성, toxin 생산.</td><td>C. botulinum은 botulism과 botulinum toxin, Botox 응용. C. tetani는 tetanus와 DPT vaccine의 T. 내생포자는 멸균과 식품 안전 핵심.</td></tr>
+                <tr><td>Mycoplasma</td><td>Facultative 또는 obligate anaerobe, 세포벽 없음, 가장 작은 자유생활 세포, pleomorphic. Respiratory/urinary tract mucosa colonization.</td><td>Pneumonia, urinary tract infections. 세포벽이 없어 beta-lactam 표적이 없습니다.</td></tr>
+                <tr><td>Bacillus</td><td>Endospore-forming aerobes and facultative anaerobes, 토양에 흔함.</td><td>B. anthracis는 anthrax. B. cereus는 식중독. B. thuringiensis는 Bt toxin. 일부 species는 antibiotics 생산.</td></tr>
+                <tr><td>Listeria</td><td>Milk and meat products contamination, 냉장 상태에서도 증식, phagocytic WBC 내부 생존 가능.</td><td>Listeria monocytogenes는 식품매개 감염. 성인에서는 드물지만 임산부에서 placenta를 넘으면 fetus 사망 위험.</td></tr>
+                <tr><td>Lactobacillus</td><td>Human mouth, stomach, intestinal tract, vagina에 존재. 젖산 생성, 정상균총, 발효식품 생산.</td><td>질병은 드뭅니다. 병원체 성장을 억제하고 yogurt, cheese, fermented vegetables와 연결됩니다.</td></tr>
+                <tr><td>Streptococcus</td><td>사슬형 구균, 여러 strain이 multi-drug resistance 가능.</td><td>S. pyogenes는 인두염과 피부 감염, S. pneumoniae는 폐렴, S. mutans는 치아 biofilm과 충치. 자료는 numerous diseases로 정리합니다.</td></tr>
+                <tr><td>Enterococcus</td><td>장내 정상균총 가능, 병원 환경에서 중요.</td><td>요로감염, 심내막염, 병원감염, VRE와 연결.</td></tr>
+                <tr><td>Staphylococcus</td><td>인간의 흔한 거주균 중 하나. Toxins and enzymes contribute to disease.</td><td>S. aureus enterotoxin은 food intoxication. MRSA는 methicillin-resistant S. aureus로 Ch 10 내성과 연결됩니다.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details open>
+          <summary>9. III. High G+C Gram-positive Bacteria</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>균/군</th>
+                  <th>분류/특징</th>
+                  <th>질병/연결</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Corynebacterium diphtheriae</td><td>Pleomorphic aerobes/facultative anaerobes, metachromatic granules, snapping division과 palisade/V-shape 배열.</td><td>Diphtheria. Diphtheria toxin은 단백질 합성 방해와 인후부 위막 형성. DPT vaccine의 D.</td></tr>
+                <tr><td>Mycobacterium tuberculosis</td><td>Aerobic rods, 때때로 filament 형성. Mycolic acid-rich cell wall 때문에 slow growth와 acid-fast staining.</td><td>Tuberculosis. 지질성 세포벽은 건조/소독제 저항성, 치료 어려움과 연결됩니다.</td></tr>
+                <tr><td>Mycobacterium leprae</td><td>Mycobacterium 속, mycolic acid와 acid-fast 특성.</td><td>Leprosy.</td></tr>
+                <tr><td>Actinomycetes</td><td>곰팡이처럼 보이는 branching filaments를 형성하지만 세균입니다.</td><td>주로 immunocompromised patients에서 disease 가능. 토양 생태와 항생제 생산도 중요합니다.</td></tr>
+                <tr><td>Actinomyces</td><td>인간 oral cavity와 throat에 정상 존재 가능.</td><td>Opportunistic infection, actinomycosis.</td></tr>
+                <tr><td>Nocardia</td><td>Soil and water dwelling aerobes, 다양한 pollutants 분해 가능.</td><td>자료에서는 환경 기능이 강조됩니다. 면역저하자 감염 가능성을 함께 기억합니다.</td></tr>
+                <tr><td>Streptomyces</td><td>토양 nutrients recycling, actinomycete 대표.</td><td>중요 항생제 다수를 생산합니다. 자료 기준 특정 질병보다 산업/토양 기능.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details open>
+          <summary>10. IV. Gram-negative Proteobacteria</summary>
+          <h3>Proteobacteria 5 classes</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Class</th>
+                  <th>대표 균/군</th>
+                  <th>특징</th>
+                  <th>질병/연결</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Alphaproteobacteria</td><td>Azospirillum, Rhizobium, Nitrobacter, Rickettsia, Brucella, Ehrlichia, Acetobacter, Gluconobacter, Caulobacter, Agrobacterium.</td><td>낮은 nutrient에서도 성장 가능. 일부는 prostheca로 부착과 nutrient absorption. 질소고정, nitrification, 세포내 병원성, 식물 유전공학까지 다양합니다.</td><td>Brucella는 brucellosis, Ehrlichia는 ehrlichiosis, Rickettsia는 tick-borne infection. Agrobacterium은 plant gall과 Ti plasmid.</td></tr>
+                <tr><td>Betaproteobacteria</td><td>Neisseria, Bordetella, Thiobacillus, Zoogloea, Sphaerotilus.</td><td>수계/토양 환경과 병원성/환경 대사가 함께 등장합니다. Thiobacillus는 H2S를 sulfate로 산화해 sulfur recycling. Zoogloea는 sewage treatment floc 형성, Sphaerotilus floc은 폐수 흐름 방해.</td><td>Neisseria는 gonorrhea와 meningitis. Bordetella는 pertussis.</td></tr>
+                <tr><td>Gammaproteobacteria</td><td>Purple sulfur bacteria, Legionella, Coxiella, methane oxidizers, Enterobacteriaceae, Pseudomonas, Azotobacter, Azomonas.</td><td>가장 크고 다양한 class. 병원성, 광합성, methane oxidation, glycolytic facultative anaerobes, pseudomonads를 포함합니다.</td><td>Legionella는 Legionnaires' disease, 오염된 에어로졸 물방울 흡입과 폐렴. Coxiella는 Q fever. Enterobacteriaceae에는 E. coli, Salmonella, Shigella 같은 장내세균/병원균이 연결됩니다. Pseudomonas는 환경성과 기회감염 포인트.</td></tr>
+                <tr><td>Deltaproteobacteria</td><td>Desulfovibrio, Bdellovibrio, myxobacteria.</td><td>Desulfovibrio는 sulfur recycling과 iron pipe corrosion. Bdellovibrio는 다른 Gram-negative bacteria를 파괴. Myxobacteria는 집단 이동, fruiting body, myxospore-like cell 형성.</td><td>자료 기준 인체 병원체보다 생태 기능과 세균 포식성, 집단 행동이 핵심입니다.</td></tr>
+                <tr><td>Epsilonproteobacteria</td><td>Campylobacter, Helicobacter pylori.</td><td>굽은 막대형 병원성 세균이 중요합니다. H. pylori는 urease로 urea를 ammonia로 바꾸어 위산을 중화합니다.</td><td>Campylobacter는 blood poisoning, intestinal inflammation, 식중독/설사. H. pylori는 ulcers, 위염, 위궤양, 위암 위험. Warren과 Marshall의 2005 Nobel Prize 사례와 연결.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details open>
+          <summary>11. V. Other Gram-negative Bacteria</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>균/군</th>
+                  <th>특징</th>
+                  <th>질병/연결</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Chlamydias</td><td>세포 내 생활사를 가지는 Gram-negative 계열. 일반 배지 성장보다 숙주세포 의존성을 고려해야 합니다.</td><td>Chlamydia 감염은 neonatal blindness, pneumonia, sexually transmitted disease와 연결됩니다. C. trachomatis는 요도염, 자궁경부염, 골반염, 불임 위험.</td></tr>
+                <tr><td>Spirochetes</td><td>독특한 유연한 나선형 세균. 운동성이 특징입니다.</td><td>Treponema와 Borrelia를 질병과 함께 기억합니다.</td></tr>
+                <tr><td>Treponema pallidum</td><td>Spirochete 계열.</td><td>Syphilis.</td></tr>
+                <tr><td>Borrelia burgdorferi</td><td>Spirochete 계열, tick 매개 감염과 연결.</td><td>Lyme disease.</td></tr>
+                <tr><td>Bacteroidetes/Bacteroides</td><td>정상적으로 digestive tract에 많이 존재. 복잡한 polysaccharide 분해와 장내 microbiota 기능에 중요합니다.</td><td>정상 위치에서는 유익하지만 장벽 밖으로 벗어나면 opportunistic infection 가능.</td></tr>
+                <tr><td>Cytophaga</td><td>Bacteroids 계열로 자료에 등장.</td><td>자료 기준 특정 인체 질병보다는 환경/분해 기능 예시.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>Methanogen vs Methane oxidizer</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>구분</th>
+                  <th>Methanogen</th>
+                  <th>Methane oxidizer</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>분류</td><td>Archaea</td><td>주로 Gammaproteobacteria 등 bacteria</td></tr>
+                <tr><td>대사 방향</td><td>CO2/H2/organic acids -> CH4</td><td>CH4를 carbon/energy source로 사용</td></tr>
+                <tr><td>환경</td><td>혐기 환경, 반추동물, 퇴적층, 하수처리</td><td>Methane이 있는 환경</td></tr>
+                <tr><td>시험 포인트</td><td>methane 생성</td><td>methane 소비/산화</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <!-- review-questions-start ch11 -->
+        <details open class="review-questions">
+          <summary>교재 문제: 정답과 해설</summary>
+          <p class="muted">첨부한 Questions for Review를 챕터 마지막에 배치했습니다. 각 문항 바로 아래에 정답과 시험용 해설을 붙였습니다.</p>
+          <h3>Modified True/False</h3>
+          <div class="qa-list">
+              <article class="qa-item">
+                <h4>참/거짓 수정 1</h4>
+                <p>________ All prokaryotes reproduce sexually.</p>
+                <div class="answer-box"><strong>정답: False → asexually</strong><span>Prokaryotes는 일반적으로 binary fission 등 asexual reproduction으로 증식합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>참/거짓 수정 2</h4>
+                <p>________ A bacillus is a bacterium with a slightly curved rod shape.</p>
+                <div class="answer-box"><strong>정답: False → vibrio</strong><span>Bacillus는 곧은 rod이고, 약간 굽은 rod 모양은 vibrio입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>참/거짓 수정 3</h4>
+                <p>________ If you were to view staphylococci, you should expect to see clusters of cells.</p>
+                <div class="answer-box"><strong>정답: True</strong><span>Staphylo- 배열은 여러 방향 분열 후 포도송이 같은 cluster를 이룹니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>참/거짓 수정 4</h4>
+                <p>________ Chlamydias have peptidoglycan cell walls.</p>
+                <div class="answer-box"><strong>정답: False → lack typical peptidoglycan cell walls</strong><span>Chlamydia는 전형적인 peptidoglycan cell wall을 갖지 않는 obligate intracellular bacterium입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>참/거짓 수정 5</h4>
+                <p>________ Archaea are classified into phyla based primarily on tRNA sequences.</p>
+                <div class="answer-box"><strong>정답: False → rRNA sequences</strong><span>Archaea와 bacteria의 큰 분류는 주로 ribosomal RNA sequence 비교에 근거합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>참/거짓 수정 6</h4>
+                <p>________ Halophiles inhabit extremely saline habitats such as the Great Salt Lake.</p>
+                <div class="answer-box"><strong>정답: True</strong><span>Halophile은 Great Salt Lake처럼 염 농도가 높은 환경에서 잘 자랍니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>참/거짓 수정 7</h4>
+                <p>________ Pigments located in thylakoids in phototrophic bacteria trap light energy for metabolic processes.</p>
+                <div class="answer-box"><strong>정답: True</strong><span>Phototrophic bacteria의 pigment는 막 구조에 위치해 빛 에너지를 대사에 사용합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>참/거짓 수정 8</h4>
+                <p>________ Most cyanobacteria form heterocysts in which nitrogen fixation occurs.</p>
+                <div class="answer-box"><strong>정답: False → some cyanobacteria</strong><span>Nitrogen fixation용 heterocyst는 cyanobacteria 전체가 아니라 일부 filamentous cyanobacteria에서 형성됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>참/거짓 수정 9</h4>
+                <p>________ A giant bacterium that is large enough to be seen without a microscope is Selenomonas.</p>
+                <div class="answer-box"><strong>정답: False → Epulopiscium</strong><span>현미경 없이 보일 정도로 큰 giant bacterium의 대표 예는 Epulopiscium입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>참/거짓 수정 10</h4>
+                <p>________ When environmental nutrients are depleted, myxobacteria aggregate in mounds to form fruiting bodies.</p>
+                <div class="answer-box"><strong>정답: True</strong><span>Myxobacteria는 영양 고갈 시 aggregation하여 fruiting body와 myxospore 형성을 유도합니다.</span></div>
+              </article>
+          </div>
+          <h3>Matching</h3>
+            <div class="table-wrap matching-options">
+              <table>
+                <thead><tr><th>선택지</th><th>용어/정의</th></tr></thead>
+                <tbody><tr><td>A</td><td>wood damage</td></tr><tr><td>B</td><td>dental biofilm (plaque)</td></tr><tr><td>C</td><td>gangrene</td></tr><tr><td>D</td><td>botox</td></tr><tr><td>E</td><td>anthrax</td></tr><tr><td>F</td><td>lymphogranuloma venereum</td></tr><tr><td>G</td><td>leprosy</td></tr><tr><td>H</td><td>tetracycline</td></tr><tr><td>I</td><td>vinegar</td></tr><tr><td>J</td><td>yogurt</td></tr><tr><td>K</td><td>impetigo</td></tr><tr><td>L</td><td>bacitracin</td></tr><tr><td>M</td><td>iron pipe corrosion</td></tr><tr><td>N</td><td>pertussis</td></tr><tr><td>O</td><td>nitrogen fixation</td></tr><tr><td>P</td><td>floc formation</td></tr><tr><td>Q</td><td>diphtheria</td></tr></tbody>
+              </table>
+            </div>
+          <div class="qa-list">
+              <article class="qa-item">
+                <h4>매칭 1</h4>
+                <p>Bacillus anthracis</p>
+                <div class="answer-box"><strong>정답: E. anthrax</strong><span>Bacillus anthracis는 anthrax의 원인균입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 2</h4>
+                <p>Selenomonas</p>
+                <div class="answer-box"><strong>정답: B. dental biofilm (plaque)</strong><span>Selenomonas는 구강 환경과 dental plaque biofilm과 연결해 외우면 됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 3</h4>
+                <p>Clostridium perfringens</p>
+                <div class="answer-box"><strong>정답: C. gangrene</strong><span>Clostridium perfringens는 gas gangrene의 대표 원인균입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 4</h4>
+                <p>Clostridium botulinum</p>
+                <div class="answer-box"><strong>정답: D. botox</strong><span>Clostridium botulinum은 botulinum toxin을 만들며 botox와 botulism으로 연결됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 5</h4>
+                <p>Bacillus licheniformis</p>
+                <div class="answer-box"><strong>정답: L. bacitracin</strong><span>Bacillus licheniformis는 bacitracin 생산과 연결됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 6</h4>
+                <p>Streptococcus</p>
+                <div class="answer-box"><strong>정답: K. impetigo</strong><span>Streptococcus는 Streptococcus pyogenes 등 피부 감염과 impetigo의 원인으로 연결됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 7</h4>
+                <p>Streptomyces</p>
+                <div class="answer-box"><strong>정답: H. tetracycline</strong><span>Streptomyces는 tetracycline을 포함한 여러 항생제 생산균으로 유명합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 8</h4>
+                <p>Corynebacterium</p>
+                <div class="answer-box"><strong>정답: Q. diphtheria</strong><span>Corynebacterium diphtheriae는 diphtheria의 원인균입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 9</h4>
+                <p>Gluconobacter</p>
+                <div class="answer-box"><strong>정답: I. vinegar</strong><span>Gluconobacter는 alcohol을 acetic acid로 산화하여 vinegar 생산과 연결됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 10</h4>
+                <p>Bordetella</p>
+                <div class="answer-box"><strong>정답: N. pertussis</strong><span>Bordetella pertussis는 pertussis, 즉 백일해의 원인균입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 11</h4>
+                <p>Zoogloea</p>
+                <div class="answer-box"><strong>정답: P. floc formation</strong><span>Zoogloea는 wastewater treatment에서 floc formation과 연결됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 12</h4>
+                <p>Rhizobium</p>
+                <div class="answer-box"><strong>정답: O. nitrogen fixation</strong><span>Rhizobium은 legume root nodule에서 nitrogen fixation을 수행합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 13</h4>
+                <p>Desulfovibrio</p>
+                <div class="answer-box"><strong>정답: M. iron pipe corrosion</strong><span>Desulfovibrio는 sulfate reduction과 금속 부식, iron pipe corrosion과 연결됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 14</h4>
+                <p>Chlamydia</p>
+                <div class="answer-box"><strong>정답: F. lymphogranuloma venereum</strong><span>Chlamydia trachomatis 일부 혈청형은 lymphogranuloma venereum을 일으킵니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 15</h4>
+                <p>Cytophaga</p>
+                <div class="answer-box"><strong>정답: A. wood damage</strong><span>Cytophaga는 cellulose 등 고분자 분해와 환경적 wood damage와 연결됩니다.</span></div>
+              </article>
+          </div>
+          <h3>Multiple Choice</h3>
+          <div class="qa-list">
+              <article class="qa-item">
+                <h4>객관식 1</h4>
+                <p>Which of the following organisms produce endospores?</p>
+                <ol class="choices" type="a"><li><span>a.</span> bacillus</li><li><span>b.</span> clostridium</li><li><span>c.</span> Gram positive bacteria</li><li><span>d.</span> all of the above</li></ol>
+                <div class="answer-box"><strong>정답: d. all of the above</strong><span>Endospore 형성균의 대표는 Bacillus와 Clostridium이며 모두 Gram-positive rod 계열입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 2</h4>
+                <p>The thick-walled reproductive spores produced in the middle of cyanobacterial filaments are called ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> akinetes</li><li><span>b.</span> terminal endospores</li><li><span>c.</span> metachromatic granules</li><li><span>d.</span> heterocysts</li></ol>
+                <div class="answer-box"><strong>정답: a. akinetes</strong><span>Cyanobacteria filaments에서 두꺼운 휴면성 reproductive spore는 akinete입니다. Heterocyst는 nitrogen fixation 세포입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 3</h4>
+                <p>Snapping division occurs in which of the following?</p>
+                <ol class="choices" type="a"><li><span>a.</span> planctomyces</li><li><span>b.</span> some Gram-positive bacilli</li><li><span>c.</span> actinomycetes</li><li><span>d.</span> none of the above</li></ol>
+                <div class="answer-box"><strong>정답: b. some Gram-positive bacilli</strong><span>Snapping division은 Corynebacterium 같은 일부 Gram-positive bacilli의 특징적 분열 방식입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 4</h4>
+                <p>Endospores ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> can remain alive for decades</li><li><span>b.</span> can remain alive in boiling water</li><li><span>c.</span> exist in a state of suspended animation</li><li><span>d.</span> all of the above</li></ol>
+                <div class="answer-box"><strong>정답: d. all of the above</strong><span>Endospore는 수십 년 생존, 끓는 물 저항, suspended animation 상태라는 특징을 모두 가질 수 있습니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 5</h4>
+                <p>How is Halobacterium salinarium distinctive?</p>
+                <ol class="choices" type="a"><li><span>a.</span> It is absolutely dependent on high salt concentrations to maintain its cell wall.</li><li><span>b.</span> It is found in terrestrial volcanic habitats.</li><li><span>c.</span> It photosynthesizes without chlorophyll.</li><li><span>d.</span> It can survive 5 million rad of radiation.</li></ol>
+                <div class="answer-box"><strong>정답: a. It is absolutely dependent on high salt concentrations to maintain its cell wall.</strong><span>Halobacterium salinarium은 높은 염 농도가 세포벽/세포 구조 안정성에 필수적인 extreme halophile입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 6</h4>
+                <p>Photosynthetic bacteria that also fix nitrogen are ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> mycoplasmas</li><li><span>b.</span> spirilla</li><li><span>c.</span> bacteroids</li><li><span>d.</span> cyanobacteria</li></ol>
+                <div class="answer-box"><strong>정답: d. cyanobacteria</strong><span>Cyanobacteria는 oxygenic photosynthesis를 하며 일부는 heterocyst에서 nitrogen fixation을 수행합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 7</h4>
+                <p>Which of the following features distinguish archaea from bacteria?</p>
+                <ol class="choices" type="a"><li><span>a.</span> Archaea lack true peptidoglycan in their cell walls.</li><li><span>b.</span> The initial amino acid in the polypeptide chains of archaea coded by the AUG start codon is methionine.</li><li><span>c.</span> The cytoplasmic membrane lipids of archaea have branched or ring-form hydrocarbon chains.</li><li><span>d.</span> All of the above</li></ol>
+                <div class="answer-box"><strong>정답: d. All of the above</strong><span>Archaea는 true peptidoglycan이 없고, AUG가 methionine을 지정하며, ether-linked branched/ring lipid를 갖는 등 bacteria와 구분됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 8</h4>
+                <p>Flexible spiral-shaped prokaryotes are ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> spirilla</li><li><span>b.</span> spirochetes</li><li><span>c.</span> vibrios</li><li><span>d.</span> rickettsias</li></ol>
+                <div class="answer-box"><strong>정답: b. spirochetes</strong><span>Spirochete는 유연한 spiral/helical prokaryote로 axial filament를 이용해 움직입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 9</h4>
+                <p>Bacteria that convert nitrogen gas into ammonia are ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> nitrifying bacteria</li><li><span>b.</span> nitrogenous</li><li><span>c.</span> nitrogen fixers</li><li><span>d.</span> nitrification bacteria</li></ol>
+                <div class="answer-box"><strong>정답: c. nitrogen fixers</strong><span>Nitrogen fixer는 atmospheric N2를 ammonia 형태로 환원하여 생물권에 이용 가능하게 만듭니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 10</h4>
+                <p>Which of the following is a low G+C Gram-positive bacterium?</p>
+                <ol class="choices" type="a"><li><span>a.</span> Corynebacterium</li><li><span>b.</span> Mycoplasma</li><li><span>c.</span> Actinomyces</li><li><span>d.</span> Alphaproteobacteria</li></ol>
+                <div class="answer-box"><strong>정답: b. Mycoplasma</strong><span>Mycoplasma는 low G+C Gram-positive group에 속하지만 cell wall이 없는 독특한 세균입니다.</span></div>
+              </article>
+          </div>
+          <h3>Short Answer</h3>
+          <div class="qa-list">
+              <article class="qa-item">
+                <h4>단답형 1</h4>
+                <p>Whereas the first edition of Bergey’s Manual relied on morphological and biochemical characters to classify microbes, the new edition focuses on ribosomal RNA sequences. List several other criteria for grouping and classifying bacteria.</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>분류 기준에는 morphology, Gram reaction, cell wall structure, G+C content, oxygen requirement, motility, endospore 형성 여부, metabolic/nutritional pattern, biochemical test 결과, pigment, pathogenicity, ecological niche 등이 있습니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 2</h4>
+                <p>What are extremophiles? Describe two kinds and give examples.</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Extremophile은 극한 환경을 필요로 하거나 그 환경에서 가장 잘 자라는 미생물입니다. Thermophile/hyperthermophile은 고온 환경에서 자라며 Thermus, Pyrodictium 같은 예가 있고, halophile/extreme halophile은 고염 환경에서 자라며 Halobacterium이 대표 예입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 3</h4>
+                <p>What are endospores? How and why are they produced?</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Endospore는 Bacillus와 Clostridium 같은 일부 Gram-positive bacilli가 만드는 휴면 생존 구조입니다. 영양 고갈이나 건조, 열 같은 불리한 조건에서 한 vegetative cell 안에 하나가 만들어지고, 환경이 좋아지면 germination으로 vegetative cell이 됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 4</h4>
+                <p>Name three groups of low G+C Gram-positive bacteria.</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Low G+C Gram-positive bacteria에는 Clostridia, Bacilli/Lactobacilli/cocci, Mycoplasmas가 포함됩니다. 예로 Clostridium, Bacillus, Streptococcus, Staphylococcus, Lactobacillus, Mycoplasma를 연결할 수 있습니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 5</h4>
+                <p>Compare and contrast bacterial and archaeal cells.</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Bacteria와 Archaea는 모두 핵막이 없는 prokaryotic cell이고 보통 binary fission으로 증식합니다. 그러나 bacteria는 peptidoglycan cell wall과 ester-linked fatty acid membrane이 일반적이고, archaea는 true peptidoglycan이 없으며 ether-linked branched lipid와 eukaryote와 유사한 정보 처리 특징을 갖습니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 6</h4>
+                <p>A student was memorizing the arrangements of bacteria and noticed that there are more arrangements for cocci than for bacilli. Why might this be so?</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Coccus는 여러 평면으로 분열할 수 있고 분열 후 붙어 남는 방향에 따라 diplo, strepto, tetrad, sarcina, staphylo 배열이 생깁니다. Bacillus는 주로 길이 방향으로 분열해 배열 종류가 상대적으로 적고 diplo, strepto, palisade, V-shape 정도가 중요합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 7</h4>
+                <p>How is Agrobacterium used in recombinant DNA technology?</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Agrobacterium tumefaciens의 Ti plasmid는 식물 세포에 DNA를 전달할 수 있습니다. 이 특성을 이용해 원하는 유전자를 식물 genome에 도입하는 plant recombinant DNA technology와 형질전환 식물 제작에 사용합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 8</h4>
+                <p>What are thermophiles and halophiles? How do they compare with each other?</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Thermophile은 고온을 요구하거나 선호하는 extremophile이고, halophile은 높은 염 농도를 요구하거나 선호하는 extremophile입니다. 둘 다 일반 생물이 견디기 어려운 조건에 적응했지만, thermophile은 단백질과 막의 열 안정성, halophile은 삼투압과 염 안정성이 핵심입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 9</h4>
+                <p>Explain why organisms formerly known as blue-green algae are now called cyanobacteria.</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Blue-green algae는 핵막과 chloroplast가 없는 prokaryote이며 bacterial rRNA 계통에 속합니다. 따라서 eukaryotic algae가 아니라 photosynthetic bacteria인 cyanobacteria로 분류합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 10</h4>
+                <p>How do chlamydias, spirochetes, and bacteroids compare with each other?</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Chlamydias는 obligate intracellular bacteria이고 전형적 peptidoglycan wall이 없습니다. Spirochetes는 유연한 helical 형태와 axial filament 운동성이 특징입니다. Bacteroids/Bacteroidetes는 주로 혐기성으로 장관 등에서 다당류 분해와 기회감염을 연결합니다.</span></div>
+              </article>
+          </div>
+        </details>
+        <!-- review-questions-end ch11 -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch12" data-chapter="12">
+      <div class="chapter-head">
+        <div>
+          <h2>Ch 12. General Characteristics of Eukaryotic Organisms</h2>
+          <p>유핵 미생물의 범위, 생식 방식, protozoa의 구조와 분류를 중심으로 정리합니다.</p>
+        </div>
+        <span class="badge">Eukaryotes</span>
+      </div>
+      <div class="content">
+        <details open>
+          <summary>1. 유핵 미생물의 범위</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>범주</th>
+                  <th>핵심 특징</th>
+                  <th>시험 연결</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Protozoa</td><td>Eukaryotic, unicellular, lack cell wall. Cilia, flagella, pseudopods로 움직이며 apicomplexans는 예외적 운동기관 특징을 보입니다.</td><td>Plasmodium, trophozoite, cyst, schizogony, conjugation.</td></tr>
+                <tr><td>Fungi</td><td>유핵 미생물이며 yeast와 mold 형태로 이해합니다. 세포벽과 포자 형성, 성/무성 생식이 중요합니다.</td><td>Yeast는 food/beverage production, fungi는 penicillin 같은 antibiotic 생산과 연결.</td></tr>
+                <tr><td>Algae</td><td>많은 algae는 광합성 유핵 미생물이며 수계 plankton과 일차생산에 중요합니다.</td><td>성/무성 생식 모두 가능. Dinoflagellates와 euglenoids는 photoautotrophic protozoa/유사 범주와 연결됩니다.</td></tr>
+                <tr><td>Water molds</td><td>Fungus-like eukaryotic microorganisms로 습윤/수계 환경과 연결됩니다.</td><td>자료에서는 범주 인식이 핵심입니다. Fungi와 혼동하지 않습니다.</td></tr>
+                <tr><td>Slime molds</td><td>Fungus-like organisms로 생활사와 형태 변화가 중요합니다.</td><td>자료에서는 eukaryotic microorganisms 범주로 포함됨을 기억합니다.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details open>
+          <summary>2. Reproduction of Eukaryotes</summary>
+          <ul>
+            <li>유핵생물 DNA는 nucleus 안에 chromosomes로 포장되어 있어 원핵생물보다 생식이 복잡합니다.</li>
+            <li>Asexual reproduction은 빠른 증식에 유리하고, sexual reproduction은 genetic diversity를 만듭니다.</li>
+            <li>Many reproduce sexually by forming gametes and zygotes.</li>
+            <li>Algae, fungi, some protozoa는 sexual/asexual reproduction을 모두 수행할 수 있습니다.</li>
+          </ul>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>과정</th>
+                  <th>정의</th>
+                  <th>핵심</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Mitosis</td><td>염색체 수를 유지하며 핵분열합니다.</td><td>Growth, asexual reproduction, 동일 genome 유지.</td></tr>
+                <tr><td>Meiosis</td><td>염색체 수를 줄이고 recombination을 통해 다양성을 만듭니다.</td><td>Gamete formation, genetic diversity.</td></tr>
+                <tr><td>Cytokinesis</td><td>Cytoplasmic division입니다.</td><td>보통 mitosis telophase와 동시에 일어납니다.</td></tr>
+                <tr><td>Coenocyte</td><td>Cytokinesis가 지연되거나 없을 때 생기는 multinucleated cell.</td><td>일부 algae와 fungi에서 중요합니다.</td></tr>
+                <tr><td>Schizogony</td><td>여러 번 mitosis 후 cytokinesis로 많은 merozoites를 만드는 방식.</td><td>Plasmodium 증식과 malaria 증상 연결.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>Plasmodium life cycle 핵심</h3>
+          <ul>
+            <li>모기가 사람을 물면 Plasmodium sporozoite가 blood stream으로 들어옵니다.</li>
+            <li>Sporozoite는 liver로 이동해 hepatocyte에 감염합니다.</li>
+            <li>Liver cell에서 schizogony로 merozoites가 대량 생성됩니다.</li>
+            <li>Merozoites는 RBC에 감염하고, RBC 안에서도 schizogony를 반복합니다.</li>
+            <li>RBC가 터지며 증상이 나타나고 일부는 gametocyte가 되어 mosquito 단계의 sexual cycle로 이어집니다.</li>
+          </ul>
+        </details>
+
+        <details open>
+          <summary>3. Protozoa 상세 정리</summary>
+          <h3>공통 특징</h3>
+          <ul>
+            <li>Eukaryotic, unicellular, lack cell wall.</li>
+            <li>Moist environments가 필요하며 pond, stream, lake, ocean, moist soil, beach sand, decaying organic matter에서 발견됩니다.</li>
+            <li>대부분 harmless이고 very few are pathogens입니다.</li>
+            <li>Motile feeding stage는 <strong>trophozoite</strong>, resting stage는 <strong>cyst</strong>입니다.</li>
+            <li>일부는 macronucleus와 micronucleus를 모두 가집니다. Macronucleus는 일상 기능, micronucleus는 sexual reproduction과 genetic exchange에 중요합니다.</li>
+            <li>Contractile vacuole은 hypotonic environment에서 물을 배출해 osmotic lysis를 막습니다.</li>
+          </ul>
+          <h3>Nutrition and reproduction</h3>
+          <ul>
+            <li>Most protozoa are chemoheterotrophic.</li>
+            <li>Phagocytosis로 bacteria, decaying organic matter, other protozoa, host tissue를 먹습니다.</li>
+            <li>일부는 주변 물에서 nutrients를 흡수합니다.</li>
+            <li>Dinoflagellates and euglenoids are photoautotrophic.</li>
+            <li>대부분 binary fission 또는 schizogony로 asexual reproduction을 합니다.</li>
+            <li>일부는 gametocytes를 만들고 fusion으로 diploid zygote를 형성합니다.</li>
+            <li>Ciliates는 conjugation으로 micronucleus 교환, fusion, 새 macro/micronucleus 형성을 거쳐 genetic exchange를 수행합니다.</li>
+          </ul>
+          <h3>Protozoa 6개 그룹</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>그룹</th>
+                  <th>자료상 연결</th>
+                  <th>시험 포인트</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Parabasala</td><td>교재 기준 protozoa 6개 그룹 중 하나.</td><td>분류명 자체와 18S rRNA 기반 분류 변화를 기억합니다.</td></tr>
+                <tr><td>Diplomonadida</td><td>교재 기준 protozoa 6개 그룹 중 하나.</td><td>현대 분류가 계속 수정된다는 점과 함께 암기.</td></tr>
+                <tr><td>Euglenozoa</td><td>Euglenoids는 photoautotrophic 예시로 연결됩니다.</td><td>영양 방식에서 photoautotrophy와 연결.</td></tr>
+                <tr><td>Alveolates</td><td>Apicomplexans와 Plasmodium이 연결됩니다. Dinoflagellates도 photoautotrophy와 연결됩니다.</td><td>Plasmodium, schizogony, malaria.</td></tr>
+                <tr><td>Rhizaria</td><td>교재 기준 protozoa 6개 그룹 중 하나.</td><td>분류명과 18S rRNA 기준.</td></tr>
+                <tr><td>Amoebozoa</td><td>Amoeba류와 pseudopod/amoeboid 형태를 연결해 기억합니다.</td><td>운동 방식과 형태 연결.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <!-- review-questions-start ch12 -->
+        <details open class="review-questions">
+          <summary>교재 문제: 정답과 해설</summary>
+          <p class="muted">첨부한 Questions for Review를 챕터 마지막에 배치했습니다. 각 문항 바로 아래에 정답과 시험용 해설을 붙였습니다.</p>
+          <h3>Multiple Choice</h3>
+          <div class="qa-list">
+              <article class="qa-item">
+                <h4>객관식 1</h4>
+                <p>Haploid nuclei ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> contain one set of chromosomes</li><li><span>b.</span> contain two sets of chromosomes</li><li><span>c.</span> contain half a set of chromosomes</li><li><span>d.</span> are found in the cytosol of eukaryotic organisms</li></ol>
+                <div class="answer-box"><strong>정답: a. contain one set of chromosomes</strong><span>Haploid nucleus는 chromosome set을 하나만 가집니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 2</h4>
+                <p>Which of the following sequences reflects the correct order of events in mitosis?</p>
+                <ol class="choices" type="a"><li><span>a.</span> telophase, anaphase, metaphase, prophase</li><li><span>b.</span> prophase, anaphase, metaphase, telophase</li><li><span>c.</span> telophase, prophase, metaphase, anaphase</li><li><span>d.</span> prophase, metaphase, anaphase, telophase</li></ol>
+                <div class="answer-box"><strong>정답: d. prophase, metaphase, anaphase, telophase</strong><span>Mitosis의 기본 순서는 prophase, metaphase, anaphase, telophase입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 3</h4>
+                <p>Which of the following statements accurately describes prophase?</p>
+                <ol class="choices" type="a"><li><span>a.</span> The cell appears to have a line of chromosomes across the midregion.</li><li><span>b.</span> The nuclear envelope becomes visible.</li><li><span>c.</span> The cell constructs microtubules to form a spindle.</li><li><span>d.</span> Chromatids separate and become known as chromosomes.</li></ol>
+                <div class="answer-box"><strong>정답: c. The cell constructs microtubules to form a spindle.</strong><span>Prophase에서는 chromosome이 응축되고 spindle을 이루는 microtubule이 형성됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 4</h4>
+                <p>Multiple nuclear divisions without cytoplasmic divisions result in cells called ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> mycoses</li><li><span>b.</span> coenocytes</li><li><span>c.</span> haustoria</li><li><span>d.</span> a pseudohypha</li></ol>
+                <div class="answer-box"><strong>정답: b. coenocytes</strong><span>핵분열은 반복되지만 cytokinesis가 일어나지 않으면 multinucleate coenocyte가 됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 5</h4>
+                <p>Tubular filaments with cross walls found in large fungi are ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> septate hyphae</li><li><span>b.</span> aseptate hyphae</li><li><span>c.</span> aseptate haustoria</li><li><span>d.</span> dimorphic mycelia</li></ol>
+                <div class="answer-box"><strong>정답: a. septate hyphae</strong><span>Cross wall, 즉 septum이 있는 fungal filament는 septate hypha입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 6</h4>
+                <p>The type of asexual fungal spore that forms within hyphae is called a ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> sporangiospore</li><li><span>b.</span> conidiospore</li><li><span>c.</span> blastospore</li><li><span>d.</span> chlamydospore</li></ol>
+                <div class="answer-box"><strong>정답: a. sporangiospore</strong><span>Sporangiospore는 sporangium이라는 구조 안에서 형성되는 asexual fungal spore입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 7</h4>
+                <p>A phycologist studies which of the following?</p>
+                <ol class="choices" type="a"><li><span>a.</span> classification of eukaryotes</li><li><span>b.</span> alternation of generations in algae</li><li><span>c.</span> rusts, smuts, and yeasts</li><li><span>d.</span> parasitic worms</li></ol>
+                <div class="answer-box"><strong>정답: b. alternation of generations in algae</strong><span>Phycologist는 algae를 연구하는 사람이며, 선택지 중 algae의 alternation of generations가 가장 직접적으로 연결됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 8</h4>
+                <p>The stemlike portion of a seaweed is called its ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> thallus</li><li><span>b.</span> holdfast</li><li><span>c.</span> stipe</li><li><span>d.</span> blade</li></ol>
+                <div class="answer-box"><strong>정답: c. stipe</strong><span>Seaweed에서 줄기처럼 보이는 부위는 stipe입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 9</h4>
+                <p>Carrageenan is found in the cell walls of which group of algae?</p>
+                <ol class="choices" type="a"><li><span>a.</span> red algae</li><li><span>b.</span> green algae</li><li><span>c.</span> dinoflagellates</li><li><span>d.</span> yellow-green algae</li></ol>
+                <div class="answer-box"><strong>정답: a. red algae</strong><span>Carrageenan은 red algae cell wall에서 얻는 다당류입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 10</h4>
+                <p>Chrysolaminarin is a storage product found in which group of microbes?</p>
+                <ol class="choices" type="a"><li><span>a.</span> dinoflagellates</li><li><span>b.</span> euglenids</li><li><span>c.</span> golden algae</li><li><span>d.</span> brown algae</li></ol>
+                <div class="answer-box"><strong>정답: c. golden algae</strong><span>Chrysolaminarin은 golden algae 계열의 저장 산물입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 11</h4>
+                <p>Which of the following features characterizes diatoms?</p>
+                <ol class="choices" type="a"><li><span>a.</span> laminarin and oils as food reserves</li><li><span>b.</span> protective plates of cellulose in their cells</li><li><span>c.</span> chlorophylls a and c and carotene</li><li><span>d.</span> paramylon as a food storage molecule</li></ol>
+                <div class="answer-box"><strong>정답: c. chlorophylls a and c and carotene</strong><span>Diatom은 chlorophyll a와 c, carotene 계열 색소를 가지며 silica frustule도 중요한 특징입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 12</h4>
+                <p>Most protozoa are ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> chemoheterotrophic</li><li><span>b.</span> phototrophic</li><li><span>c.</span> all of the above</li><li><span>d.</span> none of the above</li></ol>
+                <div class="answer-box"><strong>정답: a. chemoheterotrophic</strong><span>Most protozoa는 광합성이 아니라 organic nutrient를 섭취하는 chemoheterotroph입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 13</h4>
+                <p>The motile feeding stage of a protozoan is called ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> an apicomplexan</li><li><span>b.</span> a gametocyte</li><li><span>c.</span> a cyst</li><li><span>d.</span> a trophozoite</li></ol>
+                <div class="answer-box"><strong>정답: d. a trophozoite</strong><span>Trophozoite는 protozoan의 운동성 feeding stage입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 14</h4>
+                <p>Which of the following is common to mitosis and meiosis?</p>
+                <ol class="choices" type="a"><li><span>a.</span> spindle</li><li><span>b.</span> crossing over</li><li><span>c.</span> tetrad of chromatids</li><li><span>d.</span> cytokinesis</li></ol>
+                <div class="answer-box"><strong>정답: a. spindle</strong><span>Mitosis와 meiosis 모두 chromosome 이동을 위해 spindle을 사용합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 15</h4>
+                <p>________ are small, vertically flattened, wingless arthropods that are found across the world, though some species have geographically limited ranges. Most are found in association with wild rodents, bats, and birds.</p>
+                <ol class="choices" type="a"><li><span>a.</span> Lice</li><li><span>b.</span> Kissing bugs</li><li><span>c.</span> Flies</li><li><span>d.</span> Fleas</li></ol>
+                <div class="answer-box"><strong>정답: d. Fleas</strong><span>Fleas는 작고 wingless이며 야생 설치류, 박쥐, 조류와 연관되는 arthropod vector로 설명됩니다.</span></div>
+              </article>
+          </div>
+          <h3>Matching Set 1</h3>
+            <div class="table-wrap matching-options">
+              <table>
+                <thead><tr><th>선택지</th><th>용어/정의</th></tr></thead>
+                <tbody><tr><td>A</td><td>Cytoplasmic division</td></tr><tr><td>B</td><td>Diploid nuclei producing haploid nuclei</td></tr><tr><td>C</td><td>Results in genetic variation</td></tr><tr><td>D</td><td>Carry similar genes</td></tr><tr><td>E</td><td>Diploid nuclei producing diploid nuclei</td></tr></tbody>
+              </table>
+            </div>
+          <div class="qa-list">
+              <article class="qa-item">
+                <h4>매칭 Set 1 1</h4>
+                <p>Mitosis</p>
+                <div class="answer-box"><strong>정답: E. Diploid nuclei producing diploid nuclei</strong><span>Mitosis는 diploid nucleus가 같은 chromosome 수의 diploid nuclei를 만드는 핵분열입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 Set 1 2</h4>
+                <p>Meiosis</p>
+                <div class="answer-box"><strong>정답: B. Diploid nuclei producing haploid nuclei</strong><span>Meiosis는 diploid nucleus에서 haploid nuclei를 만드는 감수분열입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 Set 1 3</h4>
+                <p>Homologous chromosomes</p>
+                <div class="answer-box"><strong>정답: D. Carry similar genes</strong><span>Homologous chromosomes는 같은 유전자 위치를 가진 상동 염색체입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 Set 1 4</h4>
+                <p>Crossing over</p>
+                <div class="answer-box"><strong>정답: C. Results in genetic variation</strong><span>Crossing over는 homologous chromosome 사이 유전물질 교환으로 genetic variation을 만듭니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 Set 1 5</h4>
+                <p>Cytokinesis</p>
+                <div class="answer-box"><strong>정답: A. Cytoplasmic division</strong><span>Cytokinesis는 핵분열이 아니라 cytoplasm division입니다.</span></div>
+              </article>
+          </div>
+          <h3>Matching Set 2</h3>
+            <div class="table-wrap matching-options">
+              <table>
+                <thead><tr><th>선택지</th><th>용어/정의</th></tr></thead>
+                <tbody><tr><td>A</td><td>Fungal cell wall component</td></tr><tr><td>B</td><td>Fungus + alga or bacterium</td></tr><tr><td>C</td><td>Fungal filament</td></tr><tr><td>D</td><td>Fungal spore formed in a sac</td></tr><tr><td>E</td><td>Diploid fungal zygote with a thick wall</td></tr><tr><td>F</td><td>Fungal spore formed on club-shaped hypha</td></tr></tbody>
+              </table>
+            </div>
+          <div class="qa-list">
+              <article class="qa-item">
+                <h4>매칭 Set 2 1</h4>
+                <p>Chitin</p>
+                <div class="answer-box"><strong>정답: A. Fungal cell wall component</strong><span>Chitin은 fungal cell wall의 대표 구성 성분입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 Set 2 2</h4>
+                <p>Basidiospore</p>
+                <div class="answer-box"><strong>정답: F. Fungal spore formed on club-shaped hypha</strong><span>Basidiospore는 basidium, 즉 club-shaped hypha 위에서 형성됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 Set 2 3</h4>
+                <p>Zygosporangium</p>
+                <div class="answer-box"><strong>정답: E. Diploid fungal zygote with a thick wall</strong><span>Zygosporangium은 두꺼운 벽을 가진 diploid fungal zygote 구조입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 Set 2 4</h4>
+                <p>Hypha</p>
+                <div class="answer-box"><strong>정답: C. Fungal filament</strong><span>Hypha는 fungal filament입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 Set 2 5</h4>
+                <p>Ascospore</p>
+                <div class="answer-box"><strong>정답: D. Fungal spore formed in a sac</strong><span>Ascospore는 ascus라는 sac 안에서 형성되는 fungal spore입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 Set 2 6</h4>
+                <p>Lichen</p>
+                <div class="answer-box"><strong>정답: B. Fungus + alga or bacterium</strong><span>Lichen은 fungus와 alga 또는 cyanobacterium의 공생체입니다.</span></div>
+              </article>
+          </div>
+          <h3>Matching Set 3</h3>
+            <div class="table-wrap matching-options">
+              <table>
+                <thead><tr><th>선택지</th><th>용어/정의</th></tr></thead>
+                <tbody><tr><td>A</td><td>Foraminifera</td></tr><tr><td>B</td><td>Yellow-green algae</td></tr><tr><td>C</td><td>Green algae</td></tr><tr><td>D</td><td>Brown algae</td></tr><tr><td>E</td><td>Red algae</td></tr></tbody>
+              </table>
+            </div>
+          <div class="qa-list">
+              <article class="qa-item">
+                <h4>매칭 Set 3 1</h4>
+                <p>Chlorophyta</p>
+                <div class="answer-box"><strong>정답: C. Green algae</strong><span>Chlorophyta는 green algae입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 Set 3 2</h4>
+                <p>Rhodophyta</p>
+                <div class="answer-box"><strong>정답: E. Red algae</strong><span>Rhodophyta는 red algae입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 Set 3 3</h4>
+                <p>Chrysophyta</p>
+                <div class="answer-box"><strong>정답: B. Yellow-green algae</strong><span>Chrysophyta는 golden/yellow-green algae 계열로 연결됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 Set 3 4</h4>
+                <p>Phaeophyta</p>
+                <div class="answer-box"><strong>정답: D. Brown algae</strong><span>Phaeophyta는 brown algae입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 Set 3 5</h4>
+                <p>Rhizaria</p>
+                <div class="answer-box"><strong>정답: A. Foraminifera</strong><span>Rhizaria에는 foraminifera가 포함됩니다.</span></div>
+              </article>
+          </div>
+          <h3>Short Answer</h3>
+          <div class="qa-list">
+              <article class="qa-item">
+                <h4>단답형 1</h4>
+                <p>Compare and contrast the following closely related terms:<br>* Chromatid and chromosome<br>* Mitosis and meiosis II<br>* Hypha and mycelium<br>* Algal body and fungal body<br>* Water mold and slime mold</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Chromatid는 복제된 chromosome의 한 가닥이고 chromosome은 유전물질이 단백질과 결합한 단위입니다. Mitosis는 보통 diploid에서 diploid를 만들고 meiosis II는 sister chromatid를 분리해 haploid 세포를 완성합니다. Hypha는 하나의 fungal filament이고 mycelium은 hyphae의 덩어리입니다. Algal body는 photosynthetic thallus가 중심이고 fungal body는 absorptive hypha/mycelium이 중심입니다. Water mold는 fungus-like protist로 cellulose wall과 aquatic/oomycete 특징을 가지며, slime mold는 amoeboid 단계와 spore-producing 구조를 갖는 fungus-like protist입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 2</h4>
+                <p>How do fungi transport nutrients?</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Fungi는 세포 밖으로 enzyme을 분비해 고분자를 먼저 분해한 뒤, 생성된 작은 영양분을 hypha 표면으로 흡수합니다. 흡수된 물질은 hypha 내부의 cytoplasmic streaming과 확산을 통해 mycelium 전체로 이동합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>단답형 3</h4>
+                <p>How are lichens useful in environmental protection studies?</p>
+                <div class="answer-box"><strong>정답/해설:</strong><span>Lichens는 대기오염, 특히 sulfur dioxide와 중금속에 민감하고 오염물질을 축적할 수 있습니다. 그래서 특정 지역의 공기 질과 장기적 환경 변화를 평가하는 bioindicator로 유용합니다.</span></div>
+              </article>
+          </div>
+        </details>
+        <!-- review-questions-end ch12 -->
+      </div>
+    </section>
+
+    <section class="chapter" id="ch25" data-chapter="25">
+      <div class="chapter-head">
+        <div>
+          <h2>Ch 25. Applied and Environmental Microbiology: Food Microbiology</h2>
+          <p>미생물이 식품을 만들고, 망치고, 질병을 일으키는 과정을 식품 생산과 보존 관점에서 정리합니다.</p>
+        </div>
+        <span class="badge">Food</span>
+      </div>
+      <div class="content">
+        <details open>
+          <summary>1. Applied and Environmental Microbiology</summary>
+          <ul>
+            <li><strong>Applied microbiology</strong>: 미생물을 commercial use에 활용하는 분야입니다.</li>
+            <li><strong>Food microbiology</strong>: 식품과 음료의 생산, 발효, 보존, 안전을 다룹니다.</li>
+            <li><strong>Industrial microbiology</strong>: antibiotics, enzymes, insulin, growth hormone 같은 물질 생산과 연결됩니다.</li>
+            <li><strong>Environmental microbiology</strong>: 미생물이 환경과 다른 생물에 미치는 영향, 물질 순환, 오염 제거를 다룹니다.</li>
+          </ul>
+        </details>
+
+        <details open>
+          <summary>2. Fermentation vs Spoilage</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>구분</th>
+                  <th>정의</th>
+                  <th>결과</th>
+                  <th>예시</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Fermentation</td>
+                  <td>미생물 성장과 대사로 식품에 desirable change가 생기는 과정.</td>
+                  <td>Flavor, aroma, consistency, preservation, nutritional value 향상.</td>
+                  <td>Kimchi, yogurt, cheese, soy sauce, wine, beer, natto, doenjang, gochujang.</td>
+                </tr>
+                <tr>
+                  <td>Spoilage</td>
+                  <td>미생물 성장과 대사로 unwanted change가 생기는 과정.</td>
+                  <td>맛, 냄새, 질감, 안전성 저하. Pathogen growth 또는 toxin 문제가 생길 수 있습니다.</td>
+                  <td>부패, 변색, 악취, gas 생성, toxin contamination.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="exam">둘 다 microbial metabolism이지만 사람이 원하는 결과이면 fermentation, 원하지 않는 결과이면 spoilage입니다.</div>
+        </details>
+
+        <details open>
+          <summary>3. The Roles of Microorganisms in Food Production</summary>
+          <ul>
+            <li>미생물은 food and beverages production에 관여합니다.</li>
+            <li>Organic acid를 만들어 pH를 낮추고 다른 미생물 성장을 억제합니다.</li>
+            <li>Bacteriocin을 만들어 경쟁 미생물을 억제할 수 있습니다.</li>
+            <li>소화하기 어려운 성분을 분해하고 nutritional value를 높입니다.</li>
+            <li><strong>Starter culture</strong>는 알려진 microorganisms로 구성되어 consistent fermentation을 수행합니다.</li>
+            <li><strong>Secondary culture</strong>는 flavor와 aroma를 추가로 조절합니다.</li>
+          </ul>
+          <h3>Fermented foods</h3>
+          <ul>
+            <li>Fermented vegetables: kimchi, pickles, sauerkraut 등.</li>
+            <li>Fermented dairy products: buttermilk, yogurt, cheese.</li>
+            <li>Fermented meats: salami, pepperoni, pork, beef, fish products.</li>
+            <li>기타: soy sauce, chocolate, natto, doenjang, gochujang, fermented fish/rice.</li>
+          </ul>
+        </details>
+
+        <details open>
+          <summary>4. Milk Fermentation</summary>
+          <ul>
+            <li>Milk fermentation은 lactic acid bacteria가 characteristic texture와 aroma를 만드는 과정입니다.</li>
+            <li>Buttermilk, yogurt, cheese가 대표적입니다.</li>
+            <li>Cheese-making에서는 pasteurized milk에 starter culture를 넣고 curd와 whey를 만듭니다.</li>
+            <li><strong>Curd</strong>는 고체 덩어리, <strong>whey</strong>는 액체 부분입니다.</li>
+            <li>Unripened cheese는 기본 curd 형성 후 바로 얻는 치즈입니다.</li>
+            <li>Ripened cheese는 secondary culture와 aging으로 flavor/aroma가 더 발달합니다.</li>
+            <li>Swiss cheese와 blue cheese 차이는 secondary culture와 숙성 조건으로 설명됩니다.</li>
+          </ul>
+        </details>
+
+        <details open>
+          <summary>5. Alcoholic Fermentation</summary>
+          <ul>
+            <li>Alcoholic fermentation은 simple sugar를 ethanol과 CO2로 바꾸는 과정입니다.</li>
+            <li>핵심 흐름: glucose -> pyruvate -> ethanol + CO2.</li>
+            <li>Wine-making: grape crushing, must formation, SO2 treatment, fermentation, clarification, oak barrel aging, bottle aging.</li>
+            <li>Beer brewing: barley germination, malt formation, sugar extraction, hops addition, boiling, yeast fermentation.</li>
+            <li>Barley germination은 enzyme을 활성화해 starch를 simple sugar로 바꿉니다.</li>
+            <li>Hops는 aroma와 bitterness를 제공합니다.</li>
+            <li>Saccharomyces cerevisiae는 ale, Saccharomyces carlsbergensis는 lager와 연결됩니다.</li>
+          </ul>
+        </details>
+
+        <details open>
+          <summary>6. Causes and Prevention of Food Spoilage</summary>
+          <h3>Causes of food spoilage</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>구분</th>
+                  <th>요인</th>
+                  <th>설명</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Intrinsic factors</td><td>Nutrient content, moisture, pH, physical structure, existing microbes.</td><td>영양분과 수분이 많고 pH가 중성에 가까우면 spoilage가 잘 일어납니다.</td></tr>
+                <tr><td>Extrinsic factors</td><td>Processing degree, preservatives, temperature, packaging, handling/storage.</td><td>Warm storage, poor packaging, 낮은 preservative amount는 spoilage 위험을 높입니다.</td></tr>
+                <tr><td>Microbial causes</td><td>Undesirable metabolic reactions, pathogen growth, unwanted microorganisms presence.</td><td>부패 냄새, 산 생성, gas, toxin, 병원균 증식으로 이어질 수 있습니다.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>Prevention of food spoilage</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>방법</th>
+                  <th>작용</th>
+                  <th>주의점</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Industrial canning</td><td>Mesophilic bacteria와 endospores 제거를 목표로 고온 처리.</td><td>Clostridium species와 coliforms contamination이 중요합니다.</td></tr>
+                <tr><td>Pasteurization</td><td>Microbial content를 낮추어 안전성과 보존성 향상.</td><td>일부 microbes가 살아남으므로 refrigeration이 필요할 수 있습니다.</td></tr>
+                <tr><td>Desiccation</td><td>물 제거로 growth 억제.</td><td>Endospore를 죽이지 않습니다.</td></tr>
+                <tr><td>Lyophilization</td><td>Freeze-drying.</td><td>보존 방식으로도 사용됩니다.</td></tr>
+                <tr><td>Gamma radiation</td><td>조건에 따라 complete sterilization 가능.</td><td>장비와 안전 관리가 필요합니다.</td></tr>
+                <tr><td>Aseptic packaging</td><td>Hot peroxide solution, UV light, steam 등을 이용해 포장 오염을 줄임.</td><td>처리 후 오염 방지가 핵심입니다.</td></tr>
+                <tr><td>Preservatives</td><td>Salt, sugar는 water availability를 낮춤. Allicin, benzoic acid, spices, herbs는 enzyme 또는 membrane function을 방해할 수 있음.</td><td>대부분 chemical preservatives는 germicidal보다 germistatic입니다.</td></tr>
+                <tr><td>Temperature control</td><td>High temperature는 proteins와 enzymes를 denature, low temperature는 metabolism을 늦춤.</td><td>Listeria monocytogenes는 cold storage에서도 자랄 수 있습니다.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details open>
+          <summary>7. Foodborne Illnesses</summary>
+          <ul>
+            <li>Foodborne illness는 spoiled foods 또는 harmful microbes/products가 있는 food 섭취로 생깁니다.</li>
+            <li><strong>Food infection</strong>: living microorganisms를 섭취해 장내에서 성장하거나 침입하며 발생합니다.</li>
+            <li><strong>Food intoxication</strong>: food 안에 이미 존재하는 microbial toxin을 섭취해 발생합니다.</li>
+            <li>증상은 nausea, vomiting, diarrhea, fever, fatigue, muscle cramps가 포함됩니다.</li>
+            <li>Common-source epidemic은 하나의 food source가 많은 cases를 만드는 outbreak입니다.</li>
+          </ul>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>원인균/독소</th>
+                  <th>연결 식품/환경</th>
+                  <th>질병/증상 연결</th>
+                  <th>구분</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Campylobacter jejuni</td><td>Undercooked meat, milk, contaminated water.</td><td>식중독, 설사, intestinal inflammation. Ch 11에서는 Campylobacter가 blood poisoning과도 연결됩니다.</td><td>주로 food infection.</td></tr>
+                <tr><td>Salmonella</td><td>Egg shell, poultry, contaminated food.</td><td>Foodborne illness. 달걀을 만진 뒤 손 씻기 중요.</td><td>Food infection.</td></tr>
+                <tr><td>Shigella</td><td>Contaminated food.</td><td>Acute gastroenteritis, foodborne illness.</td><td>Food infection.</td></tr>
+                <tr><td>Staphylococcus aureus enterotoxin</td><td>오염된 식품에서 toxin이 미리 생성될 수 있음.</td><td>구토 중심 식중독과 food intoxication의 대표 예시.</td><td>Food intoxication.</td></tr>
+                <tr><td>Listeria monocytogenes</td><td>냉장 식품, milk/meat products.</td><td>임산부, 신생아, 노인, 면역저하자에서 위험.</td><td>Food infection.</td></tr>
+                <tr><td>Clostridium species and coliforms</td><td>Canned goods contaminant로 자료에서 언급.</td><td>Endospore와 canning 안전성 연결.</td><td>오염/부패 관리 핵심.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <!-- review-questions-start ch25 -->
+        <details open class="review-questions">
+          <summary>교재 문제: 정답과 해설</summary>
+          <p class="muted">첨부한 Questions for Review를 챕터 마지막에 배치했습니다. 각 문항 바로 아래에 정답과 시험용 해설을 붙였습니다.</p>
+          <h3>Multiple Choice</h3>
+          <div class="qa-list">
+              <article class="qa-item">
+                <h4>객관식 1</h4>
+                <p>Food fermentations do all of the following except ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> give foods a characteristic taste</li><li><span>b.</span> lower the risk of food spoilage</li><li><span>c.</span> sterilize foods</li><li><span>d.</span> increase the shelf life of the food</li></ol>
+                <div class="answer-box"><strong>정답: c. sterilize foods</strong><span>Food fermentation은 맛과 저장성을 높이고 부패 위험을 낮추지만, 식품을 sterilize하지는 않습니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 2</h4>
+                <p>Commercially produced beers and wines are usually fermented with the aid of ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> naturally occurring bacteria</li><li><span>b.</span> naturally occurring yeast</li><li><span>c.</span> specific cultured bacteria</li><li><span>d.</span> specific cultured yeast</li></ol>
+                <div class="answer-box"><strong>정답: d. specific cultured yeast</strong><span>상업적 beer/wine은 품질과 재현성을 위해 specific cultured yeast를 사용하는 것이 일반적입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 3</h4>
+                <p>How many stages does the treatment of drinking water involve?</p>
+                <ol class="choices" type="a"><li><span>a.</span> three</li><li><span>b.</span> four</li><li><span>c.</span> five</li><li><span>d.</span> six</li></ol>
+                <div class="answer-box"><strong>정답: c. five</strong><span>교재 문항 기준 drinking water treatment는 다섯 단계로 정리됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 4</h4>
+                <p>Which of the following would be the best growth medium to use for industrial fermentations?</p>
+                <ol class="choices" type="a"><li><span>a.</span> corn</li><li><span>b.</span> synthetic medium made by hand</li><li><span>c.</span> whey from cheese production</li><li><span>d.</span> brewing mash</li></ol>
+                <div class="answer-box"><strong>정답: c. whey from cheese production</strong><span>산업 발효 배지는 값싸고 풍부해야 하므로 cheese 생산 부산물인 whey가 좋은 예입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 5</h4>
+                <p>Biodegradable plastics are made from which of the following microbial metabolites?</p>
+                <ol class="choices" type="a"><li><span>a.</span> sludge</li><li><span>b.</span> PHA</li><li><span>c.</span> BOD</li><li><span>d.</span> alum</li></ol>
+                <div class="answer-box"><strong>정답: b. PHA</strong><span>PHA(polyhydroxyalkanoate)는 일부 미생물이 저장 물질로 만들며 biodegradable plastic 원료가 됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 6</h4>
+                <p>Strains of the bacterium Pseudomonas syringae have been identified as being capable of ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> producing plastics</li><li><span>b.</span> producing alternative fuels</li><li><span>c.</span> fermenting foods</li><li><span>d.</span> preventing ice formation</li></ol>
+                <div class="answer-box"><strong>정답: d. preventing ice formation</strong><span>Pseudomonas syringae의 ice-minus strain은 작물 표면의 ice nucleation을 줄여 frost damage를 막는 데 이용됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 7</h4>
+                <p>Which of the following is added during water or sewage treatment to promote flocculation?</p>
+                <ol class="choices" type="a"><li><span>a.</span> sludge</li><li><span>b.</span> PHA</li><li><span>c.</span> BOD</li><li><span>d.</span> alum</li></ol>
+                <div class="answer-box"><strong>정답: d. alum</strong><span>Alum은 작은 입자를 뭉쳐 floc을 만들도록 도와 침전과 제거를 쉽게 합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 8</h4>
+                <p>During chemical treatment of drinking water and wastewater, which of the following microbes is least likely to be inactivated or killed?</p>
+                <ol class="choices" type="a"><li><span>a.</span> algae</li><li><span>b.</span> viruses</li><li><span>c.</span> fungal spores</li><li><span>d.</span> bacteria</li></ol>
+                <div class="answer-box"><strong>정답: c. fungal spores</strong><span>Fungal spores는 화학 처리에 비교적 저항성이 있어 algae, virus, vegetative bacteria보다 불활성화가 어려울 수 있습니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 9</h4>
+                <p>In ________ treatment, water is disinfected, usually by chlorination. After this the wastewater is either released into rivers or the ocean or, in some states, used to irrigate crops and highway vegetation.</p>
+                <ol class="choices" type="a"><li><span>a.</span> primary treatment</li><li><span>b.</span> secondary treatment</li><li><span>c.</span> chemical treatment</li><li><span>d.</span> sludge treatment</li></ol>
+                <div class="answer-box"><strong>정답: c. chemical treatment</strong><span>Chemical treatment 단계에서는 보통 chlorination 등으로 물을 소독한 뒤 방류하거나 재사용합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 10</h4>
+                <p>Microbial communities are composed of ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> single, pure populations</li><li><span>b.</span> all organisms in a locale</li><li><span>c.</span> mixed populations of organisms</li><li><span>d.</span> a biosphere</li></ol>
+                <div class="answer-box"><strong>정답: c. mixed populations of organisms</strong><span>Microbial community는 한 장소의 여러 microbial population이 함께 이루는 혼합 집단입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 11</h4>
+                <p>In the environment, nutrients are generally ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> limiting</li><li><span>b.</span> present in excess</li><li><span>c.</span> stable</li><li><span>d.</span> artificially induced</li></ol>
+                <div class="answer-box"><strong>정답: a. limiting</strong><span>자연환경에서는 이용 가능한 nutrient가 대개 제한되어 microbial growth의 limiting factor가 됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 12</h4>
+                <p>Most chemical elements exist in the environment as ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> usable forms in soil and rock</li><li><span>b.</span> usable forms in water</li><li><span>c.</span> unusable forms in soil and rock</li><li><span>d.</span> unusable forms in water</li></ol>
+                <div class="answer-box"><strong>정답: c. unusable forms in soil and rock</strong><span>대부분의 원소는 토양과 암석 속에 미생물이 바로 쓰기 어려운 형태로 존재합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 13</h4>
+                <p>In the carbon cycle, microbes ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> convert CO₂ into organic material for consumption</li><li><span>b.</span> convert CO₂ into inorganic material for storage</li><li><span>c.</span> convert fossil fuels into usable organic compounds</li><li><span>d.</span> convert oxygen into water as a by-product of photosynthesis</li></ol>
+                <div class="answer-box"><strong>정답: a. convert CO₂ into organic material for consumption</strong><span>Carbon cycle에서 photosynthetic microbes는 CO2를 organic material로 고정해 먹이망에 공급합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 14</h4>
+                <p>Nitrification ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> converts organic nitrogen to NH₃</li><li><span>b.</span> converts NH₃ to NH₄⁺</li><li><span>c.</span> converts NH₄⁺ to NO₃⁻</li><li><span>d.</span> converts NO₃⁻ to N₂</li></ol>
+                <div class="answer-box"><strong>정답: c. converts NH₄⁺ to NO₃⁻</strong><span>Nitrification은 ammonia/ammonium을 nitrite와 nitrate로 산화하는 과정이며 최종적으로 NO3- 형성과 연결됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 15</h4>
+                <p>In aquatic environments, most microbial life is found in the ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> littoral zone</li><li><span>b.</span> limnetic zone</li><li><span>c.</span> profundal zone</li><li><span>d.</span> benthic zone</li><li><span>e.</span> abyssal zone</li></ol>
+                <div class="answer-box"><strong>정답: d. benthic zone</strong><span>Aquatic environment에서 많은 미생물은 유기물이 쌓이는 sediment와 표면, 즉 benthic zone에 집중됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 16</h4>
+                <p>Which of the following diseases is not caused by category A biological weapons agents?</p>
+                <ol class="choices" type="a"><li><span>a.</span> smallpox</li><li><span>b.</span> plague</li><li><span>c.</span> Q fever</li><li><span>d.</span> tularemia</li></ol>
+                <div class="answer-box"><strong>정답: c. Q fever</strong><span>Q fever는 Category B agent로 분류되며 smallpox, plague, tularemia는 Category A biological weapons agent와 연결됩니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 17</h4>
+                <p>Of the following characteristics, which would contribute most to making a microorganism an effective biological warfare agent?</p>
+                <ol class="choices" type="a"><li><span>a.</span> is readily available in the environment</li><li><span>b.</span> can be spread by contact after original dissemination</li><li><span>c.</span> cannot be treated well outside of a hospital</li><li><span>d.</span> is easily identified by symptoms</li></ol>
+                <div class="answer-box"><strong>정답: b. can be spread by contact after original dissemination</strong><span>초기 살포 후 사람 간 접촉으로 계속 전파될 수 있으면 확산력이 커져 biological warfare agent로 더 위험합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 18</h4>
+                <p>Anammox reactions are ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> anaerobic and part of nitrogen cycling</li><li><span>b.</span> anaerobic and part of carbon cycling</li><li><span>c.</span> aerobic and part of sulfur cycling</li><li><span>d.</span> aerobic and part of metal ion oxidation</li></ol>
+                <div class="answer-box"><strong>정답: a. anaerobic and part of nitrogen cycling</strong><span>Anammox는 anaerobic ammonium oxidation으로 산소 없는 조건에서 nitrogen cycle에 관여합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 19</h4>
+                <p>Industrial fermentation ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> always involves alcohol production</li><li><span>b.</span> involves the large-scale production of any beneficial compound</li><li><span>c.</span> refers to the oxidation of sugars using organic electron acceptors</li><li><span>d.</span> is any desirable change to food by microbial metabolism</li></ol>
+                <div class="answer-box"><strong>정답: b. involves the large-scale production of any beneficial compound</strong><span>Industrial fermentation은 alcohol에 한정되지 않고 미생물 대사를 이용한 유용 산물의 대량 생산을 뜻합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>객관식 20</h4>
+                <p>Lyophilization in food preservation is by ________.</p>
+                <ol class="choices" type="a"><li><span>a.</span> cell lysis</li><li><span>b.</span> gamma radiation</li><li><span>c.</span> rapid heating</li><li><span>d.</span> freeze drying</li></ol>
+                <div class="answer-box"><strong>정답: d. freeze drying</strong><span>Lyophilization은 얼린 뒤 진공에서 물을 승화시켜 제거하는 freeze drying 보존법입니다.</span></div>
+              </article>
+          </div>
+          <h3>Matching</h3>
+            <div class="table-wrap matching-options">
+              <table>
+                <thead><tr><th>선택지</th><th>용어/정의</th></tr></thead>
+                <tbody><tr><td>A</td><td>Spoilage</td></tr><tr><td>B</td><td>Water activity</td></tr><tr><td>C</td><td>Coliforms</td></tr><tr><td>D</td><td>Pasteurization</td></tr><tr><td>E</td><td>Secondary metabolites</td></tr><tr><td>F</td><td>Bt toxin</td></tr><tr><td>G</td><td>Potable</td></tr><tr><td>H</td><td>BOD</td></tr><tr><td>I</td><td>Oxidation lagoon</td></tr><tr><td>J</td><td>Recalcitrant</td></tr><tr><td>K</td><td>Biomass</td></tr><tr><td>L</td><td>Antagonism</td></tr><tr><td>M</td><td>Biomining</td></tr><tr><td>N</td><td>Nitrogen fixation</td></tr><tr><td>O</td><td>Eutrophication</td></tr><tr><td>P</td><td>Biofilm</td></tr></tbody>
+              </table>
+            </div>
+          <div class="qa-list">
+              <article class="qa-item">
+                <h4>매칭 1</h4>
+                <p>Organisms whose presence in water indicates contamination from feces</p>
+                <div class="answer-box"><strong>정답: C. Coliforms</strong><span>Coliform은 fecal contamination 여부를 판단하는 indicator organism입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 2</h4>
+                <p>Compound produced by a bacterium that kills insects</p>
+                <div class="answer-box"><strong>정답: F. Bt toxin</strong><span>Bt toxin은 Bacillus thuringiensis가 만드는 insecticidal toxin입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 3</h4>
+                <p>Refers to water that is fit to drink</p>
+                <div class="answer-box"><strong>정답: G. Potable</strong><span>Potable water는 마시기에 적합한 물을 뜻합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 4</h4>
+                <p>Community of organisms surrounded by polysaccharides and attached to surfaces</p>
+                <div class="answer-box"><strong>정답: P. Biofilm</strong><span>Biofilm은 polysaccharide matrix에 둘러싸여 표면에 부착한 microbial community입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 5</h4>
+                <p>Used in the processing of animal wastes; mimics primary and secondary wastewater treatment</p>
+                <div class="answer-box"><strong>정답: I. Oxidation lagoon</strong><span>Oxidation lagoon은 animal waste 처리에 쓰이며 wastewater treatment 과정을 모방합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 6</h4>
+                <p>Refers to compounds that are resistant to microbial degradation</p>
+                <div class="answer-box"><strong>정답: J. Recalcitrant</strong><span>Recalcitrant compound는 microbial degradation에 잘 분해되지 않는 물질입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 7</h4>
+                <p>Water that is not bound by solutes</p>
+                <div class="answer-box"><strong>정답: B. Water activity</strong><span>Water activity는 solute에 묶이지 않아 미생물이 이용할 수 있는 물의 정도입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 8</h4>
+                <p>Refers to quantity of all organisms present in an environment</p>
+                <div class="answer-box"><strong>정답: K. Biomass</strong><span>Biomass는 환경에 존재하는 모든 생물체의 양을 뜻합니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 9</h4>
+                <p>Process whereby pollutants accumulate to high levels in waterways, causing overgrowth and anaerobic conditions</p>
+                <div class="answer-box"><strong>정답: O. Eutrophication</strong><span>Eutrophication은 nutrient와 pollutant 축적으로 과도한 성장과 anaerobic condition을 유발하는 현상입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 10</h4>
+                <p>Process of reducing nitrogen from the atmosphere</p>
+                <div class="answer-box"><strong>정답: N. Nitrogen fixation</strong><span>Nitrogen fixation은 대기 중 nitrogen을 환원해 생물권에서 쓸 수 있는 형태로 바꾸는 과정입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 11</h4>
+                <p>The process whereby organisms actively inhibit the growth of other organisms</p>
+                <div class="answer-box"><strong>정답: L. Antagonism</strong><span>Antagonism은 어떤 미생물이 다른 미생물의 성장을 적극적으로 억제하는 작용입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 12</h4>
+                <p>Undesirable fermentation reactions in food leading to poor taste, smell, or appearance</p>
+                <div class="answer-box"><strong>정답: A. Spoilage</strong><span>Spoilage는 식품의 맛, 냄새, 외관을 나쁘게 만드는 원치 않는 발효/분해 반응입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 13</h4>
+                <p>Brief heating of foods during processing</p>
+                <div class="answer-box"><strong>정답: D. Pasteurization</strong><span>Pasteurization은 식품 가공 중 짧게 가열해 병원체와 부패균을 줄이는 처리입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 14</h4>
+                <p>Descriptor of the level of organic material present in wastewater</p>
+                <div class="answer-box"><strong>정답: H. BOD</strong><span>BOD는 wastewater 내 organic material 수준을 산소 요구량으로 나타내는 지표입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 15</h4>
+                <p>Fermentative products produced by microorganisms during stationary phase</p>
+                <div class="answer-box"><strong>정답: E. Secondary metabolites</strong><span>Secondary metabolites는 stationary phase에 만들어지는 발효 산물 또는 항생제 같은 대사산물입니다.</span></div>
+              </article>
+              <article class="qa-item">
+                <h4>매칭 16</h4>
+                <p>Process involving oxidation and then reduction of metals</p>
+                <div class="answer-box"><strong>정답: M. Biomining</strong><span>Biomining은 미생물의 산화와 환원 반응을 이용해 금속을 추출하는 과정입니다.</span></div>
+              </article>
+          </div>
+        </details>
+        <!-- review-questions-end ch25 -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <strong>근거 자료</strong>: 미생물학 Obsidian 챕터 노트, PDF 추출본 Chapter 9(2), 10(1), 10(2), 11(1), 11(2), 12, 25, W09-W14 주차 정리 및 녹취 정리본.
+    </div>
+  </footer>
+
+  <script>
+    const chapters = [...document.querySelectorAll(".chapter")];
+    const filterButtons = [...document.querySelectorAll("[data-filter]")];
+    const searchInput = document.querySelector("#search");
+    const detailsList = [...document.querySelectorAll("details")];
+
+    let activeFilter = "all";
+
+    function normalize(text) {
+      return text.toLowerCase().replace(/\s+/g, " ").trim();
+    }
+
+    function updateView() {
+      const query = normalize(searchInput.value);
+      chapters.forEach((chapter) => {
+        const matchesFilter = activeFilter === "all" || chapter.dataset.chapter === activeFilter;
+        const matchesQuery = !query || normalize(chapter.textContent).includes(query);
+        chapter.classList.toggle("hide", !(matchesFilter && matchesQuery));
+      });
+    }
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeFilter = button.dataset.filter;
+        filterButtons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+        updateView();
+      });
+    });
+
+    searchInput.addEventListener("input", updateView);
+
+    document.querySelector("#expandAll").addEventListener("click", () => {
+      detailsList.forEach((item) => item.open = true);
+    });
+
+    document.querySelector("#collapseAll").addEventListener("click", () => {
+      detailsList.forEach((item) => item.open = false);
+    });
+  </script>
+</body>
+</html>
