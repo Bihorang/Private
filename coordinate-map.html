@@ -564,6 +564,7 @@
         <div class="actions" aria-label="파일 작업">
           <button id="exportMd" type="button">MD 저장</button>
           <button id="importMdButton" type="button">MD 불러오기</button>
+          <button id="resetMap" class="danger" type="button">지도 초기화</button>
           <button id="exportPng" class="primary" type="button">이미지 저장</button>
           <input id="importMd" class="hidden-file" type="file" accept=".md,text/markdown,text/plain">
         </div>
@@ -622,6 +623,7 @@
       exportMd: document.querySelector("#exportMd"),
       importMdButton: document.querySelector("#importMdButton"),
       importMd: document.querySelector("#importMd"),
+      resetMap: document.querySelector("#resetMap"),
       exportPng: document.querySelector("#exportPng"),
       svg: document.querySelector("#coordinateSvg")
     };
@@ -866,6 +868,22 @@
         clearPointForm();
         setNotice("좌표를 삭제했습니다.", "ok");
       }
+    }
+
+    function resetMap() {
+      const ok = confirm("현재 지도와 자동 저장 데이터를 모두 초기화할까요?");
+      if (!ok) return;
+
+      clearTimeout(hoverClearTimer);
+      localStorage.removeItem(STORAGE_KEY);
+      state = clone(DEFAULT_STATE);
+      selectedPointId = null;
+      pendingImageData = "";
+      activeDrag = null;
+      hoveredPointId = null;
+      syncSettingsForm();
+      clearPointForm();
+      setNotice("지도와 자동 저장 데이터를 초기화했습니다.", "ok");
     }
 
     function render() {
@@ -1625,6 +1643,7 @@
       importMarkdownFile(els.importMd.files?.[0]);
       els.importMd.value = "";
     });
+    els.resetMap.addEventListener("click", resetMap);
     els.exportPng.addEventListener("click", exportPng);
     els.pointImage.addEventListener("change", () => {
       const file = els.pointImage.files?.[0];
