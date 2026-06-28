@@ -510,6 +510,36 @@
         </div>
       </section>
 
+      <section class="panel" aria-labelledby="background-title">
+        <h2 id="background-title">배경 이미지</h2>
+        <div class="field">
+          <label for="backgroundImage">이미지</label>
+          <input id="backgroundImage" type="file" accept="image/*">
+        </div>
+        <div class="image-preview" id="backgroundPreview" style="margin-top:10px">배경 없음</div>
+        <div class="grid-2" style="margin-top:10px">
+          <div class="field">
+            <label for="backgroundOffsetX">가로 위치(px)</label>
+            <input id="backgroundOffsetX" type="number" value="0" step="1">
+          </div>
+          <div class="field">
+            <label for="backgroundOffsetY">세로 위치(px)</label>
+            <input id="backgroundOffsetY" type="number" value="0" step="1">
+          </div>
+          <div class="field">
+            <label for="backgroundScale">크기(%)</label>
+            <input id="backgroundScale" type="number" value="100" step="5" min="5" max="800">
+          </div>
+          <div class="field">
+            <label for="backgroundOpacity">투명도(%)</label>
+            <input id="backgroundOpacity" type="number" value="75" step="5" min="0" max="100">
+          </div>
+        </div>
+        <div class="button-row">
+          <button id="resetBackground" type="button">배경 초기화</button>
+        </div>
+      </section>
+
       <section class="panel" aria-labelledby="point-editor-title">
         <h2 id="point-editor-title">좌표</h2>
         <div class="grid-2">
@@ -588,6 +618,15 @@
       tooltipMode: "always",
       tooltipScale: 1,
       exportScale: 3,
+      background: {
+        image: "",
+        width: 0,
+        height: 0,
+        offsetX: 0,
+        offsetY: 0,
+        scale: 1,
+        opacity: 0.75
+      },
       points: []
     };
 
@@ -604,6 +643,13 @@
       tooltipScale: document.querySelector("#tooltipScale"),
       tooltipScaleValue: document.querySelector("#tooltipScaleValue"),
       exportScale: document.querySelector("#exportScale"),
+      backgroundImage: document.querySelector("#backgroundImage"),
+      backgroundPreview: document.querySelector("#backgroundPreview"),
+      backgroundOffsetX: document.querySelector("#backgroundOffsetX"),
+      backgroundOffsetY: document.querySelector("#backgroundOffsetY"),
+      backgroundScale: document.querySelector("#backgroundScale"),
+      backgroundOpacity: document.querySelector("#backgroundOpacity"),
+      resetBackground: document.querySelector("#resetBackground"),
       applySettings: document.querySelector("#applySettings"),
       resetTooltips: document.querySelector("#resetTooltips"),
       pointX: document.querySelector("#pointX"),
@@ -632,6 +678,7 @@
     let selectedPointId = null;
     let pendingImageData = "";
     let activeDrag = null;
+    let activeBackgroundDrag = null;
     let hoveredPointId = null;
     let hoverClearTimer = null;
     let liveEditTimer = null;
@@ -672,6 +719,7 @@
       next.tooltipMode = normalizeTooltipMode(input.tooltipMode, input.showTooltips);
       next.tooltipScale = clamp(toFinite(input.tooltipScale, next.tooltipScale), 0.6, 1.3);
       next.exportScale = clamp(Math.round(toFinite(input.exportScale, next.exportScale)), 1, 4);
+      next.background = normalizeBackground(input.background, next.background);
       next.showTooltips = next.tooltipMode !== "hidden";
       next.points = Array.isArray(input.points) ? input.points.map((point, index) => ({
         id: typeof point.id === "string" ? point.id : makeId(),
@@ -685,6 +733,19 @@
         tooltipDy: toFinite(point.tooltipDy, -70 - (index % 3) * 18)
       })) : [];
       return next;
+    }
+
+    function normalizeBackground(input, fallback) {
+      const source = input && typeof input === "object" ? input : {};
+      return {
+        image: typeof source.image === "string" && source.image.startsWith("data:image/") ? source.image : fallback.image,
+        width: clamp(Math.round(toFinite(source.width, fallback.width)), 0, 10000),
+        height: clamp(Math.round(toFinite(source.height, fallback.height)), 0, 10000),
+        offsetX: toFinite(source.offsetX, fallback.offsetX),
+        offsetY: toFinite(source.offsetY, fallback.offsetY),
+        scale: clamp(toFinite(source.scale, fallback.scale), 0.05, 8),
+        opacity: clamp(toFinite(source.opacity, fallback.opacity), 0, 1)
+      };
     }
 
     function persist() {
@@ -747,6 +808,15 @@
       els.tooltipScale.value = Math.round(state.tooltipScale * 100);
       els.tooltipScaleValue.textContent = `${Math.round(state.tooltipScale * 100)}%`;
       els.exportScale.value = String(state.exportScale);
+      syncBackgroundControls();
+    }
+
+    function syncBackgroundControls() {
+      els.backgroundOffsetX.value = Math.round(state.background.offsetX);
+      els.backgroundOffsetY.value = Math.round(state.background.offsetY);
+      els.backgroundScale.value = Math.round(state.background.scale * 100);
+      els.backgroundOpacity.value = Math.round(state.background.opacity * 100);
+      updateBackgroundPreview();
     }
 
     function clearPointForm() {
@@ -821,6 +891,34 @@
       }
     }
 
+    function updateBackgroundPreview() {
+      els.backgroundPreview.replaceChildren();
+      if (state.background.image) {
+        const img = document.createElement("img");
+        img.alt = "배경 이미지 미리보기";
+        img.src = state.background.image;
+        els.backgroundPreview.append(img);
+      } else {
+        els.backgroundPreview.textContent = "배경 없음";
+      }
+    }
+
+    function updateBackgroundFromControls() {
+      state.background.offsetX = toFinite(els.backgroundOffsetX.value, state.background.offsetX);
+      state.background.offsetY = toFinite(els.backgroundOffsetY.value, state.background.offsetY);
+      state.background.scale = clamp(toFinite(els.backgroundScale.value, 100) / 100, 0.05, 8);
+      state.background.opacity = clamp(toFinite(els.backgroundOpacity.value, 75) / 100, 0, 1);
+    }
+
+    function resetBackground() {
+      state.background = clone(DEFAULT_STATE.background);
+      els.backgroundImage.value = "";
+      syncBackgroundControls();
+      persist();
+      renderSvg();
+      setNotice("배경 이미지를 초기화했습니다.", "ok");
+    }
+
     function applySettingsFromForm() {
       const minX = toFinite(els.minX.value, state.bounds.minX);
       const maxX = toFinite(els.maxX.value, state.bounds.maxX);
@@ -846,6 +944,7 @@
       state.tooltipMode = normalizeTooltipMode(els.tooltipMode.value, true);
       state.tooltipScale = clamp(toFinite(els.tooltipScale.value, 100) / 100, 0.6, 1.3);
       state.exportScale = clamp(Math.round(toFinite(els.exportScale.value, state.exportScale)), 1, 4);
+      updateBackgroundFromControls();
       state.showTooltips = state.tooltipMode !== "hidden";
       syncSettingsForm();
       persist();
@@ -916,6 +1015,7 @@
       selectedPointId = null;
       pendingImageData = "";
       activeDrag = null;
+      activeBackgroundDrag = null;
       hoveredPointId = null;
       syncSettingsForm();
       clearPointForm();
@@ -975,15 +1075,7 @@
     }
 
     function renderSvg() {
-      const width = state.canvas.width;
-      const height = state.canvas.height;
-      const margin = { top: 58, right: 58, bottom: 70, left: 82 };
-      const plot = {
-        x: margin.left,
-        y: margin.top,
-        width: Math.max(100, width - margin.left - margin.right),
-        height: Math.max(100, height - margin.top - margin.bottom)
-      };
+      const { width, height, margin, plot } = getPlotMetrics();
 
       els.svg.style.setProperty("--svg-width", `${width}px`);
       els.svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
@@ -1021,6 +1113,23 @@
       drawPoints(plot);
     }
 
+    function getPlotMetrics() {
+      const width = state.canvas.width;
+      const height = state.canvas.height;
+      const margin = { top: 58, right: 58, bottom: 70, left: 82 };
+      return {
+        width,
+        height,
+        margin,
+        plot: {
+          x: margin.left,
+          y: margin.top,
+          width: Math.max(100, width - margin.left - margin.right),
+          height: Math.max(100, height - margin.top - margin.bottom)
+        }
+      };
+    }
+
     function drawGrid(plot) {
       const { minX, maxX, minZ, maxZ } = state.bounds;
       const xTicks = buildTicks(minX, maxX, state.gridStep, Math.max(4, Math.floor(plot.width / 90)));
@@ -1033,12 +1142,20 @@
         height: plot.height,
         fill: "#fbfcfe",
         stroke: "#9aa7b9",
-        "stroke-width": 1
+        "stroke-width": 1,
+        "pointer-events": "none"
+      });
+
+      drawBackground(plot);
+
+      const gridLayer = appendSvg("g", els.svg, {
+        "data-layer": "grid",
+        "pointer-events": "none"
       });
 
       xTicks.forEach(value => {
         const x = mapX(value, plot);
-        appendSvg("line", els.svg, {
+        appendSvg("line", gridLayer, {
           x1: x,
           y1: plot.y,
           x2: x,
@@ -1046,7 +1163,7 @@
           stroke: nearZero(value) ? "#708094" : "#d6dce6",
           "stroke-width": nearZero(value) ? 1.5 : 1
         });
-        appendSvg("text", els.svg, {
+        appendSvg("text", gridLayer, {
           x,
           y: plot.y + plot.height + 22,
           fill: "#637086",
@@ -1057,7 +1174,7 @@
 
       zTicks.forEach(value => {
         const y = mapZ(value, plot);
-        appendSvg("line", els.svg, {
+        appendSvg("line", gridLayer, {
           x1: plot.x,
           y1: y,
           x2: plot.x + plot.width,
@@ -1065,13 +1182,52 @@
           stroke: nearZero(value) ? "#708094" : "#d6dce6",
           "stroke-width": nearZero(value) ? 1.5 : 1
         });
-        appendSvg("text", els.svg, {
+        appendSvg("text", gridLayer, {
           x: plot.x - 12,
           y: y + 4,
           fill: "#637086",
           "font-size": "12",
           "text-anchor": "end"
         }).textContent = formatNumber(value);
+      });
+    }
+
+    function drawBackground(plot) {
+      const background = state.background;
+      if (!background.image) return;
+
+      const fallbackWidth = plot.width;
+      const fallbackHeight = plot.height;
+      const imageWidth = (background.width || fallbackWidth) * background.scale;
+      const imageHeight = (background.height || fallbackHeight) * background.scale;
+      const x = plot.x + background.offsetX;
+      const y = plot.y + background.offsetY;
+      const clipId = "plot-background-clip";
+
+      const defs = appendSvg("defs", els.svg);
+      const clipPath = appendSvg("clipPath", defs, { id: clipId });
+      appendSvg("rect", clipPath, {
+        x: plot.x,
+        y: plot.y,
+        width: plot.width,
+        height: plot.height
+      });
+
+      const group = appendSvg("g", els.svg, {
+        "data-layer": "background",
+        "clip-path": `url(#${clipId})`
+      });
+      group.style.cursor = "grab";
+      group.addEventListener("pointerdown", startBackgroundDrag);
+
+      appendSvg("image", group, {
+        x,
+        y,
+        width: imageWidth,
+        height: imageHeight,
+        href: background.image,
+        preserveAspectRatio: "xMidYMid meet",
+        opacity: background.opacity
       });
     }
 
@@ -1460,6 +1616,21 @@
       event.currentTarget.setPointerCapture(event.pointerId);
     }
 
+    function startBackgroundDrag(event) {
+      if (!state.background.image) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const pointer = svgPoint(event);
+      activeBackgroundDrag = {
+        startX: pointer.x,
+        startY: pointer.y,
+        offsetX: state.background.offsetX,
+        offsetY: state.background.offsetY
+      };
+      event.currentTarget.style.cursor = "grabbing";
+      event.currentTarget.setPointerCapture(event.pointerId);
+    }
+
     function moveTooltipDrag(event) {
       if (!activeDrag) return;
       const point = state.points.find(item => item.id === activeDrag.pointId);
@@ -1470,12 +1641,27 @@
       renderSvg();
     }
 
+    function moveBackgroundDrag(event) {
+      if (!activeBackgroundDrag) return;
+      const pointer = svgPoint(event);
+      state.background.offsetX = activeBackgroundDrag.offsetX + pointer.x - activeBackgroundDrag.startX;
+      state.background.offsetY = activeBackgroundDrag.offsetY + pointer.y - activeBackgroundDrag.startY;
+      syncBackgroundControls();
+      renderSvg();
+    }
+
     function endTooltipDrag() {
       if (!activeDrag) return;
       const pointId = activeDrag.pointId;
       activeDrag = null;
       persist();
       clearHoveredPoint(pointId, 400);
+    }
+
+    function endBackgroundDrag() {
+      if (!activeBackgroundDrag) return;
+      activeBackgroundDrag = null;
+      persist();
     }
 
     function svgPoint(event) {
@@ -1510,6 +1696,7 @@
         tooltipMode: state.tooltipMode,
         tooltipScale: state.tooltipScale,
         exportScale: state.exportScale,
+        background: state.background,
         points: state.points
       };
       const rows = state.points.map(point => {
@@ -1528,6 +1715,10 @@
         `- 툴팁 표시: ${tooltipModeLabel(state.tooltipMode)}`,
         `- 툴팁 크기: ${Math.round(state.tooltipScale * 100)}%`,
         `- 이미지 저장 배율: ${state.exportScale}x`,
+        `- 배경 이미지: ${state.background.image ? "있음" : "없음"}`,
+        `- 배경 위치: x ${Math.round(state.background.offsetX)}px, y ${Math.round(state.background.offsetY)}px`,
+        `- 배경 크기: ${Math.round(state.background.scale * 100)}%`,
+        `- 배경 투명도: ${Math.round(state.background.opacity * 100)}%`,
         "",
         "## 좌표 목록",
         "",
@@ -1669,6 +1860,49 @@
       state.exportScale = clamp(Math.round(toFinite(els.exportScale.value, state.exportScale)), 1, 4);
       persist();
     });
+    [els.backgroundOffsetX, els.backgroundOffsetY, els.backgroundScale, els.backgroundOpacity].forEach(input => {
+      input.addEventListener("input", () => {
+        updateBackgroundFromControls();
+        persist();
+        renderSvg();
+      });
+    });
+    els.backgroundImage.addEventListener("change", () => {
+      const file = els.backgroundImage.files?.[0];
+      if (!file) return;
+      if (!file.type.startsWith("image/")) {
+        setNotice("배경은 이미지 파일만 선택할 수 있습니다.", "error");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const image = new Image();
+        image.onload = () => {
+          const { plot } = getPlotMetrics();
+          const naturalWidth = image.naturalWidth || image.width || plot.width;
+          const naturalHeight = image.naturalHeight || image.height || plot.height;
+          const fitScale = Math.min(plot.width / naturalWidth, plot.height / naturalHeight, 1);
+          state.background = {
+            image: String(reader.result || ""),
+            width: naturalWidth,
+            height: naturalHeight,
+            scale: clamp(fitScale, 0.05, 8),
+            opacity: state.background.opacity,
+            offsetX: Math.round((plot.width - naturalWidth * fitScale) / 2),
+            offsetY: Math.round((plot.height - naturalHeight * fitScale) / 2)
+          };
+          syncBackgroundControls();
+          persist();
+          renderSvg();
+          setNotice("배경 이미지를 적용했습니다. 지도에서 드래그해 위치를 조정할 수 있습니다.", "ok");
+        };
+        image.onerror = () => setNotice("배경 이미지를 읽을 수 없습니다.", "error");
+        image.src = String(reader.result || "");
+      };
+      reader.onerror = () => setNotice("배경 이미지를 읽을 수 없습니다.", "error");
+      reader.readAsDataURL(file);
+    });
+    els.resetBackground.addEventListener("click", resetBackground);
     els.resetTooltips.addEventListener("click", resetTooltipOffsets);
     [els.pointX, els.pointZ, els.pointName, els.pointDescription, els.pointColor].forEach(input => {
       input.addEventListener("input", scheduleSelectedPointLiveUpdate);
@@ -1700,9 +1934,18 @@
       reader.onerror = () => setNotice("이미지를 읽을 수 없습니다.", "error");
       reader.readAsDataURL(file);
     });
-    window.addEventListener("pointermove", moveTooltipDrag);
-    window.addEventListener("pointerup", endTooltipDrag);
-    window.addEventListener("pointercancel", endTooltipDrag);
+    window.addEventListener("pointermove", event => {
+      moveTooltipDrag(event);
+      moveBackgroundDrag(event);
+    });
+    window.addEventListener("pointerup", () => {
+      endTooltipDrag();
+      endBackgroundDrag();
+    });
+    window.addEventListener("pointercancel", () => {
+      endTooltipDrag();
+      endBackgroundDrag();
+    });
 
     syncSettingsForm();
     clearPointForm();
