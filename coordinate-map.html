@@ -618,8 +618,9 @@
       tooltipMode: "always",
       tooltipScale: 1,
       exportScale: 3,
+      imageStore: {},
       background: {
-        image: "",
+        imageId: "",
         width: 0,
         height: 0,
         offsetX: 0,
@@ -676,7 +677,7 @@
 
     let state = loadState();
     let selectedPointId = null;
-    let pendingImageData = "";
+    let pendingImageId = "";
     let activeDrag = null;
     let activeBackgroundDrag = null;
     let hoveredPointId = null;
@@ -711,6 +712,7 @@
       if (next.bounds.minX === next.bounds.maxX) next.bounds.maxX = next.bounds.minX + 1;
       if (next.bounds.minZ === next.bounds.maxZ) next.bounds.maxZ = next.bounds.minZ + 1;
 
+      next.imageStore = normalizeImageStore(input.imageStore || input.images || {});
       next.gridStep = Math.abs(toFinite(input.gridStep, next.gridStep)) || next.gridStep;
       next.canvas = {
         width: clamp(Math.round(toFinite(input.canvas?.width, next.canvas.width)), 420, 4000),
@@ -719,28 +721,38 @@
       next.tooltipMode = normalizeTooltipMode(input.tooltipMode, input.showTooltips);
       next.tooltipScale = clamp(toFinite(input.tooltipScale, next.tooltipScale), 0.6, 1.3);
       next.exportScale = clamp(Math.round(toFinite(input.exportScale, next.exportScale)), 1, 4);
-      next.background = normalizeBackground(input.background, next.background);
+      next.background = normalizeBackground(input.background, next.background, next.imageStore);
       next.showTooltips = next.tooltipMode !== "hidden";
-      next.points = Array.isArray(input.points) ? input.points.map((point, index) => ({
+      const inputPoints = Array.isArray(input.points) ? input.points : Array.isArray(input.markers) ? input.markers : [];
+      next.points = inputPoints.map((point, index) => ({
         id: typeof point.id === "string" ? point.id : makeId(),
         x: toFinite(point.x, 0),
         z: toFinite(point.z ?? point.y, 0),
         name: typeof point.name === "string" && point.name.trim() ? point.name.trim() : `좌표 ${index + 1}`,
         description: typeof point.description === "string" ? point.description : "",
         color: isColor(point.color) ? point.color : paletteColor(index),
-        image: typeof point.image === "string" && point.image.startsWith("data:image/") ? point.image : "",
+        imageId: normalizePointImage(point, next.imageStore, index),
         tooltipDx: toFinite(point.tooltipDx, 20 + (index % 4) * 14),
         tooltipDy: toFinite(point.tooltipDy, -70 - (index % 3) * 18)
-      })) : [];
+      }));
       return next;
     }
 
-    function normalizeBackground(input, fallback) {
+    function normalizeBackground(input, fallback, imageStore) {
       const source = input && typeof input === "object" ? input : {};
+      let imageId = "";
+      if (typeof source.imageId === "string" && imageStore[source.imageId]) {
+        imageId = source.imageId;
+      } else if (source.data && source.mime) {
+        imageId = normalizeImageReference(source.id || "background", source, imageStore, "background", "background");
+      } else {
+        imageId = normalizeImageReference(source.imageId || "background", source.image || source.icon, imageStore, "background", "background");
+      }
+      const asset = imageStore[imageId];
       return {
-        image: typeof source.image === "string" && source.image.startsWith("data:image/") ? source.image : fallback.image,
-        width: clamp(Math.round(toFinite(source.width, fallback.width)), 0, 10000),
-        height: clamp(Math.round(toFinite(source.height, fallback.height)), 0, 10000),
+        imageId: imageId || fallback.imageId,
+        width: clamp(Math.round(toFinite(source.width, asset?.width || fallback.width)), 0, 10000),
+        height: clamp(Math.round(toFinite(source.height, asset?.height || fallback.height)), 0, 10000),
         offsetX: toFinite(source.offsetX, fallback.offsetX),
         offsetY: toFinite(source.offsetY, fallback.offsetY),
         scale: clamp(toFinite(source.scale, fallback.scale), 0.05, 8),
@@ -748,8 +760,99 @@
       };
     }
 
+    function normalizeImageStore(input) {
+      const store = {};
+      if (!input || typeof input !== "object") return store;
+      Object.entries(input).forEach(([id, asset]) => {
+        const normalized = normalizeImageAsset(asset, id);
+        if (normalized) store[normalized.id] = normalized;
+      });
+      return store;
+    }
+
+    function normalizePointImage(point, imageStore, index) {
+      if (typeof point.imageId === "string" && imageStore[point.imageId]) return point.imageId;
+      return normalizeImageReference(point.imageId || `marker-${index + 1}`, point.icon || point.image, imageStore, `marker-${index + 1}`, "marker-icon");
+    }
+
+    function normalizeImageReference(preferredId, value, imageStore, fallbackId, type) {
+      if (!value) return "";
+      if (typeof value === "string") {
+        if (imageStore[value]) return value;
+        if (value.startsWith("data:image/")) {
+          const asset = assetFromDataUrl(value, preferredId || fallbackId, type, "source");
+          if (asset) {
+            imageStore[asset.id] = asset;
+            return asset.id;
+          }
+        }
+        return "";
+      }
+      if (typeof value === "object") {
+        const asset = normalizeImageAsset({ id: preferredId || value.id || fallbackId, type, ...value }, preferredId || fallbackId);
+        if (asset) {
+          imageStore[asset.id] = asset;
+          return asset.id;
+        }
+      }
+      return "";
+    }
+
+    function normalizeImageAsset(asset, fallbackId) {
+      if (!asset || typeof asset !== "object") return null;
+      if (typeof asset.dataUrl === "string") {
+        return assetFromDataUrl(asset.dataUrl, asset.id || fallbackId, asset.type || "raster", asset.compression || "source");
+      }
+      if (typeof asset.image === "string" && asset.image.startsWith("data:image/")) {
+        return assetFromDataUrl(asset.image, asset.id || fallbackId, asset.type || "raster", asset.compression || "source");
+      }
+      if (typeof asset.data === "string" && asset.data.startsWith("data:image/")) {
+        return assetFromDataUrl(asset.data, asset.id || fallbackId, asset.type || "raster", asset.compression || "source");
+      }
+      if (typeof asset.data !== "string" || !asset.data) return null;
+      const id = safeImageId(asset.id || fallbackId || makeId());
+      return {
+        id,
+        type: asset.type || "raster",
+        mime: typeof asset.mime === "string" ? asset.mime : "image/webp",
+        encoding: asset.encoding === "base64" ? "base64" : "base64",
+        compression: asset.compression || (asset.mime === "image/webp" ? "webp-lossy" : "source"),
+        width: clamp(Math.round(toFinite(asset.width, 0)), 0, 10000),
+        height: clamp(Math.round(toFinite(asset.height, 0)), 0, 10000),
+        data: asset.data
+      };
+    }
+
+    function assetFromDataUrl(dataUrl, id, type, compression) {
+      const parsed = parseDataUrl(dataUrl);
+      if (!parsed) return null;
+      return {
+        id: safeImageId(id || makeId()),
+        type: type || "raster",
+        mime: parsed.mime,
+        encoding: "base64",
+        compression: compression || (parsed.mime === "image/webp" ? "webp-lossy" : "source"),
+        width: 0,
+        height: 0,
+        data: parsed.data
+      };
+    }
+
+    function parseDataUrl(dataUrl) {
+      const match = String(dataUrl).match(/^data:([^;,]+)(;base64)?,(.*)$/);
+      if (!match) return null;
+      const mime = match[1];
+      const isBase64 = Boolean(match[2]);
+      const body = match[3] || "";
+      return {
+        mime,
+        data: isBase64 ? body : btoa(unescape(decodeURIComponent(body)))
+      };
+    }
+
     function persist() {
       try {
+        pruneImageStore();
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         return true;
       } catch (error) {
@@ -795,6 +898,108 @@
       return `point-${Date.now()}-${Math.random().toString(16).slice(2)}`;
     }
 
+    function safeImageId(value) {
+      return String(value || makeId())
+        .trim()
+        .replace(/[^a-z0-9_-]+/gi, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 80) || makeId();
+    }
+
+    function getImageAsset(imageId) {
+      return imageId ? state.imageStore?.[imageId] || null : null;
+    }
+
+    function getImageSrc(imageId) {
+      const asset = getImageAsset(imageId);
+      return assetToSrc(asset);
+    }
+
+    function assetToSrc(asset) {
+      if (!asset || !asset.data) return "";
+      if (String(asset.data).startsWith("data:image/")) return asset.data;
+      if (asset.encoding === "base64") return `data:${asset.mime};base64,${asset.data}`;
+      return asset.data;
+    }
+
+    function pruneImageStore() {
+      if (!state.imageStore) state.imageStore = {};
+      const keep = new Set();
+      if (state.background?.imageId) keep.add(state.background.imageId);
+      if (pendingImageId) keep.add(pendingImageId);
+      state.points.forEach(point => {
+        if (point.imageId) keep.add(point.imageId);
+      });
+      Object.keys(state.imageStore).forEach(id => {
+        if (!keep.has(id)) delete state.imageStore[id];
+      });
+    }
+
+    async function compressFileToWebpAsset(file, id, type) {
+      const source = await fileToDataUrl(file);
+      const image = await loadImage(source);
+      const canvas = document.createElement("canvas");
+      canvas.width = image.naturalWidth || image.width;
+      canvas.height = image.naturalHeight || image.height;
+      const context = canvas.getContext("2d");
+      context.imageSmoothingEnabled = true;
+      context.imageSmoothingQuality = "high";
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+      const blob = await canvasToBlob(canvas, "image/webp", 0.82);
+      const dataUrl = await blobToDataUrl(blob);
+      const parsed = parseDataUrl(dataUrl);
+      if (!parsed) throw new Error("이미지를 WebP로 압축하지 못했습니다.");
+      return {
+        id: safeImageId(id),
+        type: type || "raster",
+        mime: "image/webp",
+        encoding: "base64",
+        compression: "webp-lossy",
+        width: canvas.width,
+        height: canvas.height,
+        data: parsed.data
+      };
+    }
+
+    function fileToDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result || ""));
+        reader.onerror = () => reject(reader.error || new Error("파일을 읽을 수 없습니다."));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = () => reject(new Error("이미지를 읽을 수 없습니다."));
+        image.src = src;
+      });
+    }
+
+    function canvasToBlob(canvas, mime, quality) {
+      return new Promise((resolve, reject) => {
+        canvas.toBlob(blob => {
+          if (!blob) {
+            reject(new Error("이미지를 압축할 수 없습니다."));
+            return;
+          }
+          resolve(blob);
+        }, mime, quality);
+      });
+    }
+
+    function blobToDataUrl(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result || ""));
+        reader.onerror = () => reject(reader.error || new Error("압축 이미지를 읽을 수 없습니다."));
+        reader.readAsDataURL(blob);
+      });
+    }
+
     function syncSettingsForm() {
       els.mapTitle.value = state.title;
       els.minX.value = state.bounds.minX;
@@ -822,7 +1027,7 @@
     function clearPointForm() {
       clearTimeout(liveEditTimer);
       selectedPointId = null;
-      pendingImageData = "";
+      pendingImageId = "";
       els.pointX.value = 0;
       els.pointZ.value = 0;
       els.pointName.value = "";
@@ -853,14 +1058,14 @@
       point.name = els.pointName.value.trim() || "이름 없음";
       point.description = els.pointDescription.value.trim();
       point.color = isColor(els.pointColor.value) ? els.pointColor.value : point.color;
-      point.image = pendingImageData;
+      point.imageId = pendingImageId;
       persist();
       render();
     }
 
     function fillPointForm(point) {
       selectedPointId = point.id;
-      pendingImageData = point.image || "";
+      pendingImageId = point.imageId || "";
       els.pointX.value = point.x;
       els.pointZ.value = point.z;
       els.pointName.value = point.name;
@@ -881,10 +1086,11 @@
 
     function updateImagePreview() {
       els.imagePreview.replaceChildren();
-      if (pendingImageData) {
+      const src = getImageSrc(pendingImageId);
+      if (src) {
         const img = document.createElement("img");
         img.alt = "선택한 좌표 이미지 미리보기";
-        img.src = pendingImageData;
+        img.src = src;
         els.imagePreview.append(img);
       } else {
         els.imagePreview.textContent = "이미지 없음";
@@ -893,10 +1099,11 @@
 
     function updateBackgroundPreview() {
       els.backgroundPreview.replaceChildren();
-      if (state.background.image) {
+      const src = getImageSrc(state.background.imageId);
+      if (src) {
         const img = document.createElement("img");
         img.alt = "배경 이미지 미리보기";
-        img.src = state.background.image;
+        img.src = src;
         els.backgroundPreview.append(img);
       } else {
         els.backgroundPreview.textContent = "배경 없음";
@@ -913,6 +1120,7 @@
     function resetBackground() {
       state.background = clone(DEFAULT_STATE.background);
       els.backgroundImage.value = "";
+      pruneImageStore();
       syncBackgroundControls();
       persist();
       renderSvg();
@@ -972,7 +1180,7 @@
         name,
         description: els.pointDescription.value.trim(),
         color: isColor(els.pointColor.value) ? els.pointColor.value : paletteColor(state.points.length),
-        image: pendingImageData
+        imageId: pendingImageId
       };
 
       const existing = state.points.find(point => point.id === selectedPointId);
@@ -1013,7 +1221,7 @@
       localStorage.removeItem(STORAGE_KEY);
       state = clone(DEFAULT_STATE);
       selectedPointId = null;
-      pendingImageData = "";
+      pendingImageId = "";
       activeDrag = null;
       activeBackgroundDrag = null;
       hoveredPointId = null;
@@ -1065,7 +1273,7 @@
         main.append(name, coord);
 
         const imageMark = document.createElement("span");
-        imageMark.textContent = point.image ? "IMG" : "";
+        imageMark.textContent = getImageSrc(point.imageId) ? "IMG" : "";
         imageMark.style.fontSize = "0.7rem";
         imageMark.style.color = "var(--muted)";
 
@@ -1194,7 +1402,8 @@
 
     function drawBackground(plot) {
       const background = state.background;
-      if (!background.image) return;
+      const backgroundSrc = getImageSrc(background.imageId);
+      if (!backgroundSrc) return;
 
       const fallbackWidth = plot.width;
       const fallbackHeight = plot.height;
@@ -1225,7 +1434,7 @@
         y,
         width: imageWidth,
         height: imageHeight,
-        href: background.image,
+        href: backgroundSrc,
         preserveAspectRatio: "xMidYMid meet",
         opacity: background.opacity
       });
@@ -1358,11 +1567,12 @@
       const scale = state.tooltipScale;
       const width = Math.round(216 * scale);
       const padding = Math.round(10 * scale);
-      const imageSize = point.image ? Math.round(54 * scale) : 0;
-      const textX = point.image ? padding + imageSize + 10 * scale : padding;
-      const titleLines = wrapText(point.name, point.image ? 17 : 27, 2);
+      const pointImageSrc = getImageSrc(point.imageId);
+      const imageSize = pointImageSrc ? Math.round(54 * scale) : 0;
+      const textX = pointImageSrc ? padding + imageSize + 10 * scale : padding;
+      const titleLines = wrapText(point.name, pointImageSrc ? 17 : 27, 2);
       const description = point.description || "설명 없음";
-      const descriptionLines = wrapText(description, point.image ? 22 : 32, 4);
+      const descriptionLines = wrapText(description, pointImageSrc ? 22 : 32, 4);
       const titleLineHeight = 17 * scale;
       const descLineHeight = 15 * scale;
       const contentHeight = Math.max(
@@ -1423,13 +1633,13 @@
         fill: point.color
       });
 
-      if (point.image) {
+      if (pointImageSrc) {
         appendSvg("image", group, {
           x: padding,
           y: padding + 3 * scale,
           width: imageSize,
           height: imageSize,
-          href: point.image,
+          href: pointImageSrc,
           preserveAspectRatio: "xMidYMid meet"
         });
         appendSvg("rect", group, {
@@ -1617,7 +1827,7 @@
     }
 
     function startBackgroundDrag(event) {
-      if (!state.background.image) return;
+      if (!getImageSrc(state.background.imageId)) return;
       event.preventDefault();
       event.stopPropagation();
       const pointer = svgPoint(event);
@@ -1685,6 +1895,7 @@
     }
 
     function exportMarkdown() {
+      pruneImageStore();
       const data = {
         format: "coordinate-map-v1",
         exportedAt: new Date().toISOString(),
@@ -1696,12 +1907,13 @@
         tooltipMode: state.tooltipMode,
         tooltipScale: state.tooltipScale,
         exportScale: state.exportScale,
+        imageStore: state.imageStore,
         background: state.background,
         points: state.points
       };
       const rows = state.points.map(point => {
         const description = point.description.replace(/\|/g, "\\|").replace(/\n/g, " ");
-        return `| ${point.name.replace(/\|/g, "\\|")} | ${point.x} | ${point.z} | ${point.color} | ${description} | ${point.image ? "있음" : "없음"} |`;
+        return `| ${point.name.replace(/\|/g, "\\|")} | ${point.x} | ${point.z} | ${point.color} | ${description} | ${getImageSrc(point.imageId) ? "있음" : "없음"} |`;
       }).join("\n");
       const markdown = [
         `# ${state.title}`,
@@ -1715,7 +1927,8 @@
         `- 툴팁 표시: ${tooltipModeLabel(state.tooltipMode)}`,
         `- 툴팁 크기: ${Math.round(state.tooltipScale * 100)}%`,
         `- 이미지 저장 배율: ${state.exportScale}x`,
-        `- 배경 이미지: ${state.background.image ? "있음" : "없음"}`,
+        `- 이미지 저장 구조: WebP base64 이미지 저장소`,
+        `- 배경 이미지: ${getImageSrc(state.background.imageId) ? "있음" : "없음"}`,
         `- 배경 위치: x ${Math.round(state.background.offsetX)}px, y ${Math.round(state.background.offsetY)}px`,
         `- 배경 크기: ${Math.round(state.background.scale * 100)}%`,
         `- 배경 투명도: ${Math.round(state.background.opacity * 100)}%`,
@@ -1745,7 +1958,7 @@
           const imported = parseMarkdownData(String(reader.result || ""));
           state = normalizeState(imported);
           selectedPointId = null;
-          pendingImageData = "";
+          pendingImageId = "";
           syncSettingsForm();
           clearPointForm();
           persist();
@@ -1867,40 +2080,35 @@
         renderSvg();
       });
     });
-    els.backgroundImage.addEventListener("change", () => {
+    els.backgroundImage.addEventListener("change", async () => {
       const file = els.backgroundImage.files?.[0];
       if (!file) return;
       if (!file.type.startsWith("image/")) {
         setNotice("배경은 이미지 파일만 선택할 수 있습니다.", "error");
         return;
       }
-      const reader = new FileReader();
-      reader.onload = () => {
-        const image = new Image();
-        image.onload = () => {
-          const { plot } = getPlotMetrics();
-          const naturalWidth = image.naturalWidth || image.width || plot.width;
-          const naturalHeight = image.naturalHeight || image.height || plot.height;
-          const fitScale = Math.min(plot.width / naturalWidth, plot.height / naturalHeight, 1);
-          state.background = {
-            image: String(reader.result || ""),
-            width: naturalWidth,
-            height: naturalHeight,
-            scale: clamp(fitScale, 0.05, 8),
-            opacity: state.background.opacity,
-            offsetX: Math.round((plot.width - naturalWidth * fitScale) / 2),
-            offsetY: Math.round((plot.height - naturalHeight * fitScale) / 2)
-          };
-          syncBackgroundControls();
-          persist();
-          renderSvg();
-          setNotice("배경 이미지를 적용했습니다. 지도에서 드래그해 위치를 조정할 수 있습니다.", "ok");
+      try {
+        setNotice("배경 이미지를 WebP로 압축하는 중입니다.", "warn");
+        const asset = await compressFileToWebpAsset(file, "background", "raster");
+        state.imageStore[asset.id] = asset;
+        const { plot } = getPlotMetrics();
+        const fitScale = Math.min(plot.width / asset.width, plot.height / asset.height, 1);
+        state.background = {
+          imageId: asset.id,
+          width: asset.width,
+          height: asset.height,
+          scale: clamp(fitScale, 0.05, 8),
+          opacity: state.background.opacity,
+          offsetX: Math.round((plot.width - asset.width * fitScale) / 2),
+          offsetY: Math.round((plot.height - asset.height * fitScale) / 2)
         };
-        image.onerror = () => setNotice("배경 이미지를 읽을 수 없습니다.", "error");
-        image.src = String(reader.result || "");
-      };
-      reader.onerror = () => setNotice("배경 이미지를 읽을 수 없습니다.", "error");
-      reader.readAsDataURL(file);
+        syncBackgroundControls();
+        persist();
+        renderSvg();
+        setNotice("배경 이미지를 WebP 이미지 저장소에 저장했습니다. 지도에서 드래그해 위치를 조정할 수 있습니다.", "ok");
+      } catch (error) {
+        setNotice(error.message || "배경 이미지를 압축할 수 없습니다.", "error");
+      }
     });
     els.resetBackground.addEventListener("click", resetBackground);
     els.resetTooltips.addEventListener("click", resetTooltipOffsets);
@@ -1918,21 +2126,26 @@
     });
     els.resetMap.addEventListener("click", resetMap);
     els.exportPng.addEventListener("click", exportPng);
-    els.pointImage.addEventListener("change", () => {
+    els.pointImage.addEventListener("change", async () => {
       const file = els.pointImage.files?.[0];
       if (!file) return;
       if (!file.type.startsWith("image/")) {
         setNotice("이미지 파일만 선택할 수 있습니다.", "error");
         return;
       }
-      const reader = new FileReader();
-      reader.onload = () => {
-        pendingImageData = String(reader.result || "");
+      try {
+        setNotice("좌표 이미지를 WebP로 압축하는 중입니다.", "warn");
+        const assetId = selectedPointId ? `marker-${selectedPointId}` : `marker-draft-${Date.now()}`;
+        const asset = await compressFileToWebpAsset(file, assetId, "marker-icon");
+        state.imageStore[asset.id] = asset;
+        pendingImageId = asset.id;
         updateImagePreview();
         scheduleSelectedPointLiveUpdate();
-      };
-      reader.onerror = () => setNotice("이미지를 읽을 수 없습니다.", "error");
-      reader.readAsDataURL(file);
+        persist();
+        setNotice("좌표 이미지를 WebP 이미지 저장소에 저장했습니다.", "ok");
+      } catch (error) {
+        setNotice(error.message || "이미지를 압축할 수 없습니다.", "error");
+      }
     });
     window.addEventListener("pointermove", event => {
       moveTooltipDrag(event);
