@@ -410,6 +410,28 @@
       overflow-wrap: anywhere;
     }
 
+    .move-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .move-meta span {
+      min-width: 0;
+      border: 1px solid rgba(0, 124, 137, 0.16);
+      border-radius: var(--radius);
+      padding: 6px 8px;
+      background: #f7fafb;
+      overflow-wrap: anywhere;
+    }
+
+    .move-meta b {
+      color: var(--deep);
+    }
+
     .item-link {
       display: inline-flex;
       align-items: center;
@@ -768,6 +790,10 @@
         gap: 6px;
       }
 
+      .move-meta {
+        grid-template-columns: 1fr;
+      }
+
       .day-title {
         flex-direction: column;
       }
@@ -824,7 +850,7 @@
     <div class="page hero-inner">
       <p class="eyebrow">Busan family trip final plan</p>
       <h1>부산 4박 5일 여행 일정표</h1>
-      <p class="hero-copy">평택 출발 자가용 동선에 맞춰 수능 기원, 물놀이, 쇼핑, 먹거리, 선셋 요트 체험을 하루별로 정리했습니다.</p>
+      <p class="hero-copy">자가용 기본 일정에 자동차·대중교통 이동시간을 함께 넣고, 수능 기원·물놀이·쇼핑·디저트·바다 경관·남포동 자유시간 중심으로 정리했습니다.</p>
       <div class="hero-actions" aria-label="빠른 이동">
         <a class="button" href="#days">일정 보기</a>
         <a class="button secondary" href="#places">장소·주소 보기</a>
@@ -872,11 +898,11 @@
       <div class="section-head">
         <div>
           <h2 id="overview-title">전체 흐름</h2>
-          <p>마린시티에서 가볍게 시작하고, 해동용궁사와 송정으로 목적을 살린 뒤 센텀·광안리·남포동을 나눠 소화하는 구성입니다.</p>
+          <p>마린시티에서 가볍게 시작하고, 해동용궁사·송정, 센텀·광안리, 국립해양박물관·남포동을 하루씩 나눠 소화하는 구성입니다.</p>
         </div>
       </div>
       <div class="notice">
-        운영시간과 휴무는 2026년 7월 8일 검색 기준입니다. 여름 성수기와 기상 상황에 따라 변동될 수 있어, 출발 전날 한 번 더 확인하는 전제로 정리했습니다.
+        운영시간과 휴무는 2026년 7월 9일 기준입니다. 여름 성수기와 기상 상황에 따라 변동될 수 있어, 출발 전날 한 번 더 확인하는 전제로 정리했습니다.
       </div>
       <div class="section-head">
         <h2>일정 요약</h2>
@@ -894,13 +920,13 @@
         </article>
         <article class="summary-card">
           <h3>3일 차</h3>
-          <p>센텀·바닷마을 과자점·밀락더마켓·선셋 요트</p>
-          <span class="intensity high">보통~높음</span>
+          <p>센텀·바닷마을 과자점·밀락더마켓·광안리 야경</p>
+          <span class="intensity mid">보통</span>
         </article>
         <article class="summary-card">
           <h3>4일 차</h3>
-          <p>송도 용궁구름다리·BIFF·국제시장·광복로·깡통야시장</p>
-          <span class="intensity high">높음</span>
+          <p>국립해양박물관·남포동·BIFF·국제시장·광복로·깡통야시장</p>
+          <span class="intensity high">보통~높음</span>
         </article>
         <article class="summary-card">
           <h3>5일 차</h3>
@@ -922,7 +948,7 @@
         <div class="day-main">
           <div class="day-title">
             <div>
-              <h3 data-day-heading="1">1일 차 | 평택 → 마린시티 → 해운대</h3>
+              <h3 data-day-heading="1">1일 차 기본안 | 평택 → 마린시티 → 해운대</h3>
               <p data-day-subtitle="1">장거리 이동 후 카페·생활용품 쇼핑·체크인 중심의 완충일</p>
             </div>
             <div class="date-pill">7월 27일 월</div>
@@ -969,10 +995,18 @@
               </div>
             </div>
             <div class="time-row">
-              <div class="time">14:30~15:40</div>
+              <div class="time">14:30~15:00</div>
               <div>
-                <p class="item-title">팔라티움 해운대 이동·체크인·짐 정리</p>
-                <p class="item-note">체크인 15:00 기준, 주차장 동선 확인</p>
+                <p class="item-title">팔라티움 해운대 이동</p>
+                <p class="item-note">주차장 동선 확인</p>
+                <p class="item-address">주소: 부산광역시 해운대구 구남로30번길 18</p>
+              </div>
+            </div>
+            <div class="time-row">
+              <div class="time">15:00~15:40</div>
+              <div>
+                <p class="item-title">체크인·짐 정리</p>
+                <p class="item-note">객실 정리 후 첫날 선택 일정 결정</p>
                 <p class="item-address">주소: 부산광역시 해운대구 구남로30번길 18</p>
               </div>
             </div>
@@ -980,16 +1014,24 @@
               <div class="time">15:40~18:00</div>
               <div>
                 <p class="item-title">첫날 선택 일정</p>
-                <p class="item-note">SEA LIFE 부산, 부산 엑스더스카이, 호텔 휴식 중 당일 선택</p>
-                <p class="item-address">주소: SEA LIFE 부산 - 부산광역시 해운대구 해운대해변로 266 / 부산 엑스더스카이 - 부산광역시 해운대구 달맞이길 30</p>
+                <p class="item-note">해운대 해변·구남로, 엑스더스카이, 휴식, 해변열차, 더베이101 야경, 센텀시티 중 선택</p>
+                <p class="item-address">주소: 해운대해수욕장 - 부산광역시 해운대구 해운대해변로 264 / 엑스더스카이 - 부산광역시 해운대구 달맞이길 30</p>
                 <div class="tag-row"><span class="tag warn">가족 의견 보고 결정</span></div>
               </div>
             </div>
             <div class="time-row">
-              <div class="time">18:00~20:40</div>
+              <div class="time">18:00~19:30</div>
               <div>
-                <p class="item-title">해운대 저녁·산리오 러버스 클럽 선택 방문</p>
-                <p class="item-note">산리오는 2026.07.09부터 구남로17에서 운영 예정</p>
+                <p class="item-title">해운대 저녁</p>
+                <p class="item-note">숙소 가까운 식당 우선</p>
+                <p class="item-address">주소: 부산광역시 해운대구 구남로·해운대시장 일대</p>
+              </div>
+            </div>
+            <div class="time-row">
+              <div class="time">19:40~20:40</div>
+              <div>
+                <p class="item-title">산리오 러버스 클럽 해운대 선택 방문</p>
+                <p class="item-note">대기 길거나 피곤하면 생략</p>
                 <p class="item-address">주소: 부산광역시 해운대구 구남로17 1F~3F</p>
               </div>
             </div>
@@ -1007,16 +1049,19 @@
           <div class="side-panel">
             <h4>1일 차 선택 일정</h4>
             <ul class="compact-list">
-              <li><button class="alt-option" type="button" data-day="1" data-variant="sealife"><strong>A안 SEA LIFE 부산</strong><span>해양생물에 관심 있으면 선택</span></button></li>
-              <li><button class="alt-option" type="button" data-day="1" data-variant="xtheSky"><strong>B안 부산 엑스더스카이</strong><span>전망대와 야경 선호 시 선택</span></button></li>
-              <li><button class="alt-option" type="button" data-day="1" data-variant="rest"><strong>C안 호텔 휴식·해운대 자유시간</strong><span>장거리 이동 피로가 있으면 가장 안정적</span></button></li>
+              <li><button class="alt-option" type="button" data-day="1" data-variant="beachLight"><strong>A안 해운대 해변·구남로·시장</strong><span>첫날 가장 무난한 가벼운 코스</span></button></li>
+              <li><button class="alt-option" type="button" data-day="1" data-variant="xtheSky"><strong>B안 부산 엑스더스카이</strong><span>날씨 맑고 전망대가 괜찮을 때</span></button></li>
+              <li><button class="alt-option" type="button" data-day="1" data-variant="rest"><strong>C안 완전 휴식형</strong><span>운전 피로·도착 지연·컨디션 저하</span></button></li>
+              <li><button class="alt-option" type="button" data-day="1" data-variant="beachTrain"><strong>D안 해변열차 짧게</strong><span>짧은 탑승 체험을 넣고 싶을 때</span></button></li>
+              <li><button class="alt-option" type="button" data-day="1" data-variant="theBayNight"><strong>E안 마린시티·더베이101 야경</strong><span>낮에는 쉬고 밤에 짧게 이동</span></button></li>
+              <li><button class="alt-option" type="button" data-day="1" data-variant="centumRain"><strong>F안 비 오면 센텀시티 짧게</strong><span>첫날 비·폭염 대응</span></button></li>
             </ul>
             <div class="return-slot" data-return-slot="1"></div>
           </div>
           <div class="side-panel">
             <h4>운영 판단</h4>
             <ul class="compact-list">
-              <li><strong>추천</strong><span>C안까지 열어두고, 당일 컨디션에 맞춰 결정</span></li>
+              <li><strong>우선순위</strong><span>A안 → C안 → B안 → E안 → D안 → F안</span></li>
               <li><strong>저녁</strong><span>해운대시장·구남로는 숙소 가까운 마무리 코스로 활용</span></li>
             </ul>
           </div>
@@ -1027,7 +1072,7 @@
         <div class="day-main">
           <div class="day-title">
             <div>
-              <h3 data-day-heading="2">2일 차 | 해동용궁사 수능 기원 → 송정 물놀이</h3>
+              <h3 data-day-heading="2">2일 차 기본안 | 해동용궁사 수능 기원 → 송정 물놀이</h3>
               <p data-day-subtitle="2">19살 수험생 동생의 수능 기원과 바다 물놀이를 한 번에 묶는 날</p>
             </div>
             <div class="date-pill">7월 28일 화</div>
@@ -1039,7 +1084,8 @@
             <div class="time-row"><div class="time">11:10~11:40</div><div><p class="item-title">해동용궁사 → 송정 이동</p><p class="item-note">식사 장소는 송정 해변 쪽으로 잡기</p></div></div>
             <div class="time-row"><div class="time">11:40~13:00</div><div><p class="item-title">송정 점심</p><p class="item-note">물놀이 전후 접근 쉬운 곳 우선</p><p class="item-address">주소: 부산광역시 해운대구 송정해변로 62 일대</p></div></div>
             <div class="time-row"><div class="time">13:00~17:00</div><div><p class="item-title">송정해수욕장 물놀이·카페</p><p class="item-note">해수욕장 안전 통제와 파도 상황 확인</p><p class="item-address">주소: 부산광역시 해운대구 송정해변로 62</p><div class="tag-row"><span class="tag">물놀이</span><span class="tag">카페</span></div></div></div>
-            <div class="time-row"><div class="time">17:00~19:00</div><div><p class="item-title">숙소 복귀·샤워·휴식</p><p class="item-note">젖은 짐 정리와 저녁 전 휴식</p><p class="item-address">주소: 부산광역시 해운대구 구남로30번길 18</p></div></div>
+            <div class="time-row"><div class="time">17:00~17:40</div><div><p class="item-title">숙소 복귀</p><p class="item-note">젖은 짐 정리</p><p class="item-address">주소: 부산광역시 해운대구 구남로30번길 18</p></div></div>
+            <div class="time-row"><div class="time">17:40~19:00</div><div><p class="item-title">샤워·휴식</p><p class="item-note">저녁 전 체력 회복</p><p class="item-address">주소: 부산광역시 해운대구 구남로30번길 18</p></div></div>
             <div class="time-row"><div class="time">19:00 이후</div><div><p class="item-title">해운대 저녁·자유시간</p><p class="item-note">피곤하면 숙소 근처 식사로 짧게 마무리</p><p class="item-address">주소: 부산광역시 해운대구 구남로·해운대시장 일대</p></div></div>
           </div>
         </div>
@@ -1049,15 +1095,15 @@
             <ul class="compact-list">
               <li><strong>핵심 목적</strong><span>수험생 동생 수능 기원</span></li>
               <li><strong>송정 체류</strong><span>물놀이 중심, 카페는 회복용</span></li>
-              <li><strong>삭제</strong><span>청사포와 스카이캡슐은 제외</span></li>
+              <li><strong>삭제</strong><span>청사포 바다당과 스카이캡슐은 제외</span></li>
             </ul>
           </div>
           <div class="side-panel">
             <h4>대체안</h4>
             <ul class="compact-list">
-              <li><button class="alt-option" type="button" data-day="2" data-variant="lightRain"><strong>약한 비</strong><span>용궁사 짧게 보고 송정 카페 중심</span></button></li>
-              <li><button class="alt-option" type="button" data-day="2" data-variant="storm"><strong>폭우·강풍</strong><span>3일 차 센텀 일정과 교환</span></button></li>
-              <li><button class="alt-option" type="button" data-day="2" data-variant="noSwimming"><strong>물놀이 불가</strong><span>송정 카페 후 센텀 또는 해운대 자유시간</span></button></li>
+              <li><button class="alt-option" type="button" data-day="2" data-variant="lightRain"><strong>A안 약한 비 / 물놀이 애매</strong><span>용궁사 짧게 보고 송정 카페 중심</span></button></li>
+              <li><button class="alt-option" type="button" data-day="2" data-variant="storm"><strong>B안 폭우·강풍</strong><span>3일 차 센텀 일정과 교환</span></button></li>
+              <li><button class="alt-option" type="button" data-day="2" data-variant="noSwimming"><strong>C안 송정 물놀이 불가</strong><span>송정 카페 후 해운대 휴식</span></button></li>
             </ul>
             <div class="return-slot" data-return-slot="2"></div>
           </div>
@@ -1068,22 +1114,24 @@
         <div class="day-main">
           <div class="day-title">
             <div>
-              <h3 data-day-heading="3">3일 차 | 센텀 → 바닷마을 과자점 → 밀락더마켓 → 선셋 요트</h3>
-              <p data-day-subtitle="3">실내 쇼핑과 광안리 오션뷰를 이어 붙인 체험 중심 코스</p>
+              <h3 data-day-heading="3">3일 차 기본안 | 센텀 → 바닷마을 과자점 → 밀락더마켓 → 광안리 야경</h3>
+              <p data-day-subtitle="3">실내 쇼핑과 광안리 오션뷰, 광안대교 야경을 이어 붙인 코스</p>
             </div>
             <div class="date-pill">7월 29일 수</div>
           </div>
           <div class="timeline" data-day-timeline="3">
-            <div class="time-row"><div class="time">09:00~09:50</div><div><p class="item-title">아침</p><p class="item-note">요트 전까지 긴 하루라 여유 있게 시작</p></div></div>
+            <div class="time-row"><div class="time">09:00~09:50</div><div><p class="item-title">아침</p><p class="item-note">광안리 야경까지 보는 날이라 여유 있게 시작</p></div></div>
             <div class="time-row"><div class="time">10:00~10:25</div><div><p class="item-title">해운대 → 센텀 이동</p><p class="item-note">신세계 센텀시티 주차 후 실내 동선</p><p class="item-address">주소: 부산광역시 해운대구 센텀남대로 35</p></div></div>
             <div class="time-row"><div class="time">10:30~12:30</div><div><p class="item-title">신세계 센텀시티 쇼핑·서점·펀시티</p><p class="item-note">더위 피하면서 쇼핑과 오락을 함께 처리</p><p class="item-address">주소: 부산광역시 해운대구 센텀남대로 35</p><div class="tag-row"><span class="tag">쇼핑</span><span class="tag">실내</span></div></div></div>
-            <div class="time-row"><div class="time">12:30~15:00</div><div><p class="item-title">센텀시티 점심·자유시간·카페</p><p class="item-note">요트 전 무리하지 않게 체력 보존</p><p class="item-address">주소: 부산광역시 해운대구 센텀남대로 35</p></div></div>
-            <div class="time-row"><div class="time">15:00~15:30</div><div><p class="item-title">센텀 → 광안리 이동</p><p class="item-note">광안리 쪽 주차·정차 지점 확인</p></div></div>
-            <div class="time-row"><div class="time">15:30~16:10</div><div><p class="item-title">바닷마을 과자점 선택 방문</p><p class="item-note">수요일 방문 가능, 품절 가능성 고려</p><p class="item-address">주소: 부산광역시 수영구 광남로48번길 43 2층</p></div></div>
-            <div class="time-row"><div class="time">16:20~17:30</div><div><p class="item-title">밀락더마켓 선택 방문</p><p class="item-note">요트 전 대기·간식·오션뷰</p><p class="item-address">주소: 부산광역시 수영구 민락수변로17번길 56</p></div></div>
-            <div class="time-row"><div class="time">17:30~18:50</div><div><p class="item-title">이른 저녁 또는 간식·요트 탑승장 이동</p><p class="item-note">예약 업체가 지정한 계류장과 집결 시간을 우선</p><p class="item-address">주소: 부산광역시 해운대구 해운대해변로 84</p></div></div>
-            <div class="time-row"><div class="time">19:00 전후</div><div><p class="item-title">부산 해운대 요트투어</p><p class="item-note">3일 차 핵심 체험, 사전예약 필수</p><p class="item-address">주소: 부산광역시 해운대구 해운대해변로 84</p><a class="item-link" href="https://www.haeundaerivercruise.com/home" target="_blank" rel="noreferrer">예약 사이트</a><div class="tag-row"><span class="tag warn">예약 필수</span><span class="tag">선셋</span></div></div></div>
-            <div class="time-row"><div class="time">20:00~21:00</div><div><p class="item-title">하선 후 광안리·해운대 야경 자유시간</p><p class="item-note">피곤하면 바로 숙소 복귀</p></div></div>
+            <div class="time-row"><div class="time">12:30~13:30</div><div><p class="item-title">센텀시티 점심</p><p class="item-note">백화점·몰 내부에서 해결</p><p class="item-address">주소: 부산광역시 해운대구 센텀남대로 35</p></div></div>
+            <div class="time-row"><div class="time">13:30~14:40</div><div><p class="item-title">센텀 자유시간·카페</p><p class="item-note">광안리 이동 전 실내에서 쉬기</p><p class="item-address">주소: 부산광역시 해운대구 센텀남대로 35</p></div></div>
+            <div class="time-row"><div class="time">14:40~15:10</div><div><p class="item-title">센텀 → 광안리 이동</p><p class="item-note">광안리 쪽 주차·정차 지점 확인</p><p class="item-address">주소: 부산광역시 수영구 광안해변로 219 일대</p></div></div>
+            <div class="time-row"><div class="time">15:10~15:50</div><div><p class="item-title">바닷마을 과자점 선택 방문</p><p class="item-note">수요일 방문 가능, 품절 가능성 고려</p><p class="item-address">주소: 부산광역시 수영구 광남로48번길 43 2층</p></div></div>
+            <div class="time-row"><div class="time">16:00~17:20</div><div><p class="item-title">밀락더마켓 방문</p><p class="item-note">오션뷰·간식·광안리 전 쉬는 코스</p><p class="item-address">주소: 부산광역시 수영구 민락수변로17번길 56</p></div></div>
+            <div class="time-row"><div class="time">17:20~18:00</div><div><p class="item-title">광안리 해변 쪽 이동·휴식</p><p class="item-note">해변 산책 전 잠깐 쉬기</p><p class="item-address">주소: 부산광역시 수영구 광안해변로 219 일대</p></div></div>
+            <div class="time-row"><div class="time">18:00~19:20</div><div><p class="item-title">광안리 저녁</p><p class="item-note">해변 근처 식당가 이용</p><p class="item-address">주소: 부산광역시 수영구 광안해변로 219 일대</p></div></div>
+            <div class="time-row"><div class="time">19:20~20:20</div><div><p class="item-title">광안리 해변·광안대교 야경</p><p class="item-note">요트 없이도 광안대교 야경 확보</p><p class="item-address">주소: 부산광역시 수영구 광안해변로 219</p><div class="tag-row"><span class="tag">야경</span></div></div></div>
+            <div class="time-row"><div class="time">이후</div><div><p class="item-title">숙소 복귀</p><p class="item-note">늦은 산책은 생략 가능</p><p class="item-address">주소: 부산광역시 해운대구 구남로30번길 18</p></div></div>
           </div>
         </div>
         <aside>
@@ -1092,17 +1140,16 @@
             <ul class="compact-list">
               <li><strong>센텀시티</strong><span>쇼핑·펀시티·실내 휴식</span></li>
               <li><strong>바닷마을 과자점</strong><span>디저트 포장·선택 방문</span></li>
-              <li><strong>밀락더마켓</strong><span>요트 전 대기·간식·오션뷰</span></li>
-              <li><strong>선셋 요트</strong><span>이날의 핵심 체험</span></li>
+              <li><strong>밀락더마켓</strong><span>오션뷰·간식·광안리 전 쉬는 코스</span></li>
+              <li><strong>광안리 야경</strong><span>요트 없이도 광안대교 야경 확보</span></li>
             </ul>
           </div>
           <div class="side-panel">
             <h4>대체안</h4>
             <ul class="compact-list">
-              <li><button class="alt-option" type="button" data-day="3" data-variant="yachtSoldOut"><strong>요트 매진</strong><span>밀락더마켓 후 광안리 저녁·야경</span></button></li>
-              <li><button class="alt-option" type="button" data-day="3" data-variant="badWeather"><strong>기상 악화</strong><span>센텀 쇼핑·펀시티 확대 후 밀락더마켓</span></button></li>
-              <li><button class="alt-option" type="button" data-day="3" data-variant="tired"><strong>피곤함</strong><span>바닷마을 생략, 밀락더마켓만</span></button></li>
-              <li><button class="alt-option" type="button" data-day="3" data-variant="exhausted"><strong>더 피곤함</strong><span>둘 다 생략하고 요트 또는 숙소 복귀</span></button></li>
+              <li><button class="alt-option" type="button" data-day="3" data-variant="centumLong"><strong>A안 센텀시티 오래 구경</strong><span>폭염·비·피로가 있을 때 안정안</span></button></li>
+              <li><button class="alt-option" type="button" data-day="3" data-variant="bakeryOnly"><strong>B안 바닷마을 과자점만</strong><span>디저트와 광안리 동선만 유지</span></button></li>
+              <li><button class="alt-option" type="button" data-day="3" data-variant="hotelRest"><strong>C안 센텀 후 숙소 복귀</strong><span>전날 물놀이 피로가 클 때</span></button></li>
             </ul>
             <div class="return-slot" data-return-slot="3"></div>
           </div>
@@ -1113,43 +1160,43 @@
         <div class="day-main">
           <div class="day-title">
             <div>
-              <h3 data-day-heading="4">4일 차 | 송도 용궁구름다리 → 남포동 먹거리·시장</h3>
-              <p data-day-subtitle="4">송도 경관을 짧게 보고 BIFF·국제시장·광복로·깡통야시장으로 이어지는 고밀도 코스</p>
+              <h3 data-day-heading="4">4일 차 | 국립해양박물관 → 남포동 → 국제시장 → 광복로</h3>
+              <p data-day-subtitle="4">영도 국립해양박물관을 보고 남포동은 도보 중심으로 움직이는 원도심 일정</p>
             </div>
             <div class="date-pill">7월 30일 목</div>
           </div>
           <div class="timeline" data-day-timeline="4">
-            <div class="time-row"><div class="time">08:30~09:20</div><div><p class="item-title">아침</p><p class="item-note">남포동까지 이동이 있어 너무 늦지 않게 시작</p></div></div>
-            <div class="time-row"><div class="time">09:30</div><div><p class="item-title">해운대 숙소 출발</p><p class="item-note">차량 이동, 송도 쪽 주차 위치 사전 확인</p><p class="item-address">주소: 부산광역시 해운대구 구남로30번길 18</p></div></div>
-            <div class="time-row"><div class="time">10:30~11:20</div><div><p class="item-title">송도해수욕장·구름산책로</p><p class="item-note">케이블카 없이 바다만 짧게 보기</p><p class="item-address">주소: 부산광역시 서구 송도해변로 100 일대</p></div></div>
-            <div class="time-row"><div class="time">11:20~12:10</div><div><p class="item-title">송도 용궁구름다리</p><p class="item-note">저비용 체험·사진 포인트</p><p class="item-address">주소: 부산광역시 서구 암남공원로 179-20</p><div class="tag-row"><span class="tag">사진</span><span class="tag">저비용 체험</span></div></div></div>
-            <div class="time-row"><div class="time">12:10~13:20</div><div><p class="item-title">송도 카페·간식 후 남포동 이동</p><p class="item-note">너무 더우면 송도 체류를 줄이기</p><p class="item-address">주소: 송도 - 부산광역시 서구 송도해변로 100 일대 / 남포동 - 부산광역시 중구 비프광장로 36 일대</p></div></div>
-            <div class="time-row"><div class="time">13:20~14:20</div><div><p class="item-title">남포동 점심</p><p class="item-note">BIFF·국제시장 동선 가까운 곳</p><p class="item-address">주소: 부산광역시 중구 비프광장로 36 일대</p></div></div>
-            <div class="time-row"><div class="time">14:20~15:00</div><div><p class="item-title">BIFF광장·씨앗호떡·거리 구경</p><p class="item-note">간식과 남포동 분위기</p><p class="item-address">주소: 부산광역시 중구 비프광장로 36 일대</p></div></div>
-            <div class="time-row"><div class="time">15:00~16:00</div><div><p class="item-title">국제시장 짧게 구경</p><p class="item-note">40~60분만 살리는 시장 일정</p><p class="item-address">주소: 부산광역시 중구 중구로 32</p></div></div>
-            <div class="time-row"><div class="time">16:00~17:20</div><div><p class="item-title">광복로 자유시간·카페</p><p class="item-note">카페·소품샵·쇼핑으로 체력 회복</p><p class="item-address">주소: 부산광역시 중구 광복로 72-1</p></div></div>
-            <div class="time-row"><div class="time">17:30~20:30</div><div><p class="item-title">남포동 저녁·부평깡통야시장 선택 방문</p><p class="item-note">체력 남으면 야시장, 힘들면 저녁 후 숙소 복귀</p><p class="item-address">주소: 부산광역시 중구 부평1길 48</p><div class="tag-row"><span class="tag warn">선택 코스</span></div></div></div>
-            <div class="time-row"><div class="time">이후</div><div><p class="item-title">해운대 복귀</p><p class="item-note">늦은 시간 운전 피로 고려</p></div></div>
+            <div class="time-row"><div class="time">08:30~09:20</div><div><p class="item-title">아침</p></div></div>
+            <div class="time-row"><div class="time">09:30</div><div><p class="item-title">해운대 숙소 출발</p><p class="item-address">주소: 부산광역시 해운대구 구남로30번길 18</p></div></div>
+            <div class="time-row"><div class="time">09:30~10:20</div><div><p class="item-title">해운대 → 국립해양박물관</p><p class="item-address">주소: 부산광역시 영도구 해양로301번길 45</p><div class="move-meta"><span><b>자동차 </b>45~60분</span><span><b>대중교통/도보 </b>70~90분</span></div></div></div>
+            <div class="time-row"><div class="time">10:20~12:00</div><div><p class="item-title">국립해양박물관 관람</p><p class="item-address">주소: 부산광역시 영도구 해양로301번길 45</p><div class="tag-row"><span class="tag">실내</span><span class="tag">무료</span></div></div></div>
+            <div class="time-row"><div class="time">12:00~12:40</div><div><p class="item-title">영도 → 남포동</p><p class="item-address">주소: 부산광역시 중구 비프광장로 36 일대</p><div class="move-meta"><span><b>자동차 </b>20~35분</span><span><b>대중교통/도보 </b>35~50분</span></div></div></div>
+            <div class="time-row"><div class="time">12:40~13:50</div><div><p class="item-title">남포동 점심</p><p class="item-address">주소: 부산광역시 중구 비프광장로 36 일대</p></div></div>
+            <div class="time-row"><div class="time">13:50~14:30</div><div><p class="item-title">BIFF광장·씨앗호떡·거리 구경</p><p class="item-address">주소: 부산광역시 중구 비프광장로 36 일대</p><div class="move-meta"><span><b>자동차 </b>도보권</span><span><b>대중교통/도보 </b>도보권</span></div></div></div>
+            <div class="time-row"><div class="time">14:30~15:30</div><div><p class="item-title">국제시장 짧게 구경</p><p class="item-address">주소: 부산광역시 중구 중구로 32</p><div class="move-meta"><span><b>자동차 </b>도보권</span><span><b>대중교통/도보 </b>도보권</span></div></div></div>
+            <div class="time-row"><div class="time">15:30~17:00</div><div><p class="item-title">광복로 자유시간·카페</p><p class="item-address">주소: 부산광역시 중구 광복로 72-1</p><div class="move-meta"><span><b>자동차 </b>도보권</span><span><b>대중교통/도보 </b>도보권</span></div></div></div>
+            <div class="time-row"><div class="time">17:00~18:30</div><div><p class="item-title">남포동 저녁</p><p class="item-address">주소: 부산광역시 중구 비프광장로 36 일대</p><div class="move-meta"><span><b>자동차 </b>도보권</span><span><b>대중교통/도보 </b>도보권</span></div></div></div>
+            <div class="time-row"><div class="time">19:30~20:30</div><div><p class="item-title">부평깡통야시장 선택 방문</p><p class="item-address">주소: 부산광역시 중구 부평1길 48</p><div class="move-meta"><span><b>자동차 </b>도보/짧은 이동</span><span><b>대중교통/도보 </b>도보 10~20분</span></div><div class="tag-row"><span class="tag warn">선택</span></div></div></div>
+            <div class="time-row"><div class="time">이후</div><div><p class="item-title">남포동 → 해운대 숙소</p><p class="item-address">주소: 부산광역시 해운대구 구남로30번길 18</p><div class="move-meta"><span><b>자동차 </b>45~70분</span><span><b>대중교통/도보 </b>55~80분</span></div></div></div>
           </div>
         </div>
         <aside>
           <div class="side-panel">
             <h4>4일 차 역할</h4>
             <ul class="compact-list">
-              <li><strong>송도</strong><span>케이블카 없이 바다와 구름다리만</span></li>
-              <li><strong>BIFF광장</strong><span>씨앗호떡·간식·거리 분위기</span></li>
-              <li><strong>국제시장</strong><span>짧고 굵은 시장 구경</span></li>
+              <li><strong>국립해양박물관</strong><span>영도 실내 관람, 관람료 무료</span></li>
+              <li><strong>남포동</strong><span>점심 이후 도보 중심 동선</span></li>
+              <li><strong>국제시장</strong><span>1시간 이내로 제한</span></li>
               <li><strong>광복로</strong><span>카페·소품샵·자유시간</span></li>
-              <li><strong>깡통야시장</strong><span>체력 남을 때만 가는 저녁 코스</span></li>
+              <li><strong>깡통야시장</strong><span>체력 남을 때만 선택 방문</span></li>
             </ul>
           </div>
           <div class="side-panel">
             <h4>대체안</h4>
             <ul class="compact-list">
-              <li><button class="alt-option" type="button" data-day="4" data-variant="hot"><strong>너무 더움</strong><span>송도 단축 후 남포동 카페·광복로 중심</span></button></li>
-              <li><button class="alt-option" type="button" data-day="4" data-variant="bridgeClosed"><strong>구름다리 중단</strong><span>송도해수욕장·카페만 보고 남포동 이동</span></button></li>
-              <li><button class="alt-option" type="button" data-day="4" data-variant="marketBoring"><strong>시장 지루함</strong><span>국제시장 생략 후 광복로 카페·상점</span></button></li>
-              <li><button class="alt-option" type="button" data-day="4" data-variant="rain"><strong>비</strong><span>송도 축소 후 남포동 실내 카페·상점 중심</span></button></li>
+              <li><button class="alt-option" type="button" data-day="4" data-variant="museumLong"><strong>A안 박물관 오래 보기</strong><span>박물관을 천천히 보고 남포동 후반부 압축</span></button></li>
+              <li><button class="alt-option" type="button" data-day="4" data-variant="shortMuseum"><strong>B안 피곤하면 짧게</strong><span>핵심만 보고 18시 전후 복귀</span></button></li>
+              <li><button class="alt-option" type="button" data-day="4" data-variant="noMarket"><strong>C안 시장 싫으면</strong><span>광복로 카페·소품샵·자유시간 중심</span></button></li>
             </ul>
             <div class="return-slot" data-return-slot="4"></div>
           </div>
@@ -1160,7 +1207,7 @@
         <div class="day-main">
           <div class="day-title">
             <div>
-              <h3 data-day-heading="5">5일 차 | 해운대 마무리 → 평택 귀가</h3>
+              <h3 data-day-heading="5">5일 차 기본안 | 해운대 마무리 → 평택 귀가</h3>
               <p data-day-subtitle="5">시장·구남로를 짧게 보고 체크아웃 후 귀가하는 낮은 강도 일정</p>
             </div>
             <div class="date-pill">7월 31일 금</div>
@@ -1178,9 +1225,9 @@
           <div class="side-panel">
             <h4>5일 차 대체안</h4>
             <ul class="compact-list">
-              <li><button class="alt-option" type="button" data-day="5" data-variant="tired"><strong>모두 피곤함</strong><span>체크아웃 후 바로 출발</span></button></li>
-              <li><button class="alt-option" type="button" data-day="5" data-variant="traffic"><strong>금요일 정체 우려</strong><span>점심을 휴게소에서 해결</span></button></li>
-              <li><button class="alt-option" type="button" data-day="5" data-variant="leisure"><strong>여유 있음</strong><span>해운대시장·구남로만 짧게</span></button></li>
+              <li><button class="alt-option" type="button" data-day="5" data-variant="directReturn"><strong>A안 바로 귀가</strong><span>피로와 정체 대응 우선</span></button></li>
+              <li><button class="alt-option" type="button" data-day="5" data-variant="shortHaeundae"><strong>B안 마지막 짧은 구경</strong><span>기본안보다 구남로를 조금 더 살림</span></button></li>
+              <li><button class="alt-option" type="button" data-day="5" data-variant="lateDeparture"><strong>C안 늦게 출발</strong><span>부산에서 조금 더 쉬다 출발</span></button></li>
             </ul>
             <div class="return-slot" data-return-slot="5"></div>
           </div>
@@ -1212,8 +1259,8 @@
     <section id="operating" aria-labelledby="operating-title">
       <div class="section-head">
         <div>
-          <h2 id="operating-title">운영시간·예약·비용 요약</h2>
-          <p>변동이 잦은 곳은 ‘방문 전 재확인’으로 표시했습니다. 요트는 예약 업체의 탑승장·집결 시간이 최우선입니다.</p>
+          <h2 id="operating-title">주요 운영·예약 체크</h2>
+          <p>숙소는 예약 완료 전제입니다. 해변열차 선택안은 예약·대기 변수가 있고, 나머지는 운영시간·날씨·주차 여부를 확인하는 방식입니다.</p>
         </div>
       </div>
       <div class="table-wrap">
@@ -1221,12 +1268,60 @@
           <thead>
             <tr>
               <th>장소</th>
-              <th>운영시간</th>
               <th>예약</th>
-              <th>비용</th>
+              <th>체크 포인트</th>
             </tr>
           </thead>
           <tbody id="operatingRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="quick-alt-title">
+      <div class="section-head">
+        <div>
+          <h2 id="quick-alt-title">전체 이동시간 요약</h2>
+          <p>이동시간은 일반 추정치입니다. 2026년 7월 말 성수기, 주차, 퇴근시간, 비 오는 날에는 자가용 기준 10~30분 이상 추가될 수 있습니다.</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>구간</th><th>자동차</th><th>대중교통</th></tr></thead>
+          <tbody>
+            <tr><td>평택 → 부산 해운대</td><td>4시간 30분~5시간 30분</td><td>4~5시간</td></tr>
+            <tr><td>해운대 → 마린시티</td><td>10~15분</td><td>20~30분</td></tr>
+            <tr><td>해운대 → 해동용궁사</td><td>30~40분</td><td>55~75분</td></tr>
+            <tr><td>해동용궁사 → 송정</td><td>15~25분</td><td>25~40분</td></tr>
+            <tr><td>송정 → 해운대</td><td>25~40분</td><td>45~70분</td></tr>
+            <tr><td>해운대 → 센텀시티</td><td>15~25분</td><td>20~35분</td></tr>
+            <tr><td>센텀시티 → 광안리</td><td>20~30분</td><td>30~45분</td></tr>
+            <tr><td>광안리 → 해운대</td><td>20~35분</td><td>35~55분</td></tr>
+            <tr><td>해운대 → 국립해양박물관</td><td>45~60분</td><td>70~90분</td></tr>
+            <tr><td>국립해양박물관 → 남포동</td><td>20~35분</td><td>35~50분</td></tr>
+            <tr><td>남포동 → 해운대</td><td>45~70분</td><td>55~80분</td></tr>
+            <tr><td>부산 해운대 → 평택</td><td>4시간 30분~6시간</td><td>4~5시간</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="principles-title">
+      <div class="section-head">
+        <div>
+          <h2 id="principles-title">이동 방식 최종 추천</h2>
+          <p>자가용을 기본으로 두되, 주차가 번거로운 광안리·남포동 구간은 도보나 대중교통을 섞는 구성이 효율적입니다.</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>일차</th><th>추천 이동 방식</th><th>이유</th></tr></thead>
+          <tbody>
+            <tr><td>1일 차</td><td>자가용 + 해운대 도보</td><td>장거리 이동 후 숙소 주변이 편함</td></tr>
+            <tr><td>2일 차</td><td>자가용 추천</td><td>해동용궁사·송정은 자가용 효율이 높음</td></tr>
+            <tr><td>3일 차</td><td>택시/대중교통 혼합</td><td>광안리 주차가 번거로울 수 있음</td></tr>
+            <tr><td>4일 차</td><td>자가용/택시 + 남포동 도보</td><td>영도 이동은 차, 남포동은 도보가 편함</td></tr>
+            <tr><td>5일 차</td><td>자가용</td><td>귀가일</td></tr>
+          </tbody>
         </table>
       </div>
     </section>
@@ -1267,250 +1362,337 @@
 
   <footer>
     <div class="page">
-      <p><strong>최종 구조:</strong> 마린시티 카페·쇼핑 → 해동용궁사 수능 기원 → 송정 물놀이 → 센텀·광안리 디저트·밀락더마켓·선셋 요트 → 송도 용궁구름다리·남포동 → 귀가</p>
-      <p>스카이캡슐·청사포·송도케이블카를 제외하고, 목적성 있는 해동용궁사와 체험성 있는 선셋 요트, 저비용 경관 코스인 송도 용궁구름다리를 살린 구성입니다.</p>
+      <p><strong>최종 구조:</strong> 평택 → 마린시티·해운대 → 해동용궁사·송정 → 센텀·광안리 → 국립해양박물관·남포동 → 평택</p>
+      <p>부산아쿠아리움, 포켓몬 행사, 동백섬, 흰여울문화마을, 스카이캡슐, 청사포 바다당, 송도케이블카, 선셋 요트, 송도 용궁구름다리를 제외하고 가족형으로 해운대 중심 숙박 + 기장/송정 + 센텀/광안리 + 영도/남포동을 나눈 구조입니다.</p>
       <h2>주소·운영정보·이미지 출처</h2>
       <ul class="source-list" id="sourceList"></ul>
     </div>
   </footer>
 
   <script>
-    const scheduleVariants = {
+    const scheduleVariants = {};
+
+    const baseSchedules = {
       1: {
-        sealife: {
-          heading: "1일 차 선택안 | SEA LIFE 부산",
-          subtitle: "체크인 후 해운대 아쿠아리움으로 가볍게 움직이는 첫날 코스",
+        heading: "1일 차 | 평택 → 마린시티 → 해운대",
+        subtitle: "장거리 이동 후 마린시티와 해운대 숙소 주변을 중심으로 가볍게 적응하는 날",
+        rows: [
+          { time: "07:00", title: "평택 출발", car: "평택 → 부산 4시간 30분~5시간 30분", transit: "KTX·지하철 조합 4~5시간" },
+          { time: "09:00 전후", title: "휴게소 휴식", car: "20~30분" },
+          { time: "11:30~12:20", title: "마린시티 도착·점심", address: "부산광역시 해운대구 마린시티 일대" },
+          { time: "12:20~13:20", title: "모모스커피 마린시티점", address: "부산광역시 해운대구 마린시티1로 91 101동 1층" },
+          { time: "13:30~14:30", title: "다이소 부산해운대마린시티점", car: "모모스 → 다이소 약 5분", transit: "도보 10~15분", address: "부산광역시 해운대구 마린시티2로 38" },
+          { time: "14:30~15:00", title: "팔라티움 해운대 이동", car: "10~15분", transit: "버스/도보 20~30분", address: "부산광역시 해운대구 구남로30번길 18" },
+          { time: "15:00~15:40", title: "체크인·짐 정리", address: "부산광역시 해운대구 구남로30번길 18" },
+          { time: "15:40~18:00", title: "1일 차 선택 일정", car: "숙소 기준", transit: "숙소 기준", tags: [{ text: "A~F안 선택", tone: "warn" }] },
+          { time: "18:00~19:30", title: "해운대 저녁", car: "숙소 주변", transit: "도보 가능", address: "부산광역시 해운대구 구남로·해운대시장 일대" },
+          { time: "19:40~20:40", title: "산리오 러버스 클럽 해운대 선택 방문", car: "5~10분", transit: "도보 10~20분", address: "부산광역시 해운대구 구남로17 1F~3F" },
+          { time: "이후", title: "구남로·해운대시장 또는 숙소 복귀", transit: "도보 가능", address: "부산광역시 해운대구 중동1로 42-16" }
+        ]
+      },
+      2: {
+        heading: "2일 차 | 해동용궁사 수능 기원 → 송정 물놀이",
+        subtitle: "해동용궁사 수능 기원과 송정 물놀이를 묶은 자가용 추천 코스",
+        rows: [
+          { time: "08:30~09:10", title: "아침" },
+          { time: "09:10~09:50", title: "숙소 → 해동용궁사", car: "30~40분", transit: "55~75분", address: "부산광역시 기장군 기장읍 용궁길 86" },
+          { time: "09:50~11:10", title: "해동용궁사 관람·수능 대박 기원", address: "부산광역시 기장군 기장읍 용궁길 86", tags: ["수능 기원"] },
+          { time: "11:10~11:40", title: "해동용궁사 → 송정", car: "15~25분", transit: "25~40분", address: "부산광역시 해운대구 송정해변로 62 일대" },
+          { time: "11:40~13:00", title: "송정 점심", address: "부산광역시 해운대구 송정해변로 62 일대" },
+          { time: "13:00~17:00", title: "송정해수욕장 물놀이·카페", address: "부산광역시 해운대구 송정해변로 62", tags: ["물놀이"] },
+          { time: "17:00~17:40", title: "송정 → 숙소", car: "25~40분", transit: "45~70분", address: "부산광역시 해운대구 구남로30번길 18" },
+          { time: "17:40~19:00", title: "샤워·휴식", address: "부산광역시 해운대구 구남로30번길 18" },
+          { time: "19:00 이후", title: "해운대 저녁·자유시간", car: "숙소 주변", transit: "도보 가능", address: "부산광역시 해운대구 구남로·해운대시장 일대" }
+        ]
+      },
+      3: {
+        heading: "3일 차 | 센텀 → 바닷마을 과자점 → 밀락더마켓 → 광안리 야경",
+        subtitle: "센텀 실내 일정 후 광안리 디저트·오션뷰·야경으로 이어지는 날",
+        rows: [
+          { time: "09:00~09:50", title: "아침" },
+          { time: "10:00~10:25", title: "해운대 → 센텀시티", car: "15~25분", transit: "20~35분", address: "부산광역시 해운대구 센텀남대로 35" },
+          { time: "10:30~12:30", title: "신세계 센텀시티 쇼핑·서점·펀시티", address: "부산광역시 해운대구 센텀남대로 35", tags: ["실내"] },
+          { time: "12:30~13:30", title: "센텀시티 점심", address: "부산광역시 해운대구 센텀남대로 35" },
+          { time: "13:30~14:40", title: "센텀 자유시간·카페", address: "부산광역시 해운대구 센텀남대로 35" },
+          { time: "14:40~15:10", title: "센텀 → 광안리", car: "20~30분", transit: "30~45분", address: "부산광역시 수영구 광안해변로 219 일대" },
+          { time: "15:10~15:50", title: "바닷마을 과자점 선택 방문", address: "부산광역시 수영구 광남로48번길 43 2층" },
+          { time: "15:50~16:00", title: "바닷마을 과자점 → 밀락더마켓", car: "5~10분", transit: "도보/버스 10~20분", address: "부산광역시 수영구 민락수변로17번길 56" },
+          { time: "16:00~17:20", title: "밀락더마켓", note: "너무 늦으면 술·저녁 피크 분위기가 강해질 수 있어 이 시간대 권장", address: "부산광역시 수영구 민락수변로17번길 56" },
+          { time: "17:20~18:00", title: "광안리 해변 이동·휴식", car: "5~10분", transit: "도보/버스 10~20분", address: "부산광역시 수영구 광안해변로 219 일대" },
+          { time: "18:00~19:20", title: "광안리 저녁", address: "부산광역시 수영구 광안해변로 219 일대" },
+          { time: "19:20~20:20", title: "광안리 해변·광안대교 야경", address: "부산광역시 수영구 광안해변로 219", tags: ["야경"] },
+          { time: "이후", title: "광안리 → 숙소", car: "20~35분", transit: "35~55분", address: "부산광역시 해운대구 구남로30번길 18" }
+        ]
+      },
+      4: {
+        heading: "4일 차 | 국립해양박물관 → 남포동 → 국제시장 → 광복로",
+        subtitle: "영도 국립해양박물관을 보고 남포동은 도보 중심으로 움직이는 원도심 일정",
+        rows: [
+          { time: "08:30~09:20", title: "아침" },
+          { time: "09:30", title: "해운대 숙소 출발", address: "부산광역시 해운대구 구남로30번길 18" },
+          { time: "09:30~10:20", title: "해운대 → 국립해양박물관", car: "45~60분", transit: "70~90분", address: "부산광역시 영도구 해양로301번길 45" },
+          { time: "10:20~12:00", title: "국립해양박물관 관람", address: "부산광역시 영도구 해양로301번길 45", tags: ["실내", "무료"] },
+          { time: "12:00~12:40", title: "영도 → 남포동", car: "20~35분", transit: "35~50분", address: "부산광역시 중구 비프광장로 36 일대" },
+          { time: "12:40~13:50", title: "남포동 점심", address: "부산광역시 중구 비프광장로 36 일대" },
+          { time: "13:50~14:30", title: "BIFF광장·씨앗호떡·거리 구경", car: "도보권", transit: "도보권", address: "부산광역시 중구 비프광장로 36 일대" },
+          { time: "14:30~15:30", title: "국제시장 짧게 구경", car: "도보권", transit: "도보권", address: "부산광역시 중구 중구로 32" },
+          { time: "15:30~17:00", title: "광복로 자유시간·카페", car: "도보권", transit: "도보권", address: "부산광역시 중구 광복로 72-1" },
+          { time: "17:00~18:30", title: "남포동 저녁", car: "도보권", transit: "도보권", address: "부산광역시 중구 비프광장로 36 일대" },
+          { time: "19:30~20:30", title: "부평깡통야시장 선택 방문", car: "도보/짧은 이동", transit: "도보 10~20분", address: "부산광역시 중구 부평1길 48", tags: [{ text: "선택", tone: "warn" }] },
+          { time: "이후", title: "남포동 → 해운대 숙소", car: "45~70분", transit: "55~80분", address: "부산광역시 해운대구 구남로30번길 18" }
+        ]
+      },
+      5: {
+        heading: "5일 차 | 해운대 마무리 → 평택 귀가",
+        subtitle: "숙소 주변에서 짧게 마무리하고 평택으로 돌아가는 낮은 강도 일정",
+        rows: [
+          { time: "08:30~09:20", title: "아침" },
+          { time: "09:20~10:00", title: "해운대시장·구남로 마지막 쇼핑", car: "숙소 주변", transit: "도보 가능", address: "부산광역시 해운대구 중동1로 42-16" },
+          { time: "10:00~10:40", title: "객실 정리", address: "부산광역시 해운대구 구남로30번길 18" },
+          { time: "11:00", title: "체크아웃", address: "부산광역시 해운대구 구남로30번길 18" },
+          { time: "11:10~12:10", title: "해운대 점심", car: "숙소 주변", transit: "도보 가능", address: "부산광역시 해운대구 구남로·해운대시장 일대" },
+          { time: "12:20 전후", title: "부산 → 평택 출발", car: "4시간 30분~6시간", transit: "KTX·지하철 조합 4~5시간" },
+          { time: "오후", title: "휴게소 1회 이상", car: "20~30분" },
+          { time: "저녁", title: "평택 도착 예상", car: "교통량 따라 변동" }
+        ]
+      }
+    };
+
+    Object.assign(scheduleVariants, {
+      1: {
+        beachLight: {
+          heading: "1일 차 선택 A | 해운대 해변·구남로·해운대시장",
+          subtitle: "첫날 가장 무난한 코스. 이동 피로는 있지만 부산 도착 느낌은 남기고 싶을 때",
           rows: [
-            { time: "07:00", title: "평택 출발", note: "자가용 이동, 중간 휴게소 1회 기준" },
-            { time: "09:00 전후", title: "휴게소 20~30분", note: "화장실, 간식, 운전자 휴식" },
-            { time: "11:30~12:20", title: "마린시티 도착·점심", note: "도착 시간이 밀리면 점심은 간단히 처리", address: "부산광역시 해운대구 마린시티 일대", tags: ["마린시티", "점심"] },
-            { time: "12:20~13:20", title: "모모스커피 마린시티점", note: "에스쇼콜라 라떼, 부산 블렌드, 비커피 음료 조합 추천", address: "부산광역시 해운대구 마린시티1로 91 101동 1층", tags: ["카페"] },
-            { time: "13:30~14:30", title: "다이소 부산해운대마린시티점", note: "여행용품, 물놀이 소모품, 간식류 보충", address: "부산광역시 해운대구 마린시티2로 38" },
-            { time: "14:30~15:40", title: "팔라티움 해운대 이동·체크인·짐 정리", note: "체크인 15:00 기준, 주차장 동선 확인", address: "부산광역시 해운대구 구남로30번길 18" },
-            { time: "15:50~17:20", title: "SEA LIFE 부산아쿠아리움", note: "실내라 더위·비 부담이 적은 첫날 선택 코스", address: "부산광역시 해운대구 해운대해변로 266", tags: ["실내", "선택 코스"], link: { label: "운영시간 확인", url: "https://www.visitsealife.com/busan/plan-your-visit/before-you-visit/opening-hours/" } },
-            { time: "17:20~18:00", title: "숙소 복귀 또는 해운대 해변 짧은 산책", note: "저녁 전 체력 회복", address: "부산광역시 해운대구 해운대해변로 일대" },
-            { time: "18:00~19:30", title: "해운대 저녁", note: "숙소와 가까운 식당 우선", address: "부산광역시 해운대구 구남로·해운대시장 일대" },
-            { time: "19:40~20:40", title: "산리오 러버스 클럽 해운대 선택 방문", note: "가족 컨디션이 괜찮으면 방문", address: "부산광역시 해운대구 구남로17 1F~3F" }
+            { time: "15:40~16:20", title: "해운대 해변 짧게 보기", transit: "도보 가능", address: "부산광역시 해운대구 해운대해변로 264" },
+            { time: "16:20~17:00", title: "구남로 거리 구경", transit: "도보 가능", address: "부산광역시 해운대구 구남로 일대" },
+            { time: "17:00~17:30", title: "해운대시장 간식", transit: "도보 가능", address: "부산광역시 해운대구 중동1로 42-16" },
+            { time: "17:30~18:00", title: "숙소 복귀·휴식", transit: "도보 가능", address: "부산광역시 해운대구 구남로30번길 18" }
           ]
         },
         xtheSky: {
-          heading: "1일 차 선택안 | 부산 엑스더스카이",
-          subtitle: "체크인 후 전망대 중심으로 첫날을 마무리하는 코스",
+          heading: "1일 차 선택 B | 부산 엑스더스카이",
+          subtitle: "날씨가 맑고 전망대가 괜찮을 때. 입장료가 있고 취향을 탑니다.",
           rows: [
-            { time: "07:00", title: "평택 출발", note: "자가용 이동, 중간 휴게소 1회 기준" },
-            { time: "11:30~14:30", title: "마린시티 점심·모모스커피·다이소", note: "기본안과 동일하게 카페와 생활용품 쇼핑", address: "부산광역시 해운대구 마린시티 일대", tags: ["마린시티"] },
-            { time: "14:30~15:40", title: "팔라티움 해운대 이동·체크인·짐 정리", note: "체크인 15:00 기준", address: "부산광역시 해운대구 구남로30번길 18" },
-            { time: "16:00~17:30", title: "부산 엑스더스카이", note: "날씨가 맑으면 전망대 선택. 흐리면 호텔 휴식으로 변경", address: "부산광역시 해운대구 달맞이길 30", tags: ["전망대", "선택 코스"], link: { label: "정보 확인", url: "https://www.visitbusan.net/kr/index.do?lang_cd=ko&menuCd=DOM_000000202008001000&uc_seq=996" } },
-            { time: "17:30~18:00", title: "숙소 또는 해운대 식당가 이동", note: "저녁 전 이동 여유 확보", address: "부산광역시 해운대구 구남로 일대" },
-            { time: "18:00~19:30", title: "해운대 저녁", note: "숙소와 가까운 식당 우선", address: "부산광역시 해운대구 구남로·해운대시장 일대" },
-            { time: "19:40~20:40", title: "산리오 러버스 클럽 해운대 선택 방문", note: "체력 남으면 방문", address: "부산광역시 해운대구 구남로17 1F~3F" }
+            { time: "15:40~16:00", title: "숙소 → 엑스더스카이 이동", car: "5~10분", transit: "도보/버스 15~25분", address: "부산광역시 해운대구 달맞이길 30" },
+            { time: "16:00~17:20", title: "부산 엑스더스카이 관람", address: "부산광역시 해운대구 달맞이길 30", tags: ["유료"] },
+            { time: "17:20~17:50", title: "해운대 해변 쪽 이동", transit: "도보 가능", address: "부산광역시 해운대구 해운대해변로 일대" },
+            { time: "17:50~18:00", title: "저녁 장소 이동", transit: "도보 가능", address: "부산광역시 해운대구 구남로 일대" }
           ]
         },
         rest: {
-          heading: "1일 차 선택안 | 호텔 휴식·해운대 자유시간",
-          subtitle: "장거리 이동 피로를 줄이고 숙소 주변만 가볍게 보는 안정형 코스",
+          heading: "1일 차 선택 C | 완전 휴식형",
+          subtitle: "운전 피로, 도착 지연, 가족 컨디션 저하 시 가장 안전한 선택",
           rows: [
-            { time: "07:00", title: "평택 출발", note: "자가용 이동, 중간 휴게소 1회 기준" },
-            { time: "11:30~14:30", title: "마린시티 점심·모모스커피·다이소", note: "기본안과 동일하게 필요한 것만 처리", address: "부산광역시 해운대구 마린시티 일대" },
-            { time: "14:30~15:40", title: "팔라티움 해운대 이동·체크인·짐 정리", note: "체크인 후 바로 쉬는 흐름", address: "부산광역시 해운대구 구남로30번길 18" },
-            { time: "15:40~17:40", title: "호텔 휴식", note: "샤워, 짐 정리, 낮잠, 다음 날 물놀이 준비", address: "부산광역시 해운대구 구남로30번길 18", tags: ["휴식"] },
-            { time: "17:40~19:20", title: "해운대 저녁", note: "숙소 가까운 곳에서 짧게 식사", address: "부산광역시 해운대구 구남로·해운대시장 일대" },
-            { time: "19:20 이후", title: "해운대시장·구남로 또는 숙소 복귀", note: "컨디션 좋으면 산리오 선택 방문", address: "부산광역시 해운대구 중동1로 42-16" }
+            { time: "15:40~17:30", title: "숙소 휴식", address: "부산광역시 해운대구 구남로30번길 18", tags: ["휴식"] },
+            { time: "17:30~18:00", title: "해운대 저녁 장소 이동", transit: "도보 가능", address: "부산광역시 해운대구 구남로 일대" },
+            { time: "18:00~19:30", title: "저녁", transit: "도보 가능", address: "부산광역시 해운대구 구남로·해운대시장 일대" },
+            { time: "19:40 이후", title: "산리오 선택 또는 구남로 산책", transit: "도보 가능", address: "부산광역시 해운대구 구남로17 1F~3F" }
+          ]
+        },
+        beachTrain: {
+          heading: "1일 차 선택 D | 해운대 블루라인파크 해변열차 짧게",
+          subtitle: "첫날에 짧은 탑승 체험을 넣고 싶을 때. 예약·대기·시간 변수가 있습니다.",
+          rows: [
+            { time: "15:40~16:10", title: "숙소 → 미포정거장 이동", car: "10~15분", transit: "도보/버스 20~30분", address: "부산광역시 해운대구 달맞이길62번길 13" },
+            { time: "16:10~17:00", title: "해변열차 일부 구간 탑승", note: "스카이캡슐이 아닌 해변열차 선택", address: "부산광역시 해운대구 달맞이길62번길 13", tags: ["예약 확인"] },
+            { time: "17:00~17:40", title: "미포·해운대 쪽 복귀", car: "10~15분", transit: "도보/버스 20~30분", address: "부산광역시 해운대구 해운대해변로 일대" },
+            { time: "17:40~18:00", title: "저녁 장소 이동", transit: "도보 가능", address: "부산광역시 해운대구 구남로 일대" }
+          ]
+        },
+        theBayNight: {
+          heading: "1일 차 선택 E | 마린시티·더베이101 야경형",
+          subtitle: "낮에는 쉬고 밤에만 짧게 나가고 싶을 때",
+          rows: [
+            { time: "15:40~17:30", title: "숙소 휴식", address: "부산광역시 해운대구 구남로30번길 18", tags: ["휴식"] },
+            { time: "17:30~18:30", title: "해운대 저녁", transit: "도보 가능", address: "부산광역시 해운대구 구남로·해운대시장 일대" },
+            { time: "18:30~19:10", title: "산리오 또는 구남로", transit: "도보 가능", address: "부산광역시 해운대구 구남로17 1F~3F" },
+            { time: "19:20~20:20", title: "마린시티·더베이101 주변 야경", car: "10~15분", transit: "버스/도보 25~40분", address: "부산광역시 해운대구 동백로 52" },
+            { time: "이후", title: "숙소 복귀", car: "10~15분", transit: "버스/도보 25~40분", address: "부산광역시 해운대구 구남로30번길 18" }
+          ]
+        },
+        centumRain: {
+          heading: "1일 차 선택 F | 비 오면 센텀시티 짧게",
+          subtitle: "첫날 비·폭염 대응안. 3일 차 센텀 일정과 중복될 수 있습니다.",
+          rows: [
+            { time: "15:40~16:10", title: "숙소 → 센텀시티 이동", car: "15~25분", transit: "20~35분", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "16:10~17:40", title: "신세계 센텀시티 짧게 구경", address: "부산광역시 해운대구 센텀남대로 35", tags: ["실내"] },
+            { time: "17:40~18:10", title: "해운대 복귀", car: "15~25분", transit: "20~35분", address: "부산광역시 해운대구 구남로 일대" },
+            { time: "18:10~19:30", title: "저녁", transit: "도보 가능", address: "부산광역시 해운대구 구남로·해운대시장 일대" }
           ]
         }
       },
       2: {
         lightRain: {
-          heading: "2일 차 대체안 | 약한 비",
-          subtitle: "용궁사는 짧게 보고, 송정은 물놀이 대신 카페와 바다 구경으로 조정",
+          heading: "2일 차 대체안 A | 약한 비 / 물놀이 애매한 날",
+          subtitle: "비가 약하면 용궁사는 가능하지만 송정 물놀이는 무리하지 않는 안",
           rows: [
-            { time: "08:30~09:10", title: "아침", note: "우산·방수팩 챙기기" },
-            { time: "09:10~09:50", title: "숙소 → 해동용궁사 이동", note: "비가 약할 때 먼저 이동", address: "부산광역시 기장군 기장읍 용궁길 86" },
-            { time: "09:50~10:40", title: "해동용궁사 짧은 관람·수능 기원", note: "계단 미끄럼 주의, 핵심 구간만 보기", address: "부산광역시 기장군 기장읍 용궁길 86", tags: ["수능 기원"] },
-            { time: "10:40~11:10", title: "송정 이동", note: "해변 대신 카페 접근성 좋은 곳으로 이동", address: "부산광역시 해운대구 송정해변로 62 일대" },
-            { time: "11:10~12:30", title: "송정 카페", note: "비 보면서 쉬는 일정", address: "부산광역시 해운대구 송정해변로 62 일대", tags: ["카페"] },
-            { time: "12:30~13:40", title: "송정 점심", note: "해변 인근 식당", address: "부산광역시 해운대구 송정해변로 62 일대" },
-            { time: "13:40~15:20", title: "송정 바다 구경·카페 추가 휴식", note: "비가 잦아들면 해변 산책만 짧게", address: "부산광역시 해운대구 송정해변로 62" },
-            { time: "15:20~16:00", title: "숙소 복귀", note: "옷·신발 정리", address: "부산광역시 해운대구 구남로30번길 18" },
-            { time: "19:00 이후", title: "해운대 저녁·자유시간", note: "비가 계속 오면 숙소 근처 식사", address: "부산광역시 해운대구 구남로·해운대시장 일대" }
+            { time: "09:10~09:50", title: "숙소 → 해동용궁사", car: "30~40분", transit: "55~75분", address: "부산광역시 기장군 기장읍 용궁길 86" },
+            { time: "09:50~10:50", title: "해동용궁사 짧게 관람", address: "부산광역시 기장군 기장읍 용궁길 86" },
+            { time: "10:50~11:20", title: "해동용궁사 → 송정", car: "15~25분", transit: "25~40분", address: "부산광역시 해운대구 송정해변로 62 일대" },
+            { time: "11:20~12:40", title: "송정 점심", address: "부산광역시 해운대구 송정해변로 62 일대" },
+            { time: "12:40~14:30", title: "송정 카페·해변 짧게", address: "부산광역시 해운대구 송정해변로 62" },
+            { time: "14:30~15:10", title: "송정 → 숙소", car: "25~40분", transit: "45~70분", address: "부산광역시 해운대구 구남로30번길 18" },
+            { time: "15:10 이후", title: "숙소 휴식·해운대 저녁", address: "부산광역시 해운대구 구남로 일대" }
           ]
         },
         storm: {
-          heading: "2일 차 대체안 | 폭우·강풍",
-          subtitle: "해동용궁사·송정은 미루고 센텀 실내 일정으로 교환",
+          heading: "2일 차 대체안 B | 폭우·강풍 시 센텀으로 교환",
+          subtitle: "2일 차와 3일 차를 사실상 교환하는 구조",
           rows: [
-            { time: "08:30~09:30", title: "아침·기상 확인", note: "강풍이면 해안 일정은 취소" },
-            { time: "10:00~10:30", title: "숙소 → 신세계 센텀시티 이동", note: "실내 주차 후 이동", address: "부산광역시 해운대구 센텀남대로 35" },
-            { time: "10:30~12:30", title: "신세계 센텀시티 쇼핑·서점", note: "해안 일정 대신 실내 체류", address: "부산광역시 해운대구 센텀남대로 35", tags: ["실내"] },
-            { time: "12:30~13:30", title: "센텀시티 점심", note: "백화점·몰 내부에서 해결", address: "부산광역시 해운대구 센텀남대로 35" },
-            { time: "13:30~16:30", title: "펀시티·카페·자유 쇼핑", note: "비가 심하면 이동 없이 센텀 안에서 마무리", address: "부산광역시 해운대구 센텀남대로 35" },
-            { time: "16:30~17:10", title: "숙소 복귀", note: "교통 상황 보고 천천히 이동", address: "부산광역시 해운대구 구남로30번길 18" },
-            { time: "19:00 이후", title: "해운대 저녁", note: "해동용궁사는 날씨 회복 시 다음 날 오전으로 이동 검토", address: "부산광역시 해운대구 구남로·해운대시장 일대", tags: [{ text: "일정 교환", tone: "warn" }] }
+            { time: "09:00~10:00", title: "늦은 아침" },
+            { time: "10:00~10:30", title: "해운대 → 센텀", car: "15~25분", transit: "20~35분", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "10:30~13:00", title: "센텀시티 쇼핑·서점·실내 구경", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "13:00~14:00", title: "센텀 점심", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "14:00~16:30", title: "펀시티·카페·실내 자유시간", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "16:30~17:00", title: "센텀 → 숙소", car: "15~25분", transit: "20~35분", address: "부산광역시 해운대구 구남로30번길 18" },
+            { time: "17:00 이후", title: "숙소 휴식·해운대 저녁", address: "부산광역시 해운대구 구남로 일대" }
           ]
         },
         noSwimming: {
-          heading: "2일 차 대체안 | 송정 물놀이 불가",
-          subtitle: "수능 기원은 살리고, 송정은 카페 후 해운대·센텀 자유시간으로 변경",
+          heading: "2일 차 대체안 C | 송정 물놀이 불가, 날씨는 괜찮음",
+          subtitle: "송정은 점심·카페·해변 산책 정도로 살리는 안",
           rows: [
-            { time: "08:30~09:10", title: "아침", note: "기본안과 동일" },
-            { time: "09:10~11:10", title: "해동용궁사 이동·관람·수능 기원", note: "해안 산책 포함 60~80분", address: "부산광역시 기장군 기장읍 용궁길 86", tags: ["수능 기원"] },
-            { time: "11:10~11:40", title: "송정 이동", note: "물놀이 대신 점심·카페 중심", address: "부산광역시 해운대구 송정해변로 62 일대" },
-            { time: "11:40~13:00", title: "송정 점심", note: "해변 인근 식당", address: "부산광역시 해운대구 송정해변로 62 일대" },
-            { time: "13:00~14:30", title: "송정 카페", note: "바다 보며 휴식", address: "부산광역시 해운대구 송정해변로 62 일대" },
-            { time: "14:30~15:10", title: "해운대 복귀", note: "숙소에서 정비", address: "부산광역시 해운대구 구남로30번길 18" },
-            { time: "15:30~17:30", title: "센텀 또는 해운대 자유시간", note: "더우면 센텀 실내, 피곤하면 숙소 휴식", address: "부산광역시 해운대구 센텀남대로 35 또는 해운대 구남로 일대" },
-            { time: "19:00 이후", title: "해운대 저녁", note: "숙소 근처 식사", address: "부산광역시 해운대구 구남로·해운대시장 일대" }
+            { time: "08:30~09:10", title: "아침" },
+            { time: "09:10~09:50", title: "숙소 → 해동용궁사", car: "30~40분", transit: "55~75분", address: "부산광역시 기장군 기장읍 용궁길 86" },
+            { time: "09:50~11:10", title: "해동용궁사 관람·수능 기원", address: "부산광역시 기장군 기장읍 용궁길 86" },
+            { time: "11:10~11:40", title: "송정 이동", car: "15~25분", transit: "25~40분", address: "부산광역시 해운대구 송정해변로 62 일대" },
+            { time: "11:40~13:00", title: "송정 점심", address: "부산광역시 해운대구 송정해변로 62 일대" },
+            { time: "13:00~14:30", title: "송정해변 산책·카페", address: "부산광역시 해운대구 송정해변로 62" },
+            { time: "14:30~15:10", title: "숙소 복귀", car: "25~40분", transit: "45~70분", address: "부산광역시 해운대구 구남로30번길 18" },
+            { time: "15:10~17:30", title: "숙소 휴식", address: "부산광역시 해운대구 구남로30번길 18" },
+            { time: "17:30 이후", title: "해운대 저녁·자유시간", address: "부산광역시 해운대구 구남로 일대" }
           ]
         }
       },
       3: {
-        yachtSoldOut: {
-          heading: "3일 차 대체안 | 요트 매진",
-          subtitle: "요트 대신 밀락더마켓과 광안리 저녁·야경을 길게 가져가는 코스",
+        centumLong: {
+          heading: "3일 차 대체안 A | 센텀시티 오래 구경하는 안정안",
+          subtitle: "폭염, 비, 피로, 밀락더마켓 분위기가 애매할 때",
           rows: [
-            { time: "09:00~15:00", title: "아침·센텀시티 쇼핑·점심·카페", note: "기본안과 동일하게 실내에서 여유 확보", address: "부산광역시 해운대구 센텀남대로 35" },
-            { time: "15:00~15:30", title: "센텀 → 광안리 이동", note: "주차·정차 지점 확인", address: "부산광역시 수영구 광안해변로 일대" },
-            { time: "15:30~16:10", title: "바닷마을 과자점 선택 방문", note: "품절이면 바로 밀락더마켓 이동", address: "부산광역시 수영구 광남로48번길 43 2층" },
-            { time: "16:20~18:00", title: "밀락더마켓", note: "오션뷰, 간식, 실내 대기", address: "부산광역시 수영구 민락수변로17번길 56" },
-            { time: "18:00~19:30", title: "광안리 저녁", note: "요트 대신 저녁을 여유 있게", address: "부산광역시 수영구 광안해변로 일대" },
-            { time: "19:30~21:00", title: "광안리 야경 자유시간", note: "광안대교 야경 보고 숙소 복귀", address: "부산광역시 수영구 광안해변로 일대", tags: ["야경"] }
+            { time: "10:00~10:25", title: "해운대 → 센텀", car: "15~25분", transit: "20~35분", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "10:30~13:00", title: "센텀시티 쇼핑·서점·소품·잡화", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "13:00~14:00", title: "센텀시티 점심", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "14:00~16:30", title: "센텀시티 추가 구경·펀시티·카페", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "16:30~17:00", title: "센텀 → 숙소", car: "15~25분", transit: "20~35분", address: "부산광역시 해운대구 구남로30번길 18" },
+            { time: "17:00~18:30", title: "숙소 휴식", address: "부산광역시 해운대구 구남로30번길 18" },
+            { time: "18:30 이후", title: "해운대 저녁", car: "숙소 주변", transit: "도보 가능", address: "부산광역시 해운대구 구남로 일대" }
           ]
         },
-        badWeather: {
-          heading: "3일 차 대체안 | 기상 악화",
-          subtitle: "요트와 야외 체류를 줄이고 센텀 실내 일정으로 확장",
+        bakeryOnly: {
+          heading: "3일 차 대체안 B | 바닷마을 과자점만 살리는 안",
+          subtitle: "디저트와 광안리 동선은 유지하고 밀락더마켓은 생략",
           rows: [
-            { time: "09:00~10:00", title: "아침·기상 확인", note: "요트 운항 여부 먼저 확인" },
-            { time: "10:00~12:30", title: "신세계 센텀시티 쇼핑·서점", note: "실내 일정 확대", address: "부산광역시 해운대구 센텀남대로 35", tags: ["실내"] },
-            { time: "12:30~13:30", title: "센텀시티 점심", note: "백화점·몰 내부", address: "부산광역시 해운대구 센텀남대로 35" },
-            { time: "13:30~16:30", title: "펀시티·카페·자유시간", note: "비바람이 강하면 계속 센텀 체류", address: "부산광역시 해운대구 센텀남대로 35" },
-            { time: "16:30~17:10", title: "밀락더마켓 이동 여부 결정", note: "비가 약하면 이동, 강하면 숙소 복귀", address: "부산광역시 수영구 민락수변로17번길 56" },
-            { time: "17:10~18:30", title: "밀락더마켓 또는 숙소 휴식", note: "기상에 따라 선택", address: "부산광역시 수영구 민락수변로17번길 56 또는 부산광역시 해운대구 구남로30번길 18" },
-            { time: "19:00 이후", title: "해운대 저녁", note: "요트 취소 시 무리하지 않고 숙소 근처 식사", address: "부산광역시 해운대구 구남로·해운대시장 일대", tags: [{ text: "요트 취소 가능", tone: "warn" }] }
+            { time: "10:00~10:25", title: "해운대 → 센텀", car: "15~25분", transit: "20~35분", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "10:30~12:30", title: "센텀시티", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "12:30~13:30", title: "센텀 점심", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "13:30~14:40", title: "센텀 카페·자유시간", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "14:40~15:10", title: "센텀 → 광안리", car: "20~30분", transit: "30~45분", address: "부산광역시 수영구 광안해변로 219 일대" },
+            { time: "15:10~16:00", title: "바닷마을 과자점", address: "부산광역시 수영구 광남로48번길 43 2층" },
+            { time: "16:00~17:00", title: "광안리 해변·카페", car: "5~10분", transit: "도보/버스 10~20분", address: "부산광역시 수영구 광안해변로 219 일대" },
+            { time: "17:00~18:30", title: "광안리 저녁", address: "부산광역시 수영구 광안해변로 219 일대" },
+            { time: "이후", title: "광안리 → 숙소", car: "20~35분", transit: "35~55분", address: "부산광역시 해운대구 구남로30번길 18" }
           ]
         },
-        tired: {
-          heading: "3일 차 대체안 | 피곤함",
-          subtitle: "바닷마을 과자점을 생략하고 밀락더마켓과 요트만 살리는 코스",
+        hotelRest: {
+          heading: "3일 차 대체안 C | 센텀 후 바로 숙소 복귀",
+          subtitle: "전날 물놀이 피로가 크거나 가족 체력이 떨어졌을 때",
           rows: [
-            { time: "09:00~15:00", title: "아침·센텀시티 쇼핑·점심·카페", note: "기본안과 동일하되 중간 휴식 길게", address: "부산광역시 해운대구 센텀남대로 35" },
-            { time: "15:00~15:40", title: "센텀 → 밀락더마켓 이동", note: "바닷마을 과자점 생략", address: "부산광역시 수영구 민락수변로17번길 56" },
-            { time: "15:40~17:30", title: "밀락더마켓", note: "앉아서 쉬고 간식", address: "부산광역시 수영구 민락수변로17번길 56" },
-            { time: "17:30~18:50", title: "이른 저녁 또는 간식·요트 탑승장 이동", note: "예약 업체 집결 시간 우선", address: "부산광역시 해운대구 해운대해변로 84" },
-            { time: "19:00 전후", title: "부산 해운대 요트투어", note: "사전예약 필수", address: "부산광역시 해운대구 해운대해변로 84", tags: [{ text: "예약 필수", tone: "warn" }], link: { label: "예약 사이트", url: "https://www.haeundaerivercruise.com/home" } },
-            { time: "20:00 이후", title: "숙소 복귀", note: "야경 산책 생략 가능", address: "부산광역시 해운대구 구남로30번길 18" }
-          ]
-        },
-        exhausted: {
-          heading: "3일 차 대체안 | 많이 피곤함",
-          subtitle: "광안리 디저트·밀락더마켓을 생략하고 요트만 선택하거나 숙소 휴식",
-          rows: [
-            { time: "09:00~13:30", title: "아침·센텀시티 쇼핑·점심", note: "쇼핑도 짧게만 진행", address: "부산광역시 해운대구 센텀남대로 35" },
-            { time: "13:30~16:40", title: "숙소 복귀·휴식", note: "디저트와 밀락더마켓 생략", address: "부산광역시 해운대구 구남로30번길 18", tags: ["휴식"] },
-            { time: "16:40~18:10", title: "요트 진행 여부 결정·이른 저녁", note: "컨디션 좋으면 요트, 아니면 숙소 휴식 유지", address: "부산광역시 해운대구 구남로·해운대시장 일대" },
-            { time: "18:30~20:00", title: "부산 해운대 요트투어 또는 숙소 휴식", note: "예약 취소 규정 확인 후 결정", address: "부산광역시 해운대구 해운대해변로 84", tags: [{ text: "선택", tone: "warn" }], link: { label: "예약 사이트", url: "https://www.haeundaerivercruise.com/home" } },
-            { time: "20:00 이후", title: "숙소 복귀", note: "바로 쉬기", address: "부산광역시 해운대구 구남로30번길 18" }
+            { time: "10:30~11:00", title: "해운대 → 센텀", car: "15~25분", transit: "20~35분", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "11:00~13:00", title: "센텀시티 짧게 구경", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "13:00~14:00", title: "센텀 점심", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "14:00~15:00", title: "카페", address: "부산광역시 해운대구 센텀남대로 35" },
+            { time: "15:00~15:30", title: "센텀 → 숙소", car: "15~25분", transit: "20~35분", address: "부산광역시 해운대구 구남로30번길 18" },
+            { time: "15:30~18:00", title: "숙소 휴식", address: "부산광역시 해운대구 구남로30번길 18" },
+            { time: "18:00 이후", title: "해운대 저녁", car: "숙소 주변", transit: "도보 가능", address: "부산광역시 해운대구 구남로 일대" }
           ]
         }
       },
       4: {
-        hot: {
-          heading: "4일 차 대체안 | 너무 더움",
-          subtitle: "송도 체류를 줄이고 남포동 카페·광복로 중심으로 전환",
+        museumLong: {
+          heading: "4일 차 대체안 A | 박물관 오래 보는 안",
+          subtitle: "국립해양박물관을 천천히 보고 남포동 후반부를 조금 압축",
           rows: [
-            { time: "08:30~09:20", title: "아침", note: "물·양산·쿨링용품 준비" },
-            { time: "09:30~10:30", title: "해운대 숙소 → 송도 이동", note: "차량 이동", address: "부산광역시 서구 송도해변로 100 일대" },
-            { time: "10:30~11:20", title: "송도해수욕장·용궁구름다리 짧게", note: "사진만 빠르게 찍고 이동", address: "부산광역시 서구 암남공원로 179-20", tags: ["단축"] },
-            { time: "11:20~12:00", title: "송도 카페", note: "더위 식히기", address: "부산광역시 서구 송도해변로 100 일대" },
-            { time: "12:00~12:30", title: "남포동 이동", note: "실내·그늘 동선 우선", address: "부산광역시 중구 비프광장로 36 일대" },
-            { time: "12:30~13:40", title: "남포동 점심", note: "대기 적은 곳 우선", address: "부산광역시 중구 비프광장로 36 일대" },
-            { time: "13:40~15:20", title: "광복로 카페·소품샵", note: "시장보다 냉방 있는 매장 중심", address: "부산광역시 중구 광복로 72-1" },
-            { time: "15:20~17:00", title: "BIFF광장·국제시장 아주 짧게", note: "더우면 바로 카페 복귀", address: "부산광역시 중구 비프광장로 36 일대" },
-            { time: "17:30 이후", title: "남포동 저녁 후 숙소 복귀", note: "깡통야시장은 체력 남을 때만", address: "부산광역시 중구 부평1길 48" }
+            { time: "09:30~10:20", title: "해운대 → 국립해양박물관", car: "45~60분", transit: "70~90분", address: "부산광역시 영도구 해양로301번길 45" },
+            { time: "10:20~12:30", title: "국립해양박물관 천천히 관람", address: "부산광역시 영도구 해양로301번길 45" },
+            { time: "12:30~13:10", title: "영도 → 남포동", car: "20~35분", transit: "35~50분", address: "부산광역시 중구 비프광장로 36 일대" },
+            { time: "13:10~14:20", title: "남포동 점심", address: "부산광역시 중구 비프광장로 36 일대" },
+            { time: "14:20~15:00", title: "BIFF광장", car: "도보권", transit: "도보권", address: "부산광역시 중구 비프광장로 36 일대" },
+            { time: "15:00~16:00", title: "국제시장 짧게", car: "도보권", transit: "도보권", address: "부산광역시 중구 중구로 32" },
+            { time: "16:00~17:30", title: "광복로 카페·자유시간", car: "도보권", transit: "도보권", address: "부산광역시 중구 광복로 72-1" },
+            { time: "17:30~19:00", title: "남포동 저녁", car: "도보권", transit: "도보권", address: "부산광역시 중구 비프광장로 36 일대" },
+            { time: "이후", title: "깡통야시장 선택 또는 숙소 복귀", car: "45~70분", transit: "55~80분", address: "부산광역시 중구 부평1길 48 또는 부산광역시 해운대구 구남로30번길 18" }
           ]
         },
-        bridgeClosed: {
-          heading: "4일 차 대체안 | 용궁구름다리 운영 중단",
-          subtitle: "송도해수욕장과 카페만 보고 남포동으로 이동",
+        shortMuseum: {
+          heading: "4일 차 대체안 B | 피곤하면 짧게",
+          subtitle: "박물관과 남포동을 핵심만 보고 18시 전후 숙소로 복귀",
           rows: [
-            { time: "08:30~09:30", title: "아침·운영 여부 확인", note: "구름다리 운영 중단 확인 시 대체안 진행" },
-            { time: "09:30~10:30", title: "해운대 숙소 → 송도 이동", note: "해변과 산책로만 보기", address: "부산광역시 서구 송도해변로 100 일대" },
-            { time: "10:30~11:30", title: "송도해수욕장·구름산책로", note: "케이블카 없이 바다 짧게 보기", address: "부산광역시 서구 송도해변로 100 일대" },
-            { time: "11:30~12:20", title: "송도 카페·간식", note: "운영 중단으로 생긴 여유 시간", address: "부산광역시 서구 송도해변로 100 일대" },
-            { time: "12:20~12:50", title: "남포동 이동", note: "점심 장소로 이동", address: "부산광역시 중구 비프광장로 36 일대" },
-            { time: "12:50~14:00", title: "남포동 점심", note: "BIFF·국제시장 가까운 곳", address: "부산광역시 중구 비프광장로 36 일대" },
-            { time: "14:00~15:00", title: "BIFF광장", note: "씨앗호떡·거리 구경", address: "부산광역시 중구 비프광장로 36 일대" },
-            { time: "15:00~16:00", title: "국제시장", note: "40~60분만 짧게", address: "부산광역시 중구 중구로 32" },
-            { time: "16:00 이후", title: "광복로·저녁·깡통야시장 선택", note: "기본안 후반부와 동일", address: "부산광역시 중구 광복로 72-1" }
+            { time: "09:50~10:40", title: "해운대 → 국립해양박물관", car: "45~60분", transit: "70~90분", address: "부산광역시 영도구 해양로301번길 45" },
+            { time: "10:40~12:00", title: "국립해양박물관 핵심만 관람", address: "부산광역시 영도구 해양로301번길 45" },
+            { time: "12:00~12:40", title: "남포동 이동", car: "20~35분", transit: "35~50분", address: "부산광역시 중구 비프광장로 36 일대" },
+            { time: "12:40~13:50", title: "남포동 점심", address: "부산광역시 중구 비프광장로 36 일대" },
+            { time: "13:50~14:30", title: "BIFF광장", car: "도보권", transit: "도보권", address: "부산광역시 중구 비프광장로 36 일대" },
+            { time: "14:30~15:20", title: "국제시장 핵심만", car: "도보권", transit: "도보권", address: "부산광역시 중구 중구로 32" },
+            { time: "15:20~16:30", title: "광복로 카페", car: "도보권", transit: "도보권", address: "부산광역시 중구 광복로 72-1" },
+            { time: "16:30~17:40", title: "이른 저녁", car: "도보권", transit: "도보권", address: "부산광역시 중구 비프광장로 36 일대" },
+            { time: "18:00 전후", title: "숙소 복귀", car: "45~70분", transit: "55~80분", address: "부산광역시 해운대구 구남로30번길 18" }
           ]
         },
-        marketBoring: {
-          heading: "4일 차 대체안 | 시장이 지루함",
-          subtitle: "국제시장을 생략하고 광복로 카페·상점 시간을 늘리는 코스",
+        noMarket: {
+          heading: "4일 차 대체안 C | 시장 싫으면",
+          subtitle: "국제시장을 줄이고 광복로 카페·소품샵·자유시간 중심",
           rows: [
-            { time: "08:30~13:20", title: "아침·송도·남포동 이동", note: "기본안과 동일", address: "부산광역시 서구 암남공원로 179-20" },
-            { time: "13:20~14:20", title: "남포동 점심", note: "BIFF광장 가까운 곳", address: "부산광역시 중구 비프광장로 36 일대" },
-            { time: "14:20~15:00", title: "BIFF광장·씨앗호떡", note: "간식과 거리 구경만", address: "부산광역시 중구 비프광장로 36 일대" },
-            { time: "15:00~17:20", title: "광복로 카페·상점", note: "국제시장 생략, 카페와 소품샵 중심", address: "부산광역시 중구 광복로 72-1", tags: ["시장 생략"] },
-            { time: "17:30~19:00", title: "남포동 저녁", note: "저녁을 조금 여유 있게", address: "부산광역시 중구 비프광장로 36 일대" },
-            { time: "19:30~20:30", title: "부평깡통야시장 선택 방문", note: "시장 피로가 있으면 생략", address: "부산광역시 중구 부평1길 48" }
-          ]
-        },
-        rain: {
-          heading: "4일 차 대체안 | 비",
-          subtitle: "송도는 축소하고 남포동 실내 카페·상점 중심으로 진행",
-          rows: [
-            { time: "08:30~09:30", title: "아침·강수 확인", note: "비가 강하면 송도 생략 가능" },
-            { time: "09:30~10:30", title: "해운대 숙소 → 송도 이동", note: "약한 비일 때만 진행", address: "부산광역시 서구 송도해변로 100 일대" },
-            { time: "10:30~11:10", title: "송도해수욕장 또는 카페", note: "비가 강하면 카페만", address: "부산광역시 서구 송도해변로 100 일대" },
-            { time: "11:10~11:50", title: "남포동 이동", note: "실내 동선으로 이동", address: "부산광역시 중구 비프광장로 36 일대" },
-            { time: "11:50~13:00", title: "남포동 점심", note: "비 피하기 쉬운 식당", address: "부산광역시 중구 비프광장로 36 일대" },
-            { time: "13:00~15:00", title: "광복로 실내 카페·상점", note: "우산 이동을 줄이는 코스", address: "부산광역시 중구 광복로 72-1", tags: ["실내"] },
-            { time: "15:00~16:00", title: "BIFF광장 짧게 또는 카페 연장", note: "비가 약하면 거리 구경", address: "부산광역시 중구 비프광장로 36 일대" },
-            { time: "16:00~17:30", title: "광복로 자유시간", note: "국제시장은 생략 가능", address: "부산광역시 중구 광복로 72-1" },
-            { time: "17:30 이후", title: "남포동 저녁 후 숙소 복귀", note: "깡통야시장은 비가 그치면 선택", address: "부산광역시 중구 부평1길 48" }
+            { time: "09:30~10:20", title: "해운대 → 국립해양박물관", car: "45~60분", transit: "70~90분", address: "부산광역시 영도구 해양로301번길 45" },
+            { time: "10:20~12:00", title: "국립해양박물관", address: "부산광역시 영도구 해양로301번길 45" },
+            { time: "12:00~12:40", title: "남포동 이동", car: "20~35분", transit: "35~50분", address: "부산광역시 중구 비프광장로 36 일대" },
+            { time: "12:40~13:50", title: "점심", address: "부산광역시 중구 비프광장로 36 일대" },
+            { time: "13:50~14:30", title: "BIFF광장", car: "도보권", transit: "도보권", address: "부산광역시 중구 비프광장로 36 일대" },
+            { time: "14:30~16:30", title: "광복로 카페·소품샵·자유시간", car: "도보권", transit: "도보권", address: "부산광역시 중구 광복로 72-1", tags: ["시장 축소"] },
+            { time: "16:30~18:00", title: "저녁", car: "도보권", transit: "도보권", address: "부산광역시 중구 비프광장로 36 일대" },
+            { time: "이후", title: "깡통야시장 선택 또는 숙소 복귀", car: "45~70분", transit: "55~80분", address: "부산광역시 중구 부평1길 48 또는 부산광역시 해운대구 구남로30번길 18" }
           ]
         }
       },
       5: {
-        tired: {
-          heading: "5일 차 대체안 | 모두 피곤함",
-          subtitle: "마지막 쇼핑을 생략하고 체크아웃 후 바로 출발",
+        directReturn: {
+          heading: "5일 차 대체안 A | 바로 귀가",
+          subtitle: "가장 피로가 적고 귀가 정체 대응이 쉬운 안",
           rows: [
-            { time: "08:30~09:20", title: "아침", note: "귀가 운전 전 간단히" },
-            { time: "09:20~10:40", title: "객실 정리·짐 싣기", note: "해운대시장 생략", address: "부산광역시 해운대구 구남로30번길 18", tags: ["쇼핑 생략"] },
-            { time: "11:00", title: "체크아웃", note: "주차 정산과 분실물 확인", address: "부산광역시 해운대구 구남로30번길 18" },
-            { time: "11:10 전후", title: "평택 출발", note: "점심은 휴게소에서 해결" },
-            { time: "오후", title: "휴게소 1회 이상", note: "운전자 휴식 우선" },
-            { time: "저녁", title: "평택 도착 예상", note: "정체에 따라 변동" }
+            { time: "08:00~09:00", title: "아침" },
+            { time: "09:00~10:30", title: "짐 정리", address: "부산광역시 해운대구 구남로30번길 18" },
+            { time: "11:00", title: "체크아웃", address: "부산광역시 해운대구 구남로30번길 18" },
+            { time: "11:10", title: "바로 평택 출발", car: "4시간 30분~6시간" },
+            { time: "13:00 전후", title: "휴게소 점심" },
+            { time: "저녁", title: "평택 도착" }
           ]
         },
-        traffic: {
-          heading: "5일 차 대체안 | 금요일 정체 우려",
-          subtitle: "해운대 점심을 생략하고 출발 시간을 앞당기는 코스",
+        shortHaeundae: {
+          heading: "5일 차 대체안 B | 해운대 마지막 짧은 구경",
+          subtitle: "기본안보다 마지막 쇼핑을 조금 더 살리는 안",
           rows: [
-            { time: "08:00~08:50", title: "아침", note: "기본안보다 30분 빠르게 시작" },
-            { time: "08:50~10:20", title: "객실 정리·짐 싣기", note: "마지막 쇼핑은 생략하거나 10분만", address: "부산광역시 해운대구 구남로30번길 18" },
-            { time: "10:30~11:00", title: "체크아웃 준비·주차 정산", note: "11:00 이전 출발 목표", address: "부산광역시 해운대구 구남로30번길 18" },
-            { time: "11:00 전후", title: "평택 출발", note: "해운대 점심 생략" },
-            { time: "12:30 전후", title: "휴게소 점심", note: "교통 상황 보고 휴게소 선택" },
-            { time: "오후~저녁", title: "평택 도착", note: "휴게소 1회 이상 추가 가능" }
+            { time: "08:30~09:20", title: "아침" },
+            { time: "09:20~10:20", title: "해운대시장·구남로 마지막 구경", transit: "도보 가능", address: "부산광역시 해운대구 중동1로 42-16" },
+            { time: "10:20~10:50", title: "숙소 복귀·짐 정리", transit: "도보 가능", address: "부산광역시 해운대구 구남로30번길 18" },
+            { time: "11:00", title: "체크아웃", address: "부산광역시 해운대구 구남로30번길 18" },
+            { time: "11:10~12:00", title: "해운대 점심", transit: "도보 가능", address: "부산광역시 해운대구 구남로 일대" },
+            { time: "12:10", title: "평택 출발", car: "4시간 30분~6시간" }
           ]
         },
-        leisure: {
-          heading: "5일 차 대체안 | 여유 있음",
-          subtitle: "해운대시장·구남로를 조금 더 보고 점심 후 출발",
+        lateDeparture: {
+          heading: "5일 차 대체안 C | 정체 피하려고 늦게 출발",
+          subtitle: "금요일 오후 정체가 커질 수 있어 귀가 시간이 늦어질 수 있음",
           rows: [
-            { time: "08:30~09:20", title: "아침", note: "기본안과 동일" },
-            { time: "09:20~10:20", title: "해운대시장·구남로 마지막 쇼핑", note: "기념품·간식 구매", address: "부산광역시 해운대구 중동1로 42-16", tags: ["마지막 쇼핑"] },
-            { time: "10:20~10:50", title: "객실 정리", note: "분실물·충전기 확인", address: "부산광역시 해운대구 구남로30번길 18" },
-            { time: "11:00", title: "체크아웃", note: "짐 싣고 점심 장소 이동", address: "부산광역시 해운대구 구남로30번길 18" },
-            { time: "11:10~12:20", title: "해운대 점심", note: "출발 전 마지막 식사", address: "부산광역시 해운대구 구남로·해운대시장 일대" },
-            { time: "12:30 전후", title: "평택 출발", note: "오후 휴게소 1회 이상" }
+            { time: "08:30~09:30", title: "아침" },
+            { time: "09:30~10:40", title: "짐 정리", address: "부산광역시 해운대구 구남로30번길 18" },
+            { time: "11:00", title: "체크아웃", address: "부산광역시 해운대구 구남로30번길 18" },
+            { time: "11:00~12:30", title: "해운대 점심·카페", transit: "도보 가능", address: "부산광역시 해운대구 구남로 일대" },
+            { time: "12:30~13:30", title: "구남로·해운대시장 짧게", transit: "도보 가능", address: "부산광역시 해운대구 중동1로 42-16" },
+            { time: "13:30~14:00", title: "평택 출발", car: "4시간 30분~6시간", tags: [{ text: "정체 주의", tone: "warn" }] }
           ]
         }
       }
-    };
+    });
 
     const places = [
       {
@@ -1520,7 +1702,7 @@
         days: [1, 5],
         image: "https://media.interparkcdn.net/interpark-tour/image/upload/w_640,h_410,c_limit/v1769753335/domstay/279386a9240f487d.jpg",
         hours: "체크인 15:00 / 체크아웃 11:00",
-        reservation: "숙박 예약 필요",
+        reservation: "예약 완료",
         cost: "숙박비 별도",
         note: "구남로 중심 숙소. 체크인 전 주차·짐 보관 가능 여부 확인.",
         sourceName: "Trip.com·인터파크",
@@ -1553,17 +1735,17 @@
         sourceUrl: "https://triple.guide/attractions/51b94ccc-bef3-4012-9d34-8429ef167ebf"
       },
       {
-        title: "SEA LIFE 부산아쿠아리움",
+        title: "해운대해수욕장·구남로",
         area: "해운대 선택 일정",
-        address: "부산광역시 해운대구 해운대해변로 266",
-        days: [1],
-        image: "https://www.visitsealife.com/busan/media/fg5lfc1b/top-banner-header3-slbkk.jpg?format=jpg",
-        hours: "평일 10:00~19:00, 주말 10:00~20:00",
-        reservation: "필수 아님",
-        cost: "온라인권 변동",
-        note: "첫날 피로가 적고 해양생물 관심이 있으면 선택.",
-        sourceName: "SEA LIFE 부산",
-        sourceUrl: "https://www.visitsealife.com/busan/plan-your-visit/before-you-visit/opening-hours/"
+        address: "부산광역시 해운대구 해운대해변로 264",
+        days: [1, 5],
+        image: "https://www.visitbusan.net/uploadImgs/files/cntnts/20200914115047550",
+        hours: "해수욕장 09:00~18:00 전후, 거리·구남로는 상시",
+        reservation: "불필요",
+        cost: "무료, 식사·구매액 별도",
+        note: "첫날 A안과 마지막 날 짧은 구경에 쓰기 좋은 숙소 주변 동선.",
+        sourceName: "Visit Busan",
+        sourceUrl: "https://www.visitbusan.net/kr/index.do?lang_cd=ko&menuCd=DOM_000000201001001000&uc_seq=373"
       },
       {
         title: "부산 엑스더스카이",
@@ -1577,6 +1759,34 @@
         note: "날씨가 맑고 전망대 취향이면 저녁 전후 선택.",
         sourceName: "Visit Busan",
         sourceUrl: "https://www.visitbusan.net/kr/index.do?lang_cd=ko&menuCd=DOM_000000202008001000&uc_seq=996"
+      },
+      {
+        title: "해운대 블루라인파크 미포정거장",
+        area: "해운대 선택 일정",
+        address: "부산광역시 해운대구 달맞이길62번길 13",
+        days: [1],
+        image: "https://media.triple.guide/triple-cms/q_70%2Cf_auto/4720df4a-c858-4451-998e-742b1831f7f7",
+        hours: "운행시간·회차 변동, 방문 전 확인",
+        reservation: "선택 시 예약·대기 확인",
+        reservationUrl: "https://www.bluelinepark.com/booking.do",
+        reservationLabel: "예매",
+        cost: "해변열차 유료",
+        note: "스카이캡슐은 제외하고 해변열차 일부 구간만 짧게 타는 선택안.",
+        sourceName: "해운대블루라인파크",
+        sourceUrl: "https://www.bluelinepark.com/tourFacilityList.do"
+      },
+      {
+        title: "더베이101·마린시티 야경",
+        area: "마린시티·동백",
+        address: "부산광역시 해운대구 동백로 52",
+        days: [1],
+        image: "https://www.newsprime.co.kr/data/photos/cdn/20190417/art_1556261856.jpg",
+        hours: "매장별 상이, 야경은 저녁 시간대",
+        reservation: "불필요",
+        cost: "매장별 결제",
+        note: "낮에는 쉬고 밤에만 짧게 나가는 1일 차 E안 야경 코스.",
+        sourceName: "Visit Busan·더베이101",
+        sourceUrl: "https://www.visitbusan.net/kr/index.do?lang_cd=ko&menuCd=DOM_000000201001001000&uc_seq=373"
       },
       {
         title: "산리오 러버스 클럽 해운대점",
@@ -1652,37 +1862,35 @@
         hours: "10:00~24:00 전후",
         reservation: "불필요",
         cost: "입장 무료, 매장별 결제",
-        note: "요트 전 대기와 간식, 오션뷰 휴식에 적합.",
+        note: "오션뷰, 간식, 광안리 야경 전 쉬는 코스로 적합.",
         sourceName: "열린관광 모두의 여행",
         sourceUrl: "https://access.visitkorea.or.kr/ms/detail.do?cotId=38ff6c9e-af8d-42f7-8cce-50b989d22d68"
       },
       {
-        title: "부산 해운대 요트투어",
-        area: "수영만 요트경기장 기준",
-        address: "부산광역시 해운대구 해운대해변로 84",
+        title: "광안리 해변·광안대교 야경",
+        area: "광안리",
+        address: "부산광역시 수영구 광안해변로 219",
         days: [3],
-        image: "https://media.triple.guide/triple-cms/c_limit,f_auto,h_1024,w_1024/94815c0a-f848-444a-a0ac-03ddcf571557.jpeg",
-        hours: "회차제, 19:00 전후 선셋 회차 추천",
-        reservation: "사전예약 필요",
-        cost: "업체·회차별 상이",
-        note: "예약 업체가 지정한 계류장, 집결 시간, 신분 확인 안내를 최우선.",
-        reservationLabel: "해운대 리버크루즈 예약",
-        reservationUrl: "https://www.haeundaerivercruise.com/home",
-        sourceName: "수영만 요트경기장·요트다",
-        sourceUrl: "https://yachtda.com/board_yLUU38"
+        image: "https://tong.visitkorea.or.kr/cms/resource/45/3311245_image2_1.jpg",
+        hours: "상시",
+        reservation: "불필요",
+        cost: "무료",
+        note: "요트 없이 광안대교 야경을 확보하는 3일 차 마무리 코스.",
+        sourceName: "Visit Korea·Visit Busan",
+        sourceUrl: "https://www.visitbusan.net/kr/index.do?lang_cd=ko&menuCd=DOM_000000201001001000&uc_seq=377"
       },
       {
-        title: "송도 용궁구름다리",
-        area: "송도·암남공원",
-        address: "부산광역시 서구 암남공원로 179-20",
+        title: "국립해양박물관",
+        area: "영도",
+        address: "부산광역시 영도구 해양로301번길 45",
         days: [4],
-        image: "https://www.bsseogu.go.kr/upload_data/board_data/BBS_0000078/173370492014958.jpg",
-        hours: "3~9월 09:00~18:00, 입장마감 17:30",
+        image: "https://www.visitbusan.net/uploadImgs/files/cntnts/20230504134158127",
+        hours: "화~금 09:00~18:00, 토·일·공휴일 09:00~19:00, 월 휴관",
         reservation: "불필요",
-        cost: "소액 입장료 가능",
-        note: "정기휴장과 기상 통제 가능성 확인.",
-        sourceName: "부산 서구청",
-        sourceUrl: "https://www.bsseogu.go.kr/tour/board/view.bsseogu?boardId=BBS_0000078&dataSid=204104&menuCd=DOM_000000304011000000"
+        cost: "관람료 무료, 4D영상관·유료특별전시 제외",
+        note: "4일 차 핵심 실내 관람지. 영도 이동은 자가용·택시가 편함.",
+        sourceName: "국립해양박물관·Visit Busan",
+        sourceUrl: "https://www.visitbusan.net/index.do?lang_cd=ko&menuCd=DOM_000000201001001000&uc_seq=257"
       },
       {
         title: "BIFF광장",
@@ -1761,6 +1969,22 @@
       return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(place.title + " " + place.address);
     }
 
+    function escapeSvgText(text) {
+      return String(text).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+
+    function fallbackImageUrl(title) {
+      const safeTitle = escapeSvgText(title);
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720"><rect width="960" height="720" fill="#e8f6f7"/><path d="M0 516c128-76 250-76 366 0s246 76 366 0 190-75 228-49v253H0z" fill="#007c89" opacity=".78"/><circle cx="718" cy="188" r="86" fill="#de5f52" opacity=".9"/><rect x="132" y="272" width="696" height="176" rx="8" fill="#fffaf3" opacity=".92"/><text x="480" y="372" fill="#183a59" font-family="Arial, sans-serif" font-size="42" font-weight="700" text-anchor="middle">${safeTitle}</text></svg>`;
+      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    }
+
     const defaultSchedules = {};
 
     function captureDefaultSchedules() {
@@ -1817,6 +2041,26 @@
         content.append(address);
       }
 
+      if (row.car || row.transit) {
+        const moveMeta = document.createElement("div");
+        moveMeta.className = "move-meta";
+        if (row.car) {
+          const car = document.createElement("span");
+          const label = document.createElement("b");
+          label.textContent = "자동차 ";
+          car.append(label, document.createTextNode(row.car));
+          moveMeta.append(car);
+        }
+        if (row.transit) {
+          const transit = document.createElement("span");
+          const label = document.createElement("b");
+          label.textContent = "대중교통/도보 ";
+          transit.append(label, document.createTextNode(row.transit));
+          moveMeta.append(transit);
+        }
+        content.append(moveMeta);
+      }
+
       if (row.link) {
         const link = document.createElement("a");
         link.className = "item-link";
@@ -1836,6 +2080,20 @@
 
       wrapper.append(time, content);
       return wrapper;
+    }
+
+    function renderBaseSchedules() {
+      Object.entries(baseSchedules).forEach(([day, schedule]) => {
+        const timeline = document.querySelector(`[data-day-timeline="${day}"]`);
+        const heading = document.querySelector(`[data-day-heading="${day}"]`);
+        const subtitle = document.querySelector(`[data-day-subtitle="${day}"]`);
+        if (!timeline || !heading || !subtitle) return;
+
+        timeline.replaceChildren();
+        schedule.rows.forEach((row) => timeline.append(makeScheduleRow(row)));
+        heading.textContent = schedule.heading;
+        subtitle.textContent = schedule.subtitle;
+      });
     }
 
     function updateReturnSlot(day, variantKey) {
@@ -1912,8 +2170,19 @@
         const image = document.createElement("img");
         image.src = place.image;
         image.alt = place.title + " 이미지";
-        image.loading = "lazy";
-        image.addEventListener("error", () => card.classList.add("image-error"), { once: true });
+        image.loading = "eager";
+        let fallbackApplied = false;
+        const applyImageFallback = () => {
+          if (fallbackApplied) return;
+          fallbackApplied = true;
+          image.src = fallbackImageUrl(place.title);
+          image.alt = place.title + " 대체 이미지";
+        };
+        const fallbackTimer = window.setTimeout(() => {
+          if (!image.complete || image.naturalWidth === 0) applyImageFallback();
+        }, 5000);
+        image.addEventListener("load", () => window.clearTimeout(fallbackTimer), { once: true });
+        image.addEventListener("error", applyImageFallback, { once: true });
         const fallback = document.createElement("div");
         fallback.className = "image-fallback";
         fallback.textContent = place.title;
@@ -1985,7 +2254,7 @@
       operatingRows.replaceChildren();
       places.forEach((place) => {
         const row = document.createElement("tr");
-        [place.title, place.hours, place.reservation, place.cost].forEach((text) => {
+        [place.title, place.reservation, `${place.hours} / ${place.note}`].forEach((text) => {
           const cell = document.createElement("td");
           cell.textContent = text;
           row.append(cell);
@@ -2014,6 +2283,7 @@
       });
     }
 
+    renderBaseSchedules();
     captureDefaultSchedules();
 
     document.querySelectorAll(".alt-option").forEach((button) => {
