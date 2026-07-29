@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>우리의 여름, 해운대</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Nanum+Pen+Script&display=swap');
   :root {
     color-scheme: dark;
   }
@@ -202,7 +203,7 @@ function drawOverlay() {
   strokeTextWithShadow(
     "우리의 여름, 해운대",
     1400, 175,
-    '700 92px "Nanum Pen Script", "Apple SD Gothic Neo", cursive'
+    '400 104px "Nanum Pen Script", "Gaegu", cursive'
   );
 
   // 밑줄
@@ -220,7 +221,7 @@ function drawOverlay() {
   ctx.save();
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.font = '700 54px "Segoe Print", "Comic Sans MS", cursive';
+  ctx.font = '700 60px "Gaegu", "Nanum Pen Script", cursive';
   ctx.lineJoin = "round";
   ctx.lineWidth = 8;
   ctx.strokeStyle = "rgba(0,0,0,.42)";
@@ -268,6 +269,7 @@ function render() {
 }
 
 photo.onload = render;
+document.fonts.ready.then(render);
 
 overlayBtn.addEventListener("click", () => {
   showOverlay = !showOverlay;
