@@ -70,7 +70,7 @@
 <body>
   <main class="wrap">
     <div class="toolbar">
-      <button class="primary" id="downloadBtn">PNG로 저장</button>
+      <button class="primary" id="downloadBtn">PNG 저장·공유</button>
       <button class="secondary" id="overlayBtn">장식 표시/숨기기</button>
     </div>
 
@@ -79,7 +79,7 @@
     </div>
 
     <p class="note">
-      원본 사진 픽셀은 다시 생성하지 않습니다. HTML의 Canvas가 원본 위에 텍스트와 손그림만 합성한 뒤 PNG로 저장합니다.
+      원본 사진 픽셀은 다시 생성하지 않습니다. iPhone·iPad에서는 버튼을 누르면 공유 시트가 열리며, “이미지 저장” 또는 “파일에 저장”을 선택할 수 있습니다.
     </p>
   </main>
 
@@ -276,12 +276,48 @@ overlayBtn.addEventListener("click", () => {
   render();
 });
 
-downloadBtn.addEventListener("click", () => {
+downloadBtn.addEventListener("click", async () => {
   render();
-  const link = document.createElement("a");
-  link.download = "우리의_여름_해운대_2026.png";
-  link.href = canvas.toDataURL("image/png");
-  link.click();
+
+  canvas.toBlob(async (blob) => {
+    if (!blob) {
+      alert("PNG 생성에 실패했습니다.");
+      return;
+    }
+
+    const filename = "우리의_여름_해운대_2026.png";
+    const file = new File([blob], filename, { type: "image/png" });
+
+    // iPhone/iPad에서는 다운로드 속성보다 공유 시트가 더 안정적입니다.
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({
+          files: [file],
+          title: "우리의 여름, 해운대",
+          text: "완성된 PNG 이미지"
+        });
+        return;
+      } catch (error) {
+        // 사용자가 공유 창을 닫은 경우에는 추가 동작을 하지 않습니다.
+        if (error && error.name === "AbortError") return;
+      }
+    }
+
+    // 데스크톱 및 일반 브라우저용 다운로드
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    // 일부 iOS 인앱 브라우저에서는 download가 무시되므로 새 탭으로 표시
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+    }, 60000);
+  }, "image/png");
 });
 </script>
 </body>
