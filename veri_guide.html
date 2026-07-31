@@ -1,0 +1,1192 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="6개 국립대학교 수의예과 수시 전형, 합격선, 경쟁률과 캠퍼스 위치 비교">
+  <title>국립대 수의예과 입시 비교 가이드</title>
+  <link rel="icon" href="assets/university-logos/cbnu.ico">
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://tile.openstreetmap.org">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <style>
+    :root {
+      --canvas: #f4eff9;
+      --paper: #fffdf9;
+      --paper-strong: #ffffff;
+      --ink: #241f2d;
+      --muted: #71687b;
+      --purple: #6b4796;
+      --purple-dark: #43305b;
+      --purple-soft: #eee5f6;
+      --line: #d9cbe7;
+      --coral: #e86f61;
+      --coral-soft: #fff0ed;
+      --green: #2f7b62;
+      --shadow: 0 12px 32px rgba(65, 43, 86, 0.09);
+      --radius: 12px;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Noto Serif KR", Batang, serif;
+      --sans: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--canvas);
+      font-family: var(--sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select { font: inherit; }
+
+    a { color: inherit; }
+
+    button, a, input, select, summary { -webkit-tap-highlight-color: transparent; }
+
+    :focus-visible {
+      outline: 3px solid rgba(232, 111, 97, 0.42);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      left: 18px;
+      top: -80px;
+      z-index: 9999;
+      padding: 10px 16px;
+      background: var(--ink);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+
+    .skip-link:focus { top: 18px; }
+
+    .page-shell {
+      width: min(1320px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      background: rgba(255, 253, 249, 0.94);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .utility-bar {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid #e8deef;
+    }
+
+    .wordmark {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .wordmark-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      background: var(--purple);
+      color: #fff;
+      border-radius: 7px;
+    }
+
+    .wordmark small {
+      display: block;
+      margin-top: -3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .header-actions { display: flex; gap: 8px; }
+
+    .button {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 14px;
+      border: 1px solid var(--purple);
+      border-radius: 7px;
+      background: var(--paper-strong);
+      color: var(--purple-dark);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+
+    .button:hover { background: var(--purple-soft); }
+    .button:active { transform: translateY(1px); }
+    .button.primary { background: var(--purple); color: #fff; }
+    .button.primary:hover { background: var(--purple-dark); }
+    .button.coral { border-color: var(--coral); color: #9e3f34; }
+    .button svg { width: 17px; height: 17px; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(460px, 1.08fr);
+      gap: 28px;
+      padding: 42px 0 46px;
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8px 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--coral);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-family: var(--serif);
+      letter-spacing: -0.04em;
+      line-height: 1.14;
+    }
+
+    h1 {
+      max-width: 720px;
+      font-size: clamp(38px, 4.5vw, 62px);
+      color: var(--purple-dark);
+    }
+
+    .hero-copy > p:not(.eyebrow) {
+      max-width: 680px;
+      margin: 20px 0 26px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .hero-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding-left: 14px;
+      border-left: 3px solid var(--coral);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero-note svg { flex: 0 0 auto; width: 18px; margin-top: 3px; color: var(--coral); }
+
+    .overview-card {
+      position: relative;
+      min-height: 420px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .overview-map { width: 100%; height: 100%; min-height: 420px; }
+
+    .map-caption {
+      position: absolute;
+      z-index: 500;
+      left: 16px;
+      top: 16px;
+      max-width: calc(100% - 32px);
+      padding: 11px 13px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: rgba(255, 253, 249, 0.95);
+      box-shadow: 0 8px 20px rgba(53, 37, 69, 0.11);
+    }
+
+    .map-caption strong { display: block; color: var(--purple-dark); font-size: 14px; }
+    .map-caption span { color: var(--muted); font-size: 12px; }
+
+    .map-fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+      background: #efe9f5;
+      color: var(--muted);
+    }
+
+    .map-failed .map-fallback { display: grid; }
+
+    main { padding: 32px 0 72px; }
+
+    .stats-band {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: -22px;
+      margin-bottom: 32px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper-strong);
+      box-shadow: 0 8px 24px rgba(66, 46, 86, 0.07);
+    }
+
+    .stat {
+      min-height: 112px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 21px 24px;
+      border-right: 1px solid #e8deef;
+    }
+
+    .stat:last-child { border-right: 0; }
+
+    .stat-icon {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--purple-soft);
+      color: var(--purple);
+    }
+
+    .stat:nth-child(3) .stat-icon { background: var(--coral-soft); color: var(--coral); }
+    .stat strong { display: block; font-family: var(--serif); font-size: 28px; line-height: 1; color: var(--purple-dark); }
+    .stat span { display: block; margin-top: 4px; color: var(--muted); font-size: 13px; }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin: 48px 0 18px;
+    }
+
+    .section-heading h2 { font-size: clamp(30px, 4vw, 44px); color: var(--purple-dark); }
+    .section-heading p { max-width: 540px; margin: 0; color: var(--muted); font-size: 14px; text-align: right; }
+
+    .comparison-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .filters {
+      position: relative;
+      z-index: 700;
+      display: grid;
+      grid-template-columns: minmax(220px, 1.7fr) minmax(150px, 0.7fr) minmax(170px, 0.8fr) auto;
+      gap: 10px;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    .field { position: relative; }
+
+    .field svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      width: 17px;
+      height: 17px;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .field input, .field select {
+      width: 100%;
+      height: 44px;
+      border: 1px solid #cdbddb;
+      border-radius: 7px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .field input { padding: 0 12px 0 38px; }
+    .field select { padding: 0 35px 0 12px; }
+
+    .university-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      padding: 14px 16px;
+      border-bottom: 1px solid #e8deef;
+    }
+
+    .filter-chip {
+      min-height: 36px;
+      padding: 0 12px;
+      border: 1px solid #cdbddb;
+      border-radius: 6px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .filter-chip:hover, .filter-chip[aria-pressed="true"] {
+      border-color: var(--purple);
+      background: var(--purple);
+      color: #fff;
+    }
+
+    .table-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 16px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .table-scroll { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .comparison-table { min-width: 1050px; }
+    .detail-table { min-width: 900px; }
+
+    th, td {
+      padding: 14px 15px;
+      border-bottom: 1px solid #e8deef;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f8f4fb;
+      color: var(--purple-dark);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    tbody tr { transition: background 140ms ease; }
+    tbody tr:hover { background: #fbf7fd; }
+    tbody tr:last-child td { border-bottom: 0; }
+    td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    td.score { font-weight: 900; color: var(--purple-dark); }
+
+    .univ-cell { display: flex; align-items: center; gap: 10px; min-width: 154px; }
+
+    .mini-logo {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      padding: 3px;
+      border: 1px solid #e3d8ec;
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    .type-label {
+      display: inline-block;
+      margin-right: 5px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--purple-soft);
+      color: var(--purple-dark);
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .type-label.course { background: var(--coral-soft); color: #9e4035; }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #a59bab;
+    }
+
+    .status.yes { color: #a8453a; }
+    .status.yes::before { background: var(--coral); }
+    .status.none { color: var(--green); }
+    .status.none::before { background: var(--green); }
+
+    .cut-note { color: var(--coral); font-size: 11px; font-weight: 800; }
+
+    .empty-state {
+      display: none;
+      padding: 42px 20px 48px;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid #e8deef;
+    }
+
+    .empty-state.visible { display: block; }
+
+    .universities { display: grid; gap: 26px; }
+
+    .university-card {
+      scroll-margin-top: 24px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .university-card[hidden], tr[hidden] { display: none; }
+
+    .university-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(400px, 0.9fr);
+      min-height: 245px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .university-intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 30px 34px;
+    }
+
+    .brand-lockup {
+      display: grid;
+      grid-template-columns: 154px minmax(0, 1fr);
+      align-items: center;
+      gap: 22px;
+    }
+
+    .logo-frame {
+      width: 154px;
+      height: 98px;
+      display: grid;
+      place-items: center;
+      padding: 12px;
+      overflow: hidden;
+      border: 1px solid #d9cbe7;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .logo-frame img { width: 100%; height: 100%; object-fit: contain; }
+    .logo-frame.square img { width: 78px; height: 78px; }
+
+    .university-title .kicker {
+      margin: 0 0 5px;
+      color: var(--coral);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .university-title h3 { font-size: clamp(29px, 3vw, 39px); color: var(--purple-dark); }
+    .university-title .english { margin-top: 4px; color: var(--muted); font-size: 12px; letter-spacing: 0.05em; }
+
+    .campus-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 9px 14px;
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .campus-row span { display: inline-flex; align-items: center; gap: 7px; }
+    .campus-row svg { width: 16px; height: 16px; color: var(--purple); }
+    .text-link { color: var(--purple); font-weight: 900; text-underline-offset: 3px; }
+
+    .mini-map-wrap { position: relative; min-height: 245px; background: #ece5f2; }
+    .mini-map { width: 100%; height: 100%; min-height: 245px; }
+
+    .map-badge {
+      position: absolute;
+      z-index: 500;
+      right: 12px;
+      top: 12px;
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(255, 253, 249, 0.94);
+      color: var(--purple-dark);
+      font-size: 11px;
+      font-weight: 900;
+      box-shadow: 0 5px 14px rgba(54, 36, 70, 0.1);
+    }
+
+    .fact-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-bottom: 1px solid #e8deef;
+      background: #fcf9fd;
+    }
+
+    .fact {
+      padding: 17px 22px;
+      border-right: 1px solid #e8deef;
+    }
+
+    .fact:last-child { border-right: 0; }
+    .fact span { display: block; color: var(--muted); font-size: 11px; font-weight: 800; }
+    .fact strong { display: block; margin-top: 3px; color: var(--purple-dark); font-family: var(--serif); font-size: 22px; }
+
+    .card-section { padding: 24px 28px 28px; }
+
+    .card-section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 13px;
+    }
+
+    .card-section-title h4 { margin: 0; color: var(--purple-dark); font-size: 17px; }
+    .card-section-title p { margin: 0; color: var(--muted); font-size: 12px; }
+
+    .detail-panel { border-top: 1px solid var(--line); }
+
+    .detail-panel summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 28px;
+      color: var(--purple-dark);
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .detail-panel summary::-webkit-details-marker { display: none; }
+
+    .detail-panel summary::after {
+      content: "+";
+      font-family: var(--sans);
+      color: var(--coral);
+      font-size: 23px;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .detail-panel[open] summary::after { content: "−"; }
+    .detail-panel[open] summary { border-bottom: 1px solid #e8deef; }
+    .detail-panel .table-scroll { padding: 0 12px 12px; }
+
+    .data-note {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin: 24px 0 0;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fffaf6;
+    }
+
+    .legend strong { display: block; margin-bottom: 3px; color: var(--purple-dark); font-size: 13px; }
+    .legend span { color: var(--muted); font-size: 12px; }
+
+    footer {
+      padding: 30px 0 44px;
+      border-top: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.6fr);
+      gap: 32px;
+    }
+
+    .footer-grid p { margin: 0; }
+    .source-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px 14px; }
+    .source-links a { color: var(--purple); text-underline-offset: 3px; }
+
+    .leaflet-container { font-family: var(--sans); }
+    .leaflet-popup-content-wrapper { border-radius: 8px; box-shadow: 0 8px 24px rgba(48, 33, 61, 0.18); }
+    .leaflet-popup-content { margin: 12px 14px; line-height: 1.45; }
+    .map-popup strong { display: block; margin-bottom: 2px; color: var(--purple-dark); }
+    .map-popup span { color: var(--muted); font-size: 11px; }
+    .leaflet-control-zoom a { color: var(--purple-dark); }
+
+    @media (max-width: 1020px) {
+      .hero { grid-template-columns: 1fr; }
+      .overview-card, .overview-map { min-height: 360px; }
+      .stats-band { grid-template-columns: repeat(2, 1fr); }
+      .stat:nth-child(2) { border-right: 0; }
+      .stat:nth-child(-n+2) { border-bottom: 1px solid #e8deef; }
+      .filters { grid-template-columns: 1fr 1fr; }
+      .university-head { grid-template-columns: 1fr; }
+      .mini-map-wrap, .mini-map { min-height: 270px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .source-links { justify-content: flex-start; }
+    }
+
+    @media (max-width: 720px) {
+      .page-shell { width: min(100% - 24px, 1320px); }
+      .utility-bar { min-height: 62px; }
+      .wordmark small { display: none; }
+      .header-actions .button span { display: none; }
+      .header-actions .button { width: 42px; padding: 0; }
+      .hero { padding: 30px 0 38px; }
+      h1 { font-size: 38px; }
+      .overview-card, .overview-map { min-height: 310px; }
+      .stats-band { margin-top: -10px; }
+      .stat { min-height: 95px; padding: 16px; }
+      .stat-icon { width: 36px; height: 36px; }
+      .stat strong { font-size: 23px; }
+      .section-heading { display: block; margin-top: 38px; }
+      .section-heading h2 { font-size: 33px; }
+      .section-heading p { margin-top: 8px; text-align: left; }
+      .filters { position: static; grid-template-columns: 1fr; }
+      .brand-lockup { grid-template-columns: 112px minmax(0, 1fr); gap: 15px; }
+      .logo-frame { width: 112px; height: 78px; padding: 8px; }
+      .logo-frame.square img { width: 60px; height: 60px; }
+      .university-intro { padding: 24px 20px; }
+      .university-title h3 { font-size: 27px; }
+      .fact-strip { grid-template-columns: repeat(2, 1fr); }
+      .fact:nth-child(2) { border-right: 0; }
+      .fact:nth-child(-n+2) { border-bottom: 1px solid #e8deef; }
+      .fact { padding: 14px 16px; }
+      .fact strong { font-size: 19px; }
+      .card-section { padding: 20px 16px 22px; }
+      .card-section-title { display: block; }
+      .card-section-title p { margin-top: 5px; }
+      .detail-panel summary { padding: 17px 18px; }
+      .legend { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      :root { --canvas: #fff; --shadow: none; }
+      .site-header, .filters, .university-tabs, .overview-card, .mini-map-wrap, .detail-panel summary::after { display: none !important; }
+      .page-shell { width: 100%; }
+      .hero { display: block; padding: 20px 0; }
+      .hero-copy > p:not(.eyebrow) { margin: 10px 0; }
+      .stats-band { margin: 0 0 22px; }
+      .university-card { break-inside: avoid; box-shadow: none; }
+      .university-head { display: block; min-height: auto; }
+      .detail-panel > * { display: block !important; }
+      .table-scroll { overflow: visible; }
+      .comparison-table, .detail-table { min-width: 0; font-size: 10px; }
+      th, td { padding: 7px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+
+  <header class="site-header">
+    <div class="page-shell utility-bar">
+      <div class="wordmark" aria-label="수의예과 입시 노트">
+        <span class="wordmark-mark"><i data-lucide="book-open-check" aria-hidden="true"></i></span>
+        <span>수의예과 입시 노트<small>Veterinary admissions field guide</small></span>
+      </div>
+      <div class="header-actions">
+        <a class="button" href="#comparison" title="전형 비교표로 이동">
+          <i data-lucide="table-2" aria-hidden="true"></i><span>전형 비교</span>
+        </a>
+        <button class="button coral" id="printButton" type="button" title="인쇄 또는 PDF로 저장">
+          <i data-lucide="printer" aria-hidden="true"></i><span>인쇄 / PDF</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="page-shell hero">
+      <div class="hero-copy">
+        <p class="eyebrow">수시 전형 · 제공 자료 기준</p>
+        <h1>국립대 수의예과,<br>합격선과 전형을 한눈에</h1>
+        <p>충북대부터 전북대까지 6개 대학, 13개 수시 전형의 모집 인원·면접·수능 최저·내신 컷을 같은 기준으로 정리했습니다. 로고 옆 지도에서 수의과대학이 위치한 캠퍼스도 바로 확인할 수 있습니다.</p>
+        <div class="hero-note">
+          <i data-lucide="info" aria-hidden="true"></i>
+          <span>입시 결과는 사용자가 제공한 자료를 그대로 표기했습니다. ‘–’는 미제공, ‘3명 이하’는 대학의 비공개 기준을 뜻합니다.</span>
+        </div>
+      </div>
+
+      <div class="overview-card" aria-label="6개 대학 전체 위치 지도">
+        <div class="map-caption"><strong>전국 캠퍼스 위치</strong><span>마커를 눌러 대학과 주소를 확인하세요.</span></div>
+        <div class="overview-map" id="overviewMap"></div>
+        <div class="map-fallback">지도를 불러오지 못했습니다. 대학별 ‘외부 지도 열기’를 이용해 주세요.</div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="page-shell">
+      <section class="stats-band" aria-label="전체 전형 요약">
+        <div class="stat"><span class="stat-icon"><i data-lucide="school" aria-hidden="true"></i></span><div><strong>6</strong><span>비교 대학</span></div></div>
+        <div class="stat"><span class="stat-icon"><i data-lucide="list-checks" aria-hidden="true"></i></span><div><strong>13</strong><span>수시 전형</span></div></div>
+        <div class="stat"><span class="stat-icon"><i data-lucide="users" aria-hidden="true"></i></span><div><strong>103</strong><span>총 모집 인원</span></div></div>
+        <div class="stat"><span class="stat-icon"><i data-lucide="messages-square" aria-hidden="true"></i></span><div><strong>5</strong><span>면접 실시 전형</span></div></div>
+      </section>
+
+      <section id="comparison" aria-labelledby="comparison-title">
+        <div class="section-heading">
+          <div><p class="eyebrow">Quick comparison</p><h2 id="comparison-title">13개 전형 비교표</h2></div>
+          <p>대학·전형명 검색과 면접/수능최저 필터를 조합할 수 있습니다. 아래 대학 버튼을 누르면 해당 대학만 모아볼 수 있습니다.</p>
+        </div>
+
+        <div class="comparison-panel">
+          <form class="filters" id="filterForm" role="search">
+            <label class="field">
+              <span class="visually-hidden">대학 또는 전형 검색</span>
+              <i data-lucide="search" aria-hidden="true"></i>
+              <input id="searchInput" type="search" placeholder="대학 또는 전형명 검색" autocomplete="off">
+            </label>
+            <label class="field">
+              <span class="visually-hidden">면접 여부</span>
+              <select id="interviewFilter" aria-label="면접 여부">
+                <option value="all">면접 전체</option>
+                <option value="yes">면접 있음</option>
+                <option value="no">면접 없음</option>
+              </select>
+            </label>
+            <label class="field">
+              <span class="visually-hidden">수능 최저 여부</span>
+              <select id="minimumFilter" aria-label="수능 최저 여부">
+                <option value="all">수능 최저 전체</option>
+                <option value="yes">수능 최저 있음</option>
+                <option value="none">수능 최저 없음</option>
+              </select>
+            </label>
+            <button class="button" id="resetButton" type="button"><i data-lucide="rotate-ccw" aria-hidden="true"></i>초기화</button>
+          </form>
+
+          <nav class="university-tabs" aria-label="대학 필터">
+            <button class="filter-chip" type="button" data-university-filter="all" aria-pressed="true">전체</button>
+            <button class="filter-chip" type="button" data-university-filter="cbnu" aria-pressed="false">충북대</button>
+            <button class="filter-chip" type="button" data-university-filter="snu" aria-pressed="false">서울대</button>
+            <button class="filter-chip" type="button" data-university-filter="jnu" aria-pressed="false">전남대</button>
+            <button class="filter-chip" type="button" data-university-filter="gnu" aria-pressed="false">경상국립대</button>
+            <button class="filter-chip" type="button" data-university-filter="cnu" aria-pressed="false">충남대</button>
+            <button class="filter-chip" type="button" data-university-filter="jbnu" aria-pressed="false">전북대</button>
+          </nav>
+
+          <div class="table-toolbar"><strong id="resultCount" aria-live="polite">13개 전형 표시 중</strong><span>평균·컷은 최종등록자 기준</span></div>
+          <div class="table-scroll">
+            <table class="comparison-table">
+              <thead><tr><th scope="col">대학</th><th scope="col">전형 유형 명칭</th><th scope="col">모집</th><th scope="col">면접</th><th scope="col">수능 최저</th><th scope="col">평균</th><th scope="col">50% 컷</th><th scope="col">70% 컷</th></tr></thead>
+              <tbody>
+                <tr class="comparison-row" data-university="cbnu" data-interview="no" data-minimum="none" data-search="충북대학교 충북대 학생부종합 학생부종합1 학생부종합Ⅰ전형 수의예과">
+                  <td><span class="univ-cell"><img class="mini-logo" src="assets/university-logos/cbnu.png" alt=""><strong>충북대</strong></span></td><td><span class="type-label">종합</span>학생부종합Ⅰ전형</td><td class="num">8명</td><td><span class="status">없음</span></td><td><span class="status none">없음</span></td><td class="score num">1.27</td><td class="score num">1.25</td><td class="score num">1.30</td>
+                </tr>
+                <tr class="comparison-row" data-university="cbnu" data-interview="no" data-minimum="yes" data-search="충북대학교 충북대 학생부종합 학생부종합2 학생부종합Ⅱ전형 수의예과">
+                  <td><span class="univ-cell"><img class="mini-logo" src="assets/university-logos/cbnu.png" alt=""><strong>충북대</strong></span></td><td><span class="type-label">종합</span>학생부종합Ⅱ전형</td><td class="num">7명</td><td><span class="status">없음</span></td><td>국·수·영·한·과 상위 3합 8</td><td class="score num">1.26</td><td class="score num">1.29</td><td class="score num">1.36</td>
+                </tr>
+                <tr class="comparison-row" data-university="cbnu" data-interview="no" data-minimum="yes" data-search="충북대학교 충북대 학생부교과 학생부교과전형 수의예과">
+                  <td><span class="univ-cell"><img class="mini-logo" src="assets/university-logos/cbnu.png" alt=""><strong>충북대</strong></span></td><td><span class="type-label course">교과</span>학생부교과전형</td><td class="num">5명</td><td><span class="status">없음</span></td><td>국·수·영·한·과 상위 3합 7</td><td class="score num">1.11</td><td class="score num">1.10</td><td class="score num">1.12</td>
+                </tr>
+                <tr class="comparison-row" data-university="snu" data-interview="yes" data-minimum="none" data-search="서울대학교 서울대 학생부종합 일반전형 수의예과">
+                  <td><span class="univ-cell"><img class="mini-logo" src="assets/university-logos/snu.png" alt=""><strong>서울대</strong></span></td><td><span class="type-label">종합</span>일반전형</td><td class="num">17명</td><td><span class="status yes">있음</span></td><td><span class="status none">없음</span></td><td class="num">–</td><td class="score num">1.46</td><td class="score num">1.68</td>
+                </tr>
+                <tr class="comparison-row" data-university="jnu" data-interview="no" data-minimum="yes" data-search="전남대학교 전남대 학생부교과 일반 수의예과">
+                  <td><span class="univ-cell"><img class="mini-logo" src="assets/university-logos/jnu.png" alt=""><strong>전남대</strong></span></td><td><span class="type-label course">교과</span>일반</td><td class="num">10명</td><td><span class="status">없음</span></td><td>3합 6</td><td class="score num">1.276</td><td class="score num">1.275</td><td class="score num">1.280</td>
+                </tr>
+                <tr class="comparison-row" data-university="jnu" data-interview="yes" data-minimum="yes" data-search="전남대학교 전남대 학생부종합 고교생활우수자1 고교생활우수자Ⅰ 수의예과">
+                  <td><span class="univ-cell"><img class="mini-logo" src="assets/university-logos/jnu.png" alt=""><strong>전남대</strong></span></td><td><span class="type-label">종합</span>고교생활우수자Ⅰ</td><td class="num">8명</td><td><span class="status yes">있음</span></td><td>3합 7</td><td class="score num">1.561</td><td class="score num">1.537</td><td class="score num">1.612</td>
+                </tr>
+                <tr class="comparison-row" data-university="gnu" data-interview="no" data-minimum="yes" data-search="경상국립대학교 경상국립대 학생부교과 일반 수의예과">
+                  <td><span class="univ-cell"><img class="mini-logo" src="assets/university-logos/gnu.png" alt=""><strong>경상국립대</strong></span></td><td><span class="type-label course">교과</span>일반</td><td class="num">10명</td><td><span class="status">없음</span></td><td>3합 6</td><td class="score num">1.31</td><td class="num">–</td><td class="score num">1.32 <span class="cut-note">(80%)</span></td>
+                </tr>
+                <tr class="comparison-row" data-university="gnu" data-interview="yes" data-minimum="yes" data-search="경상국립대학교 경상국립대 학생부종합 일반전형 수의예과 수학포함">
+                  <td><span class="univ-cell"><img class="mini-logo" src="assets/university-logos/gnu.png" alt=""><strong>경상국립대</strong></span></td><td><span class="type-label">종합</span>일반전형</td><td class="num">5명</td><td><span class="status yes">있음</span></td><td>3합 7 · 수학 포함</td><td class="score num">1.47</td><td class="num">–</td><td class="num">–</td>
+                </tr>
+                <tr class="comparison-row" data-university="cnu" data-interview="no" data-minimum="yes" data-search="충남대학교 충남대 학생부교과 일반 수의예과 수학필수">
+                  <td><span class="univ-cell"><img class="mini-logo" src="assets/university-logos/cnu-cropped.png" alt=""><strong>충남대</strong></span></td><td><span class="type-label course">교과</span>일반</td><td class="num">14명</td><td><span class="status">없음</span></td><td>수학 필수 · 국·영·과(평균) 3합 6</td><td class="score num">1.20</td><td class="num">–</td><td class="score num">1.23</td>
+                </tr>
+                <tr class="comparison-row" data-university="cnu" data-interview="yes" data-minimum="yes" data-search="충남대학교 충남대 학생부종합 종합1 일반 종합Ⅰ 일반 수의예과 수학필수">
+                  <td><span class="univ-cell"><img class="mini-logo" src="assets/university-logos/cnu-cropped.png" alt=""><strong>충남대</strong></span></td><td><span class="type-label">종합</span>종합Ⅰ 일반</td><td class="num">4명</td><td><span class="status yes">있음</span></td><td>수학 필수 · 국·영·과(평균) 3합 7</td><td class="score num">1.95</td><td class="num">–</td><td class="score num">1.65</td>
+                </tr>
+                <tr class="comparison-row" data-university="cnu" data-interview="no" data-minimum="yes" data-search="충남대학교 충남대 학생부종합 종합1 서류 종합Ⅰ 서류 수의예과 수학필수">
+                  <td><span class="univ-cell"><img class="mini-logo" src="assets/university-logos/cnu-cropped.png" alt=""><strong>충남대</strong></span></td><td><span class="type-label">종합</span>종합Ⅰ 서류</td><td class="num">2명</td><td><span class="status">없음</span></td><td>수학 필수 · 국·영·과(평균) 3합 7</td><td class="score num">1.48</td><td class="num">–</td><td class="score num">1.55</td>
+                </tr>
+                <tr class="comparison-row" data-university="jbnu" data-interview="no" data-minimum="yes" data-search="전북대학교 전북대 학생부교과 일반학생 수의예과 수학포함">
+                  <td><span class="univ-cell"><img class="mini-logo" src="assets/university-logos/jbnu-cropped.jpg" alt=""><strong>전북대</strong></span></td><td><span class="type-label course">교과</span>일반학생</td><td class="num">10명</td><td><span class="status">없음</span></td><td>수학 포함 3합 7</td><td class="score num">1.17</td><td class="score num">1.16</td><td class="score num">1.19</td>
+                </tr>
+                <tr class="comparison-row" data-university="jbnu" data-interview="yes" data-minimum="yes" data-search="전북대학교 전북대 학생부종합 큰사람 수의예과 수학포함">
+                  <td><span class="univ-cell"><img class="mini-logo" src="assets/university-logos/jbnu-cropped.jpg" alt=""><strong>전북대</strong></span></td><td><span class="type-label">종합</span>큰사람</td><td class="num">3명</td><td><span class="status yes">있음</span></td><td>수학 포함 3합 7</td><td class="score num">1.52</td><td class="num">3명 이하</td><td class="num">3명 이하</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="emptyState"><strong>조건에 맞는 전형이 없습니다.</strong><br>검색어를 줄이거나 필터를 초기화해 주세요.</div>
+        </div>
+      </section>
+
+      <section aria-labelledby="detail-title">
+        <div class="section-heading">
+          <div><p class="eyebrow">University profiles</p><h2 id="detail-title">대학별 상세</h2></div>
+          <p>각 대학 카드의 로고 옆 지도로 캠퍼스 위치를 확인하고, 하단 상세 보기를 열어 경쟁률과 충원 결과까지 살펴보세요.</p>
+        </div>
+
+        <div class="universities">
+          <article class="university-card" id="cbnu" data-university-section="cbnu">
+            <div class="university-head">
+              <div class="university-intro">
+                <div class="brand-lockup">
+                  <div class="logo-frame"><img src="assets/university-logos/cbnu.png" alt="충북대학교 로고"></div>
+                  <div class="university-title"><p class="kicker">01 · Cheongju</p><h3>충북대학교</h3><div class="english">CHUNGBUK NATIONAL UNIVERSITY</div></div>
+                </div>
+                <div class="campus-row"><span><i data-lucide="map-pin" aria-hidden="true"></i>충북 청주시 서원구 충대로 1</span><a class="text-link" href="https://www.google.com/maps/search/?api=1&query=%EC%B6%A9%EB%B6%81%EB%8C%80%ED%95%99%EA%B5%90+%EC%88%98%EC%9D%98%EA%B3%BC%EB%8C%80%ED%95%99" target="_blank" rel="noopener">외부 지도 열기 ↗</a></div>
+              </div>
+              <div class="mini-map-wrap"><span class="map-badge">개신캠퍼스</span><div class="mini-map" id="map-cbnu"></div><div class="map-fallback">충북대학교 위치 · 36.625°N, 127.455°E</div></div>
+            </div>
+            <div class="fact-strip"><div class="fact"><span>전형 수</span><strong>3개</strong></div><div class="fact"><span>총 모집</span><strong>20명</strong></div><div class="fact"><span>면접 전형</span><strong>0개</strong></div><div class="fact"><span>최저 없는 전형</span><strong>1개</strong></div></div>
+            <div class="card-section">
+              <div class="card-section-title"><h4>전형별 최종등록자 결과</h4><p>내신 등급 · 일괄합산 · 면접 없음</p></div>
+              <div class="table-scroll"><table class="detail-table"><thead><tr><th>전형</th><th>모집</th><th>수능 최저</th><th>평균</th><th>편차</th><th>50%</th><th>70%</th></tr></thead><tbody>
+                <tr class="section-row" data-interview="no" data-minimum="none" data-search="충북대학교 충북대 학생부종합Ⅰ전형 수의예과"><td><span class="type-label">종합</span>학생부종합Ⅰ전형</td><td class="num">8명</td><td>없음</td><td class="score num">1.27</td><td class="num">0.18</td><td class="score num">1.25</td><td class="score num">1.30</td></tr>
+                <tr class="section-row" data-interview="no" data-minimum="yes" data-search="충북대학교 충북대 학생부종합Ⅱ전형 수의예과"><td><span class="type-label">종합</span>학생부종합Ⅱ전형</td><td class="num">7명</td><td>상위 3합 8</td><td class="score num">1.26</td><td class="num">0.12</td><td class="score num">1.29</td><td class="score num">1.36</td></tr>
+                <tr class="section-row" data-interview="no" data-minimum="yes" data-search="충북대학교 충북대 학생부교과전형 수의예과"><td><span class="type-label course">교과</span>학생부교과전형</td><td class="num">5명</td><td>상위 3합 7</td><td class="score num">1.11</td><td class="num">0.03</td><td class="score num">1.10</td><td class="score num">1.12</td></tr>
+              </tbody></table></div>
+            </div>
+            <details class="detail-panel"><summary>지원·예비순위·최초합격자 세부 결과</summary><div class="table-scroll"><table class="detail-table"><thead><tr><th>전형</th><th>지원</th><th>경쟁률</th><th>예비순위</th><th>최초합 내신</th><th>최초 평가점수</th><th>등록 평가점수</th></tr></thead><tbody>
+              <tr><td>종합Ⅰ</td><td class="num">117명</td><td class="num">14.63:1</td><td class="num">5</td><td class="num">1.17 ± 0.16</td><td class="num">서류 75.30 ± 1.93</td><td class="num">서류 71.91 ± 1.83</td></tr>
+              <tr><td>종합Ⅱ</td><td class="num">82명</td><td class="num">11.71:1</td><td class="num">10</td><td class="num">1.17 ± 0.09</td><td class="num">서류 74.55 ± 2.40</td><td class="num">서류 71.21 ± 4.59</td></tr>
+              <tr><td>교과</td><td class="num">75명</td><td class="num">15.00:1</td><td class="num">15</td><td class="num">1.03 ± 0.02</td><td class="num">총점 79.95</td><td class="num">총점 79.79</td></tr>
+            </tbody></table></div></details>
+          </article>
+
+          <article class="university-card" id="snu" data-university-section="snu">
+            <div class="university-head">
+              <div class="university-intro">
+                <div class="brand-lockup"><div class="logo-frame"><img src="assets/university-logos/snu.png" alt="서울대학교 로고"></div><div class="university-title"><p class="kicker">02 · Seoul</p><h3>서울대학교</h3><div class="english">SEOUL NATIONAL UNIVERSITY</div></div></div>
+                <div class="campus-row"><span><i data-lucide="map-pin" aria-hidden="true"></i>서울 관악구 관악로 1</span><a class="text-link" href="https://www.google.com/maps/search/?api=1&query=%EC%84%9C%EC%9A%B8%EB%8C%80%ED%95%99%EA%B5%90+%EC%88%98%EC%9D%98%EA%B3%BC%EB%8C%80%ED%95%99" target="_blank" rel="noopener">외부 지도 열기 ↗</a></div>
+              </div>
+              <div class="mini-map-wrap"><span class="map-badge">관악캠퍼스</span><div class="mini-map" id="map-snu"></div><div class="map-fallback">서울대학교 위치 · 37.460°N, 126.952°E</div></div>
+            </div>
+            <div class="fact-strip"><div class="fact"><span>전형 수</span><strong>1개</strong></div><div class="fact"><span>총 모집</span><strong>17명</strong></div><div class="fact"><span>경쟁률</span><strong>10.71:1</strong></div><div class="fact"><span>충원</span><strong>2명</strong></div></div>
+            <div class="card-section"><div class="card-section-title"><h4>일반전형 결과</h4><p>수능 최저 없음 · 면접 있음</p></div><div class="table-scroll"><table class="detail-table"><thead><tr><th>전형</th><th>모집</th><th>면접</th><th>수능 최저</th><th>평균</th><th>50%</th><th>70%</th></tr></thead><tbody>
+              <tr class="section-row" data-interview="yes" data-minimum="none" data-search="서울대학교 서울대 학생부종합 일반전형 수의예과"><td><span class="type-label">종합</span>일반전형</td><td class="num">17명</td><td><span class="status yes">있음</span></td><td><span class="status none">없음</span></td><td class="num">–</td><td class="score num">1.46</td><td class="score num">1.68</td></tr>
+            </tbody></table></div><p class="data-note">경쟁률 10.71:1, 충원 합격 2명. 평균 내신은 제공 자료에 없어 ‘–’로 표시했습니다.</p></div>
+          </article>
+
+          <article class="university-card" id="jnu" data-university-section="jnu">
+            <div class="university-head">
+              <div class="university-intro">
+                <div class="brand-lockup"><div class="logo-frame square"><img src="assets/university-logos/jnu.png" alt="전남대학교 로고"></div><div class="university-title"><p class="kicker">03 · Gwangju</p><h3>전남대학교</h3><div class="english">CHONNAM NATIONAL UNIVERSITY</div></div></div>
+                <div class="campus-row"><span><i data-lucide="map-pin" aria-hidden="true"></i>광주 북구 용봉로 77</span><a class="text-link" href="https://www.google.com/maps/search/?api=1&query=%EC%A0%84%EB%82%A8%EB%8C%80%ED%95%99%EA%B5%90+%EC%88%98%EC%9D%98%EA%B3%BC%EB%8C%80%ED%95%99" target="_blank" rel="noopener">외부 지도 열기 ↗</a></div>
+              </div>
+              <div class="mini-map-wrap"><span class="map-badge">용봉캠퍼스</span><div class="mini-map" id="map-jnu"></div><div class="map-fallback">전남대학교 위치 · 35.176°N, 126.908°E</div></div>
+            </div>
+            <div class="fact-strip"><div class="fact"><span>전형 수</span><strong>2개</strong></div><div class="fact"><span>총 모집</span><strong>18명</strong></div><div class="fact"><span>최고 경쟁률</span><strong>24.13:1</strong></div><div class="fact"><span>최대 충원</span><strong>25명</strong></div></div>
+            <div class="card-section"><div class="card-section-title"><h4>전형별 최종등록자 결과</h4><p>두 전형 모두 수능 최저 적용</p></div><div class="table-scroll"><table class="detail-table"><thead><tr><th>전형</th><th>모집</th><th>면접</th><th>수능 최저</th><th>평균</th><th>50%</th><th>70%</th></tr></thead><tbody>
+              <tr class="section-row" data-interview="no" data-minimum="yes" data-search="전남대학교 전남대 학생부교과 일반 수의예과"><td><span class="type-label course">교과</span>일반</td><td class="num">10명</td><td><span class="status">없음</span></td><td>3합 6</td><td class="score num">1.276</td><td class="score num">1.275</td><td class="score num">1.280</td></tr>
+              <tr class="section-row" data-interview="yes" data-minimum="yes" data-search="전남대학교 전남대 학생부종합 고교생활우수자Ⅰ 수의예과"><td><span class="type-label">종합</span>고교생활우수자Ⅰ</td><td class="num">8명</td><td><span class="status yes">있음</span></td><td>3합 7</td><td class="score num">1.561</td><td class="score num">1.537</td><td class="score num">1.612</td></tr>
+            </tbody></table></div></div>
+            <details class="detail-panel"><summary>지원·경쟁률·충원 상세 보기</summary><div class="table-scroll"><table class="detail-table"><thead><tr><th>전형</th><th>모집</th><th>지원</th><th>경쟁률</th><th>충원 합격</th><th>평균</th></tr></thead><tbody><tr><td>교과(일반)</td><td class="num">10명</td><td class="num">113명</td><td class="num">11.30:1</td><td class="num">25명</td><td class="num">1.276</td></tr><tr><td>종합(고교생활우수자Ⅰ)</td><td class="num">8명</td><td class="num">193명</td><td class="num">24.13:1</td><td class="num">1명</td><td class="num">1.561</td></tr></tbody></table></div></details>
+          </article>
+
+          <article class="university-card" id="gnu" data-university-section="gnu">
+            <div class="university-head">
+              <div class="university-intro">
+                <div class="brand-lockup"><div class="logo-frame"><img src="assets/university-logos/gnu.png" alt="경상국립대학교 로고"></div><div class="university-title"><p class="kicker">04 · Jinju</p><h3>경상국립대학교</h3><div class="english">GYEONGSANG NATIONAL UNIVERSITY</div></div></div>
+                <div class="campus-row"><span><i data-lucide="map-pin" aria-hidden="true"></i>경남 진주시 진주대로 501</span><a class="text-link" href="https://www.google.com/maps/search/?api=1&query=%EA%B2%BD%EC%83%81%EA%B5%AD%EB%A6%BD%EB%8C%80%ED%95%99%EA%B5%90+%EC%88%98%EC%9D%98%EA%B3%BC%EB%8C%80%ED%95%99" target="_blank" rel="noopener">외부 지도 열기 ↗</a></div>
+              </div>
+              <div class="mini-map-wrap"><span class="map-badge">가좌캠퍼스</span><div class="mini-map" id="map-gnu"></div><div class="map-fallback">경상국립대학교 위치 · 35.153°N, 128.100°E</div></div>
+            </div>
+            <div class="fact-strip"><div class="fact"><span>전형 수</span><strong>2개</strong></div><div class="fact"><span>총 모집</span><strong>15명</strong></div><div class="fact"><span>최고 경쟁률</span><strong>19.60:1</strong></div><div class="fact"><span>교과 최저 충족</span><strong>39%</strong></div></div>
+            <div class="card-section"><div class="card-section-title"><h4>전형별 최종등록자 결과</h4><p>교과 전형은 70% 대신 80% 컷 제공</p></div><div class="table-scroll"><table class="detail-table"><thead><tr><th>전형</th><th>모집</th><th>면접</th><th>수능 최저</th><th>평균</th><th>50%</th><th>70% / 80%</th></tr></thead><tbody>
+              <tr class="section-row" data-interview="no" data-minimum="yes" data-search="경상국립대학교 경상국립대 학생부교과 일반 수의예과"><td><span class="type-label course">교과</span>일반</td><td class="num">10명</td><td><span class="status">없음</span></td><td>3합 6</td><td class="score num">1.31</td><td class="num">–</td><td class="score num">1.32 <span class="cut-note">80%</span></td></tr>
+              <tr class="section-row" data-interview="yes" data-minimum="yes" data-search="경상국립대학교 경상국립대 학생부종합 일반전형 수의예과"><td><span class="type-label">종합</span>일반전형</td><td class="num">5명</td><td><span class="status yes">있음</span></td><td>3합 7 · 수학 포함</td><td class="score num">1.47</td><td class="num">–</td><td class="num">–</td></tr>
+            </tbody></table></div></div>
+            <details class="detail-panel"><summary>지원·실경쟁률·충원 상세 보기</summary><div class="table-scroll"><table class="detail-table"><thead><tr><th>전형</th><th>지원</th><th>경쟁률</th><th>최저 충족률</th><th>실경쟁률</th><th>최종 등록</th><th>충원</th></tr></thead><tbody><tr><td>교과 일반</td><td class="num">137명</td><td class="num">13.70:1</td><td class="num">39%</td><td class="num">5.40:1</td><td class="num">9명</td><td class="num">25명</td></tr><tr><td>종합 일반</td><td class="num">98명</td><td class="num">19.60:1</td><td class="num">–</td><td class="num">–</td><td class="num">4명</td><td class="num">3명</td></tr></tbody></table></div></details>
+          </article>
+
+          <article class="university-card" id="cnu" data-university-section="cnu">
+            <div class="university-head">
+              <div class="university-intro">
+                <div class="brand-lockup"><div class="logo-frame"><img src="assets/university-logos/cnu-cropped.png" alt="충남대학교 로고"></div><div class="university-title"><p class="kicker">05 · Daejeon</p><h3>충남대학교</h3><div class="english">CHUNGNAM NATIONAL UNIVERSITY</div></div></div>
+                <div class="campus-row"><span><i data-lucide="map-pin" aria-hidden="true"></i>대전 유성구 대학로 99</span><a class="text-link" href="https://www.google.com/maps/search/?api=1&query=%EC%B6%A9%EB%82%A8%EB%8C%80%ED%95%99%EA%B5%90+%EC%88%98%EC%9D%98%EA%B3%BC%EB%8C%80%ED%95%99" target="_blank" rel="noopener">외부 지도 열기 ↗</a></div>
+              </div>
+              <div class="mini-map-wrap"><span class="map-badge">대덕캠퍼스</span><div class="mini-map" id="map-cnu"></div><div class="map-fallback">충남대학교 위치 · 36.366°N, 127.345°E</div></div>
+            </div>
+            <div class="fact-strip"><div class="fact"><span>전형 수</span><strong>3개</strong></div><div class="fact"><span>총 모집</span><strong>20명</strong></div><div class="fact"><span>최고 경쟁률</span><strong>29.75:1</strong></div><div class="fact"><span>교과 충원률</span><strong>214%</strong></div></div>
+            <div class="card-section"><div class="card-section-title"><h4>전형별 최종등록자 결과</h4><p>전 전형 수학 필수 · 국·영·과 평균 반영</p></div><div class="table-scroll"><table class="detail-table"><thead><tr><th>전형</th><th>모집</th><th>면접</th><th>수능 최저</th><th>평균</th><th>50%</th><th>70%</th></tr></thead><tbody>
+              <tr class="section-row" data-interview="no" data-minimum="yes" data-search="충남대학교 충남대 학생부교과 일반 수의예과"><td><span class="type-label course">교과</span>일반</td><td class="num">14명</td><td><span class="status">없음</span></td><td>3합 6</td><td class="score num">1.20</td><td class="num">–</td><td class="score num">1.23</td></tr>
+              <tr class="section-row" data-interview="yes" data-minimum="yes" data-search="충남대학교 충남대 학생부종합 종합Ⅰ 일반 수의예과"><td><span class="type-label">종합</span>종합Ⅰ 일반</td><td class="num">4명</td><td><span class="status yes">있음</span></td><td>3합 7</td><td class="score num">1.95</td><td class="num">–</td><td class="score num">1.65</td></tr>
+              <tr class="section-row" data-interview="no" data-minimum="yes" data-search="충남대학교 충남대 학생부종합 종합Ⅰ 서류 수의예과"><td><span class="type-label">종합</span>종합Ⅰ 서류</td><td class="num">2명</td><td><span class="status">없음</span></td><td>3합 7</td><td class="score num">1.48</td><td class="num">–</td><td class="score num">1.55</td></tr>
+            </tbody></table></div></div>
+            <details class="detail-panel"><summary>지원·최저 충족·충원 상세 보기</summary><div class="table-scroll"><table class="detail-table"><thead><tr><th>전형</th><th>지원</th><th>경쟁률</th><th>최저 충족률</th><th>최초합 평균</th><th>최종합 평균 / 70% / 저</th><th>최종순위·충원률</th></tr></thead><tbody><tr><td>교과 일반</td><td class="num">382명</td><td class="num">27.29:1</td><td class="num">48.4%</td><td class="num">1.13</td><td class="num">1.20 / 1.23 / 1.25</td><td class="num">30 · 214%</td></tr><tr><td>종합Ⅰ 일반</td><td class="num">119명</td><td class="num">29.75:1</td><td class="num">64.7%</td><td class="num">2.09</td><td class="num">1.95 / 1.65 / 3.49</td><td class="num">2 · 50%</td></tr><tr><td>종합Ⅰ 서류</td><td class="num">26명</td><td class="num">13.00:1</td><td class="num">46.2%</td><td class="num">1.46</td><td class="num">1.48 / 1.55 / 1.65</td><td class="num">– · 0%</td></tr></tbody></table></div></details>
+          </article>
+
+          <article class="university-card" id="jbnu" data-university-section="jbnu">
+            <div class="university-head">
+              <div class="university-intro">
+                <div class="brand-lockup"><div class="logo-frame"><img src="assets/university-logos/jbnu-cropped.jpg" alt="전북대학교 로고"></div><div class="university-title"><p class="kicker">06 · Jeonju</p><h3>전북대학교</h3><div class="english">JEONBUK NATIONAL UNIVERSITY</div></div></div>
+                <div class="campus-row"><span><i data-lucide="map-pin" aria-hidden="true"></i>전북 전주시 덕진구 백제대로 567</span><a class="text-link" href="https://www.google.com/maps/search/?api=1&query=%EC%A0%84%EB%B6%81%EB%8C%80%ED%95%99%EA%B5%90+%EC%88%98%EC%9D%98%EA%B3%BC%EB%8C%80%ED%95%99" target="_blank" rel="noopener">외부 지도 열기 ↗</a></div>
+              </div>
+              <div class="mini-map-wrap"><span class="map-badge">전주캠퍼스</span><div class="mini-map" id="map-jbnu"></div><div class="map-fallback">전북대학교 위치 · 35.847°N, 127.129°E</div></div>
+            </div>
+            <div class="fact-strip"><div class="fact"><span>전형 수</span><strong>2개</strong></div><div class="fact"><span>총 모집</span><strong>13명</strong></div><div class="fact"><span>최고 경쟁률</span><strong>19.7:1</strong></div><div class="fact"><span>교과 충원 순위</span><strong>26</strong></div></div>
+            <div class="card-section"><div class="card-section-title"><h4>전형별 최종등록자 결과</h4><p>두 전형 모두 수학 포함 3합 7 이내</p></div><div class="table-scroll"><table class="detail-table"><thead><tr><th>전형</th><th>모집</th><th>면접</th><th>수능 최저</th><th>평균</th><th>50%</th><th>70%</th></tr></thead><tbody>
+              <tr class="section-row" data-interview="no" data-minimum="yes" data-search="전북대학교 전북대 학생부교과 일반학생 수의예과"><td><span class="type-label course">교과</span>일반학생</td><td class="num">10명</td><td><span class="status">없음</span></td><td>수학 포함 3합 7</td><td class="score num">1.17</td><td class="score num">1.16</td><td class="score num">1.19</td></tr>
+              <tr class="section-row" data-interview="yes" data-minimum="yes" data-search="전북대학교 전북대 학생부종합 큰사람 수의예과"><td><span class="type-label">종합</span>큰사람</td><td class="num">3명</td><td><span class="status yes">있음</span></td><td>수학 포함 3합 7</td><td class="score num">1.52</td><td class="num">3명 이하</td><td class="num">3명 이하</td></tr>
+            </tbody></table></div></div>
+            <details class="detail-panel"><summary>지원·경쟁률·충원 상세 보기</summary><div class="table-scroll"><table class="detail-table"><thead><tr><th>전형</th><th>모집</th><th>지원</th><th>등록</th><th>경쟁률</th><th>충원 합격 순위</th><th>충원 등록</th></tr></thead><tbody><tr><td>일반학생</td><td class="num">10명</td><td class="num">111명</td><td class="num">10명</td><td class="num">11.1:1</td><td class="num">26</td><td class="num">10명</td></tr><tr><td>큰사람</td><td class="num">3명</td><td class="num">59명</td><td class="num">3명</td><td class="num">19.7:1</td><td class="num">2</td><td class="num">1명</td></tr></tbody></table></div></details>
+          </article>
+        </div>
+      </section>
+
+      <aside class="legend" aria-label="자료 읽는 법">
+        <div><strong>평균·50%·70%</strong><span>별도 표기가 없는 경우 최종등록자 학생부 내신 등급입니다. 숫자가 낮을수록 높은 등급입니다.</span></div>
+        <div><strong>3합 6 / 3합 7</strong><span>대학이 지정한 수능 영역 중 상위 또는 지정 3개 영역 등급 합 기준입니다. 영역 조건은 전형별 문구를 확인하세요.</span></div>
+        <div><strong>경상국립대 1.32</strong><span>70% 컷이 아니라 대학이 제공한 80% 컷이므로 비교표와 상세표에 따로 표시했습니다.</span></div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="page-shell footer-grid">
+      <p><strong>자료 안내</strong><br>입시 수치는 사용자 제공 자료를 재구성했으며, 지원 전에는 반드시 각 대학 최신 모집요강과 입학처 공지를 확인해야 합니다. 지도는 OpenStreetMap을 사용하며 위치는 수의과대학이 속한 대표 캠퍼스 기준입니다.</p>
+      <div class="source-links" aria-label="로고 UI 참고 링크">
+        <a href="https://www.chungbuk.ac.kr/site/pr/sub.do?key=1829" target="_blank" rel="noopener">충북대 UI</a>
+        <a href="https://identity.snu.ac.kr/ui/2/1" target="_blank" rel="noopener">서울대 UI</a>
+        <a href="https://www.jnu.ac.kr/MainIntro/Symbol/jnuUI" target="_blank" rel="noopener">전남대 UI</a>
+        <a href="https://www.gnu.ac.kr/main/cm/cntnts/cntntsView.do?cntntsId=1199&mi=1370" target="_blank" rel="noopener">경상국립대 VI</a>
+        <a href="https://plus.cnu.ac.kr/" target="_blank" rel="noopener">충남대</a>
+        <a href="https://www.jbnu.ac.kr/web/intro/university/sub05.do" target="_blank" rel="noopener">전북대 UI</a>
+      </div>
+    </div>
+  </footer>
+
+  <style>
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+  </style>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>
+    (() => {
+      'use strict';
+
+      const universities = [
+        { id: 'cbnu', name: '충북대학교', campus: '개신캠퍼스', address: '충북 청주시 서원구 충대로 1', lat: 36.6254, lng: 127.4545 },
+        { id: 'snu', name: '서울대학교', campus: '관악캠퍼스', address: '서울 관악구 관악로 1', lat: 37.4599, lng: 126.9519 },
+        { id: 'jnu', name: '전남대학교', campus: '용봉캠퍼스', address: '광주 북구 용봉로 77', lat: 35.1762, lng: 126.9081 },
+        { id: 'gnu', name: '경상국립대학교', campus: '가좌캠퍼스', address: '경남 진주시 진주대로 501', lat: 35.1533, lng: 128.0994 },
+        { id: 'cnu', name: '충남대학교', campus: '대덕캠퍼스', address: '대전 유성구 대학로 99', lat: 36.3665, lng: 127.3448 },
+        { id: 'jbnu', name: '전북대학교', campus: '전주캠퍼스', address: '전북 전주시 덕진구 백제대로 567', lat: 35.8468, lng: 127.1294 }
+      ];
+
+      const state = { query: '', interview: 'all', minimum: 'all', university: 'all' };
+      const comparisonRows = [...document.querySelectorAll('.comparison-row')];
+      const sections = [...document.querySelectorAll('[data-university-section]')];
+      const searchInput = document.getElementById('searchInput');
+      const interviewFilter = document.getElementById('interviewFilter');
+      const minimumFilter = document.getElementById('minimumFilter');
+      const resultCount = document.getElementById('resultCount');
+      const emptyState = document.getElementById('emptyState');
+      const tabButtons = [...document.querySelectorAll('[data-university-filter]')];
+      const maps = new Map();
+
+      function normalize(value) {
+        return value.toLocaleLowerCase('ko-KR').replace(/\s+/g, ' ').trim();
+      }
+
+      function matches(row) {
+        const queryMatch = !state.query || normalize(row.dataset.search || row.textContent).includes(state.query);
+        const interviewMatch = state.interview === 'all' || row.dataset.interview === state.interview;
+        const minimumMatch = state.minimum === 'all' || row.dataset.minimum === state.minimum;
+        const universityMatch = state.university === 'all' || row.dataset.university === state.university;
+        return queryMatch && interviewMatch && minimumMatch && universityMatch;
+      }
+
+      function applyFilters() {
+        let visibleCount = 0;
+        comparisonRows.forEach((row) => {
+          const visible = matches(row);
+          row.hidden = !visible;
+          if (visible) visibleCount += 1;
+        });
+
+        sections.forEach((section) => {
+          const sectionUniversity = section.dataset.universitySection;
+          const universityAllowed = state.university === 'all' || state.university === sectionUniversity;
+          const rows = [...section.querySelectorAll('.section-row')];
+          let hasVisibleRow = false;
+
+          rows.forEach((row) => {
+            const searchMatch = !state.query || normalize(row.dataset.search || row.textContent).includes(state.query);
+            const interviewMatch = state.interview === 'all' || row.dataset.interview === state.interview;
+            const minimumMatch = state.minimum === 'all' || row.dataset.minimum === state.minimum;
+            const visible = universityAllowed && searchMatch && interviewMatch && minimumMatch;
+            row.hidden = !visible;
+            if (visible) hasVisibleRow = true;
+          });
+
+          section.hidden = !universityAllowed || !hasVisibleRow;
+          if (!section.hidden && maps.has(sectionUniversity)) {
+            window.setTimeout(() => maps.get(sectionUniversity).invalidateSize(), 120);
+          }
+        });
+
+        resultCount.textContent = `${visibleCount}개 전형 표시 중`;
+        emptyState.classList.toggle('visible', visibleCount === 0);
+      }
+
+      searchInput.addEventListener('input', () => {
+        state.query = normalize(searchInput.value);
+        applyFilters();
+      });
+
+      interviewFilter.addEventListener('change', () => {
+        state.interview = interviewFilter.value;
+        applyFilters();
+      });
+
+      minimumFilter.addEventListener('change', () => {
+        state.minimum = minimumFilter.value;
+        applyFilters();
+      });
+
+      tabButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          state.university = button.dataset.universityFilter;
+          tabButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+          applyFilters();
+        });
+      });
+
+      document.getElementById('resetButton').addEventListener('click', () => {
+        state.query = '';
+        state.interview = 'all';
+        state.minimum = 'all';
+        state.university = 'all';
+        searchInput.value = '';
+        interviewFilter.value = 'all';
+        minimumFilter.value = 'all';
+        tabButtons.forEach((item) => item.setAttribute('aria-pressed', String(item.dataset.universityFilter === 'all')));
+        applyFilters();
+        searchInput.focus();
+      });
+
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+
+      function popupContent(university) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'map-popup';
+        const name = document.createElement('strong');
+        name.textContent = university.name;
+        const address = document.createElement('span');
+        address.textContent = `${university.campus} · ${university.address}`;
+        wrapper.append(name, address);
+        return wrapper;
+      }
+
+      function addTiles(map) {
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+      }
+
+      function addMarker(map, university, openPopup = true) {
+        const marker = L.circleMarker([university.lat, university.lng], {
+          radius: 9,
+          color: '#fffdf9',
+          weight: 4,
+          fillColor: '#6b4796',
+          fillOpacity: 1
+        }).addTo(map);
+        marker.bindPopup(popupContent(university));
+        if (openPopup) marker.openPopup();
+        return marker;
+      }
+
+      function initMaps() {
+        if (!window.L) {
+          document.documentElement.classList.add('map-failed');
+          return;
+        }
+
+        try {
+          const overview = L.map('overviewMap', { scrollWheelZoom: false, zoomControl: true, attributionControl: true });
+          addTiles(overview);
+          const bounds = [];
+          universities.forEach((university) => {
+            addMarker(overview, university, false);
+            bounds.push([university.lat, university.lng]);
+          });
+          overview.fitBounds(bounds, { padding: [34, 34] });
+
+          universities.forEach((university) => {
+            const map = L.map(`map-${university.id}`, { scrollWheelZoom: false, zoomControl: true, attributionControl: true }).setView([university.lat, university.lng], 14);
+            addTiles(map);
+            addMarker(map, university, true);
+            maps.set(university.id, map);
+          });
+        } catch (error) {
+          document.documentElement.classList.add('map-failed');
+          console.error('Map initialization failed:', error);
+        }
+      }
+
+      window.addEventListener('load', () => {
+        initMaps();
+        if (window.lucide) window.lucide.createIcons();
+      });
+
+      applyFilters();
+      if (window.lucide) window.lucide.createIcons();
+    })();
+  </script>
+</body>
+</html>
