@@ -1,0 +1,1448 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026학년도 2학기 강의계획서 핵심 요약">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%230066cc'/%3E%3Cpath d='M20 17h24v30H20z' fill='none' stroke='white' stroke-width='4'/%3E%3Cpath d='M26 25h12M26 33h12M26 41h8' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <title>2026-2 강의계획서 요약</title>
+  <style>
+    :root {
+      --blue: #0066cc;
+      --blue-focus: #0071e3;
+      --blue-dark: #2997ff;
+      --white: #ffffff;
+      --parchment: #f5f5f7;
+      --pearl: #fafafc;
+      --ink: #1d1d1f;
+      --muted: #6e6e73;
+      --hairline: #d2d2d7;
+      --dark-1: #272729;
+      --dark-2: #2a2a2c;
+      --dark-muted: #cccccc;
+      --nav-height: 44px;
+      --subnav-height: 52px;
+      --content-width: 980px;
+      --page-inset: clamp(32px, 6vw, 80px);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      background: var(--white);
+      color: var(--ink);
+      font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.47;
+      letter-spacing: -0.022em;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    button,
+    summary {
+      font: inherit;
+    }
+
+    button,
+    a,
+    summary {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    summary:focus-visible {
+      outline: 2px solid var(--blue-focus);
+      outline-offset: 3px;
+    }
+
+    .global-nav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      height: var(--nav-height);
+      background: #000;
+      color: #fff;
+    }
+
+    .nav-inner,
+    .subnav-inner,
+    .content-inner {
+      width: calc(100% - var(--page-inset));
+      max-width: var(--content-width);
+      margin-inline: auto;
+    }
+
+    .nav-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-title {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .nav-meta {
+      color: #a1a1a6;
+    }
+
+    .subnav {
+      position: sticky;
+      top: var(--nav-height);
+      z-index: 20;
+      min-height: var(--subnav-height);
+      background: rgba(245, 245, 247, 0.82);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      backdrop-filter: saturate(180%) blur(20px);
+    }
+
+    .subnav-inner {
+      min-height: var(--subnav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 6px 0;
+    }
+
+    .subnav-title {
+      margin: 0;
+      font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif;
+      font-size: 21px;
+      font-weight: 600;
+      line-height: 1.19;
+      letter-spacing: 0.011em;
+      white-space: nowrap;
+    }
+
+    .subnav-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .control {
+      min-height: 32px;
+      padding: 7px 14px;
+      border: 0;
+      border-radius: 9999px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.016em;
+      transition: transform 120ms ease, background-color 120ms ease;
+    }
+
+    .control:active {
+      transform: scale(0.95);
+    }
+
+    .control-primary {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .control-secondary {
+      background: var(--pearl);
+      color: var(--blue);
+      box-shadow: inset 0 0 0 1px rgba(0, 102, 204, 0.35);
+    }
+
+    .hero {
+      background: var(--white);
+      padding: clamp(56px, 8vw, 92px) 0 clamp(52px, 7.5vw, 88px);
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      margin: 0 0 14px;
+      color: var(--blue);
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      margin: 0 auto;
+      font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif;
+      font-size: clamp(36px, 4.6vw, 64px);
+      font-weight: 600;
+      line-height: 1.07;
+      letter-spacing: -0.025em;
+    }
+
+    .hero-copy {
+      max-width: 660px;
+      margin: clamp(20px, 2.5vw, 24px) auto 0;
+      color: var(--muted);
+      font-size: clamp(17px, 2vw, 21px);
+      line-height: 1.45;
+      letter-spacing: 0.006em;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: clamp(14px, 3vw, 30px);
+      margin-top: clamp(32px, 4vw, 40px);
+    }
+
+    .stat {
+      min-width: clamp(76px, 10vw, 90px);
+    }
+
+    .stat strong,
+    .stat span {
+      display: block;
+    }
+
+    .stat strong {
+      font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-size: clamp(24px, 2.8vw, 28px);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    .stat span {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0;
+    }
+
+    .course-stack {
+      scroll-margin-top: calc(var(--nav-height) + var(--subnav-height));
+    }
+
+    .course {
+      margin: 0;
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .course.parchment {
+      background: var(--parchment);
+    }
+
+    .course.dark {
+      background: var(--dark-1);
+      color: #fff;
+    }
+
+    .course.dark-alt {
+      background: var(--dark-2);
+      color: #fff;
+    }
+
+    .course + .course {
+      border-top: 2px solid var(--white);
+    }
+
+    .course.dark + .course.dark-alt,
+    .course.dark-alt + .course.dark {
+      border-top-color: #333336;
+    }
+
+    .course summary {
+      display: block;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .course summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .summary-inner {
+      width: calc(100% - var(--page-inset));
+      max-width: var(--content-width);
+      min-height: clamp(138px, 16vw, 176px);
+      margin-inline: auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) clamp(44px, 5vw, 52px);
+      align-items: center;
+      gap: clamp(14px, 2.5vw, 24px);
+      padding: clamp(34px, 4vw, 42px) 0;
+    }
+
+    .summary-inner > div {
+      min-width: 0;
+    }
+
+    .course-number {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .dark .course-number,
+    .dark-alt .course-number {
+      color: var(--blue-dark);
+    }
+
+    .course h2 {
+      margin: 0;
+      font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif;
+      font-size: clamp(30px, 4.5vw, 42px);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .course-meta {
+      margin: 13px 0 0;
+      color: var(--muted);
+      font-size: clamp(13px, 1.5vw, 14px);
+      line-height: 1.5;
+      letter-spacing: -0.016em;
+    }
+
+    .dark .course-meta,
+    .dark-alt .course-meta {
+      color: var(--dark-muted);
+    }
+
+    .toggle-indicator {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      justify-self: end;
+      border-radius: 50%;
+      background: var(--blue);
+      transition: transform 220ms ease;
+    }
+
+    .toggle-indicator::before {
+      width: 9px;
+      height: 9px;
+      content: "";
+      border-right: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(45deg) translate(-2px, -2px);
+      transition: transform 220ms ease;
+    }
+
+    details[open] .toggle-indicator {
+      transform: rotate(180deg);
+    }
+
+    .course-body {
+      width: calc(100% - var(--page-inset));
+      max-width: var(--content-width);
+      margin-inline: auto;
+      padding: 0 0 clamp(58px, 7vw, 80px);
+      animation: reveal 260ms ease both;
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .lead {
+      max-width: 800px;
+      margin: 0;
+      padding-top: clamp(30px, 4vw, 38px);
+      border-top: 1px solid var(--hairline);
+      font-size: clamp(20px, 2.5vw, 24px);
+      font-weight: 300;
+      line-height: 1.5;
+      letter-spacing: 0;
+    }
+
+    .dark .lead,
+    .dark-alt .lead {
+      border-top-color: #515154;
+    }
+
+    .fact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
+      gap: clamp(20px, 2.5vw, 24px);
+      margin: clamp(38px, 5vw, 48px) 0 0;
+    }
+
+    .fact-grid div {
+      border-top: 1px solid var(--hairline);
+      padding-top: 12px;
+    }
+
+    .dark .fact-grid div,
+    .dark-alt .fact-grid div {
+      border-top-color: #515154;
+    }
+
+    .fact-grid dt {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
+      letter-spacing: -0.008em;
+    }
+
+    .dark .fact-grid dt,
+    .dark-alt .fact-grid dt {
+      color: var(--dark-muted);
+    }
+
+    .fact-grid dd {
+      margin: 5px 0 0;
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+      gap: clamp(42px, 5vw, 56px);
+      margin-top: clamp(48px, 6vw, 62px);
+    }
+
+    .detail-section {
+      min-width: 0;
+    }
+
+    .detail-section.full {
+      grid-column: 1 / -1;
+    }
+
+    .detail-section h3 {
+      margin: 0 0 18px;
+      font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .detail-section ul,
+    .detail-section ol {
+      margin: 0;
+      padding-left: 1.15em;
+    }
+
+    .detail-section li + li {
+      margin-top: 9px;
+    }
+
+    .detail-section p {
+      margin: 0;
+    }
+
+    .detail-section p + p {
+      margin-top: 12px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .dark .muted,
+    .dark-alt .muted {
+      color: var(--dark-muted);
+    }
+
+    .evaluation {
+      width: 100%;
+      border-collapse: collapse;
+      border-top: 1px solid var(--hairline);
+    }
+
+    .dark .evaluation,
+    .dark-alt .evaluation {
+      border-top-color: #515154;
+    }
+
+    .evaluation th,
+    .evaluation td {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--hairline);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .dark .evaluation th,
+    .dark .evaluation td,
+    .dark-alt .evaluation th,
+    .dark-alt .evaluation td {
+      border-bottom-color: #515154;
+    }
+
+    .evaluation th {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 400;
+    }
+
+    .dark .evaluation th,
+    .dark-alt .evaluation th {
+      color: var(--dark-muted);
+    }
+
+    .evaluation td:last-child,
+    .evaluation th:last-child {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .evaluation td:last-child {
+      font-weight: 600;
+    }
+
+    .notice {
+      margin-top: 18px !important;
+      padding-left: 16px;
+      border-left: 3px solid var(--blue);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .dark .notice,
+    .dark-alt .notice {
+      border-left-color: var(--blue-dark);
+      color: var(--dark-muted);
+    }
+
+    .source-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid var(--hairline);
+    }
+
+    .dark .source-row,
+    .dark-alt .source-row {
+      border-top-color: #515154;
+    }
+
+    .source-row span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .dark .source-row span,
+    .dark-alt .source-row span {
+      color: var(--dark-muted);
+    }
+
+    .source-link {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 15px;
+      transition: transform 120ms ease;
+    }
+
+    .source-link:hover {
+      text-decoration: none;
+    }
+
+    .source-link:active {
+      transform: scale(0.95);
+    }
+
+    .footer {
+      background: var(--parchment);
+      color: var(--muted);
+      padding: 60px 0 36px;
+      font-size: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .footer-inner {
+      width: calc(100% - var(--page-inset));
+      max-width: var(--content-width);
+      margin-inline: auto;
+    }
+
+    .footer-title {
+      margin: 0 0 10px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .footer p {
+      max-width: 720px;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .footer p + p {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--hairline);
+    }
+
+    @media (max-width: 833px) {
+      .control-secondary.print-control {
+        display: none;
+      }
+
+      .subnav-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+
+      .subnav-actions {
+        min-width: 0;
+      }
+
+      .lead {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 734px) {
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .detail-section.full {
+        grid-column: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      :root {
+        --subnav-height: 58px;
+      }
+
+      .nav-inner,
+      .subnav-inner,
+      .content-inner,
+      .summary-inner,
+      .course-body,
+      .footer-inner {
+        width: calc(100% - var(--page-inset));
+      }
+
+      .subnav-title {
+        font-size: 17px;
+      }
+
+      .control {
+        min-height: 36px;
+        padding-inline: 12px;
+        font-size: 12px;
+      }
+
+      .subnav-actions .control-secondary {
+        display: none;
+      }
+
+      .fact-grid {
+        column-gap: 16px;
+      }
+
+      .detail-grid {
+        column-gap: 24px;
+      }
+
+      .detail-section.full {
+        grid-column: auto;
+      }
+
+      .source-row {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-top: 48px;
+      }
+
+      .source-link {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media print {
+      .global-nav,
+      .subnav,
+      .toggle-indicator {
+        display: none !important;
+      }
+
+      .hero {
+        padding: 30px 0;
+      }
+
+      .course,
+      .course.dark,
+      .course.dark-alt,
+      .course.parchment {
+        background: #fff !important;
+        color: #000 !important;
+        break-inside: avoid;
+        border-top: 1px solid #999;
+      }
+
+      .course-meta,
+      .course-number,
+      .muted,
+      .fact-grid dt,
+      .dark .course-meta,
+      .dark-alt .course-meta,
+      .dark .course-number,
+      .dark-alt .course-number,
+      .dark .muted,
+      .dark-alt .muted,
+      .dark .fact-grid dt,
+      .dark-alt .fact-grid dt {
+        color: #444 !important;
+      }
+
+      .source-link {
+        border: 1px solid #000;
+        background: #fff;
+        color: #000;
+      }
+
+      .footer {
+        background: #fff;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="global-nav" aria-label="전체 메뉴">
+    <div class="nav-inner">
+      <a class="nav-title" href="#top">강의계획서</a>
+      <span class="nav-meta">Soongsil University</span>
+    </div>
+  </nav>
+
+  <nav class="subnav" aria-label="요약 보기 도구">
+    <div class="subnav-inner">
+      <p class="subnav-title">2026년 2학기</p>
+      <div class="subnav-actions">
+        <span class="nav-meta" id="open-count" aria-live="polite">0 / 8 펼침</span>
+        <button class="control control-secondary" id="collapse-all" type="button">모두 접기</button>
+        <button class="control control-secondary print-control" id="print-page" type="button">인쇄</button>
+        <button class="control control-primary" id="expand-all" type="button">모두 펼치기</button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="content-inner">
+      <p class="hero-eyebrow">2026학년도 2학기</p>
+      <h1>이번 학기,<br>한눈에.</h1>
+      <p class="hero-copy">과목명을 누르면 핵심 목표, 평가 방식, 주차별 흐름과 수강할 때 꼭 알아둘 내용이 펼쳐집니다.</p>
+      <div class="hero-stats" aria-label="과목 구성 요약">
+        <div class="stat"><strong>8</strong><span>전체 과목</span></div>
+        <div class="stat"><strong>4</strong><span>전공 과목</span></div>
+        <div class="stat"><strong>19.5</strong><span>전체 학점</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="course-stack" id="courses">
+    <details class="course parchment" id="course-r">
+      <summary>
+        <div class="summary-inner">
+          <div>
+            <span class="course-number">01 · 전공선택</span>
+            <h2>R을 활용한 데이터 분석</h2>
+            <p class="course-meta">이제근 교수 · 3학점 · 상대평가 · 대면 + 사전 녹화 · 실습 중심</p>
+          </div>
+          <span class="toggle-indicator" aria-hidden="true"></span>
+        </div>
+      </summary>
+      <div class="course-body">
+        <p class="lead">R의 기본 문법부터 데이터 처리·시각화·기초 통계까지 익힌 뒤, Bioconductor로 실제 생물학 데이터를 분석합니다.</p>
+        <dl class="fact-grid">
+          <div><dt>담당 교수</dt><dd>이제근</dd></div>
+          <div><dt>과목코드</dt><dd>2150068301-01</dd></div>
+          <div><dt>대상</dt><dd>의생명시스템 2학년</dd></div>
+          <div><dt>수업</dt><dd>3학점 / 주 3시간</dd></div>
+        </dl>
+        <div class="detail-grid">
+          <section class="detail-section">
+            <h3>무엇을 배우나</h3>
+            <ul>
+              <li>R/RStudio 환경 설정, 데이터 타입과 프로그래밍 기초</li>
+              <li><code>tidyverse</code>를 이용한 데이터 정리·변환</li>
+              <li><code>ggplot2</code> 기반 시각화와 시각화 원칙</li>
+              <li>데이터 불러오기, 분석 실습과 기초 통계</li>
+              <li>Bioconductor와 바이오 데이터 분석</li>
+            </ul>
+          </section>
+          <section class="detail-section">
+            <h3>평가</h3>
+            <table class="evaluation">
+              <thead><tr><th>항목</th><th>비율</th></tr></thead>
+              <tbody>
+                <tr><td>중간고사</td><td>35%</td></tr>
+                <tr><td>기말고사</td><td>35%</td></tr>
+                <tr><td>과제</td><td>20%</td></tr>
+                <tr><td>수업 참여도</td><td>10%</td></tr>
+              </tbody>
+            </table>
+          </section>
+          <section class="detail-section">
+            <h3>학기 흐름</h3>
+            <ol>
+              <li>1-4주: R 입문, 데이터 타입, 프로그래밍 기초</li>
+              <li>5-8주: tidyverse, 데이터 처리, ggplot2, 중간고사</li>
+              <li>9-12주: 분석·시각화 실습, 기초 통계</li>
+              <li>13-15주: Bioconductor, 바이오 데이터, 기말고사</li>
+            </ol>
+          </section>
+          <section class="detail-section">
+            <h3>수강 포인트</h3>
+            <ul>
+              <li>권장 선수과목: 컴퓨터 프로그래밍 및 실습</li>
+              <li>실습 환경이 필요하며 개인 노트북도 사용할 수 있음</li>
+              <li>거의 매주 실습 퀴즈가 있어 수업 외 연습이 중요함</li>
+              <li>실습·과제 결과를 발표하거나 공유할 수 있음</li>
+            </ul>
+          </section>
+          <section class="detail-section full">
+            <h3>교재</h3>
+            <p><em>Introduction to Data Science: Data Analysis and Prediction Algorithms with R</em></p>
+            <p class="muted">참고: <em>Computational Genomics with R</em>, <em>Do it! 쉽게 배우는 R 데이터 분석</em>, <em>R for Data Science</em>, 사전 녹화 강의자료</p>
+          </section>
+        </div>
+        <div class="source-row">
+          <span>요약 기준: 2026학년도 2학기 강의계획서</span>
+          <a class="source-link" href="./R을활용한데이터분석.pdf">원본 PDF 보기</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="course dark" id="course-global-city">
+      <summary>
+        <div class="summary-inner">
+          <div>
+            <span class="course-number">02 · 교양필수</span>
+            <h2>글로벌도시이해</h2>
+            <p class="course-meta">김시천 교수 · 2학점 · 절대평가 · 토론 · 팀 프로젝트</p>
+          </div>
+          <span class="toggle-indicator" aria-hidden="true"></span>
+        </div>
+      </summary>
+      <div class="course-body">
+        <p class="lead">세계 도시의 형성과 특징을 배우고, 메가시티 서울을 다른 도시와 비교하며 글로벌 시민의식을 기릅니다.</p>
+        <dl class="fact-grid">
+          <div><dt>담당 교수</dt><dd>김시천</dd></div>
+          <div><dt>과목코드</dt><dd>2150102406-06</dd></div>
+          <div><dt>대상</dt><dd>수학·화학·의생명 2학년</dd></div>
+          <div><dt>수업</dt><dd>2학점 / 주 2시간</dd></div>
+        </dl>
+        <div class="detail-grid">
+          <section class="detail-section">
+            <h3>무엇을 배우나</h3>
+            <ul>
+              <li>문명과 도시, 세계화와 도시화, 국가와 도시</li>
+              <li>유럽·비서구권·동아시아 도시의 특성과 비교</li>
+              <li>서울의 전통·거대·미래도시적 성격</li>
+              <li>서울의 문제 진단과 개선안 도출</li>
+              <li>다문화 수용력, 팀 협업과 발표 역량</li>
+            </ul>
+          </section>
+          <section class="detail-section">
+            <h3>평가</h3>
+            <table class="evaluation">
+              <thead><tr><th>항목</th><th>비율</th></tr></thead>
+              <tbody>
+                <tr><td>출석</td><td>20%</td></tr>
+                <tr><td>퀴즈</td><td>20%</td></tr>
+                <tr><td>문제 탐색과 정의</td><td>20%</td></tr>
+                <tr><td>아이디어·해결책</td><td>20%</td></tr>
+                <tr><td>프로젝트 발표·결과물</td><td>20%</td></tr>
+              </tbody>
+            </table>
+          </section>
+          <section class="detail-section">
+            <h3>학기 흐름</h3>
+            <ol>
+              <li>1-3주: 팀 구성, 글로벌 도시 담론과 문제 탐색</li>
+              <li>4-7주: 세계화·동아시아 도시 비교, 문제 정의</li>
+              <li>8-11주: 서울 프로젝트 설정과 현장 조사</li>
+              <li>12주: 글로벌 도시 기초 지식 평가</li>
+              <li>13-15주: 결과 발표와 미래도시 종합 토론</li>
+            </ol>
+          </section>
+          <section class="detail-section">
+            <h3>프로젝트 핵심</h3>
+            <ul>
+              <li>서울이 개선해야 할 문제를 정해 세계 도시와 비교</li>
+              <li>양적·질적 자료를 바탕으로 구체적인 해결책 제안</li>
+              <li>표준 양식 결과보고서 제출</li>
+              <li>PPT 또는 동영상 발표, 발표 시간은 5분</li>
+            </ul>
+          </section>
+          <section class="detail-section full">
+            <h3>교재</h3>
+            <p><em>메트로폴리스</em> · 벤 윌슨 · 매일경제신문사 · 2021</p>
+          </section>
+        </div>
+        <div class="source-row">
+          <span>요약 기준: 2026학년도 2학기 강의계획서</span>
+          <a class="source-link" href="./[글로벌시민의식]글로벌도시이해.pdf">원본 PDF 보기</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="course" id="course-christian-psychology">
+      <summary>
+        <div class="summary-inner">
+          <div>
+            <span class="course-number">03 · 교양선택</span>
+            <h2>기독교심리: 마음을 만나다</h2>
+            <p class="course-meta">김옥주 교수 · 2학점 · 절대평가 · 토론 · 꿈 분석</p>
+          </div>
+          <span class="toggle-indicator" aria-hidden="true"></span>
+        </div>
+      </summary>
+      <div class="course-body">
+        <p class="lead">발달심리와 정신분석 이론을 바탕으로 자아·무의식·감정·가족·공동체를 탐구하고 자신의 정체성을 성찰합니다.</p>
+        <dl class="fact-grid">
+          <div><dt>담당 교수</dt><dd>김옥주</dd></div>
+          <div><dt>과목코드</dt><dd>2150049702-02</dd></div>
+          <div><dt>대상</dt><dd>전체 학년</dd></div>
+          <div><dt>수업</dt><dd>2학점 / 주 2시간</dd></div>
+        </dl>
+        <div class="detail-grid">
+          <section class="detail-section">
+            <h3>무엇을 배우나</h3>
+            <ul>
+              <li>내면 탐구, 심리적 문제, 명상의 이론과 실제</li>
+              <li>행동주의와 프로이트의 고전적 정신분석</li>
+              <li>무의식, 꿈의 형성과 분석, 대상관계이론</li>
+              <li>위니코트의 거짓자기, 융의 자기와 상징</li>
+              <li>가족체계, 사회심리, 한국인의 집단심리</li>
+            </ul>
+          </section>
+          <section class="detail-section">
+            <h3>평가</h3>
+            <table class="evaluation">
+              <thead><tr><th>항목</th><th>비율</th></tr></thead>
+              <tbody>
+                <tr><td>출석</td><td>20%</td></tr>
+                <tr><td>중간고사</td><td>20%</td></tr>
+                <tr><td>기말고사</td><td>25%</td></tr>
+                <tr><td>퀴즈</td><td>15%</td></tr>
+                <tr><td>과제</td><td>10%</td></tr>
+                <tr><td>꿈 분석</td><td>10%</td></tr>
+              </tbody>
+            </table>
+          </section>
+          <section class="detail-section">
+            <h3>학기 흐름</h3>
+            <ol>
+              <li>1-2주: 강의 소개, 인간과 심리, 명상</li>
+              <li>3-7주: 행동주의, 프로이트, 꿈, 대상관계이론</li>
+              <li>8주: 중간고사(2-7주)</li>
+              <li>9-13주: 융, 가족체계, 사회심리, 한국인 심리</li>
+              <li>14-15주: 전체 종합, 기말고사(9-13주)</li>
+            </ol>
+          </section>
+          <section class="detail-section">
+            <h3>과제·활동</h3>
+            <ul>
+              <li>주차별 조별 질문과 토론 참여</li>
+              <li>꿈 그림 제출 과제</li>
+              <li>꿈 분석은 별도 평가 항목</li>
+            </ul>
+          </section>
+          <section class="detail-section full">
+            <h3>주요 교재</h3>
+            <p><em>삶이 내게 말을 걸어올 때</em>, <em>상담의 이론과 실제</em>, <em>프로이트 이후</em></p>
+            <p class="muted">참고: <em>가족</em>, <em>사회심리학</em>, <em>프레임</em>, <em>한국인의 심리학</em></p>
+          </section>
+        </div>
+        <div class="source-row">
+          <span>요약 기준: 2026학년도 2학기 강의계획서</span>
+          <a class="source-link" href="./기독교심리:마음을만나다.pdf">원본 PDF 보기</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="course dark-alt" id="course-protein">
+      <summary>
+        <div class="summary-inner">
+          <div>
+            <span class="course-number">04 · 전공선택</span>
+            <h2>단백질화학 및 실험</h2>
+            <p class="course-meta">박상연 교수 · 3학점 · 상대평가 · 이론 + 실험 · 주 4시간</p>
+          </div>
+          <span class="toggle-indicator" aria-hidden="true"></span>
+        </div>
+      </summary>
+      <div class="course-body">
+        <p class="lead">X-선 결정학의 이론과 실험을 통해 단백질의 3차원 구조를 규명하는 구조생물학의 전체 흐름을 배웁니다.</p>
+        <dl class="fact-grid">
+          <div><dt>담당 교수</dt><dd>박상연</dd></div>
+          <div><dt>과목코드</dt><dd>2150466601-01</dd></div>
+          <div><dt>대상</dt><dd>의생명시스템 2학년</dd></div>
+          <div><dt>수업</dt><dd>3학점 / 주 4시간</dd></div>
+        </dl>
+        <div class="detail-grid">
+          <section class="detail-section">
+            <h3>무엇을 배우나</h3>
+            <ul>
+              <li>아미노산과 단백질의 2차·3차 구조</li>
+              <li>단백질 결정화, 단위세포, 결정계와 Bravais 격자</li>
+              <li>대칭, 공간군과 Miller 지수</li>
+              <li>파동, X-선 산란과 결정 회절</li>
+              <li>데이터 수집·처리, Fourier 변환과 위상 문제</li>
+              <li>전자밀도 지도, 모델 빌딩과 구조 검증</li>
+            </ul>
+          </section>
+          <section class="detail-section">
+            <h3>평가</h3>
+            <table class="evaluation">
+              <thead><tr><th>항목</th><th>비율</th></tr></thead>
+              <tbody>
+                <tr><td>출석</td><td>5%</td></tr>
+                <tr><td>중간고사</td><td>30%</td></tr>
+                <tr><td>기말고사</td><td>35%</td></tr>
+                <tr><td>실험</td><td>30%</td></tr>
+              </tbody>
+            </table>
+          </section>
+          <section class="detail-section">
+            <h3>학기 흐름</h3>
+            <ol>
+              <li>1-3주: 단백질·아미노산과 고차 구조</li>
+              <li>4-6주: 결정화, 격자, 대칭과 공간군</li>
+              <li>7주: 중간고사</li>
+              <li>8-10주: 파동, X-선 산란과 결정 회절</li>
+              <li>11-14주: 데이터 처리부터 구조 검증까지</li>
+              <li>15주: 기말고사</li>
+            </ol>
+          </section>
+          <section class="detail-section">
+            <h3>수강 포인트</h3>
+            <ul>
+              <li>실험 성적이 30%로 큰 비중을 차지함</li>
+              <li>결정학 개념과 실제 데이터 처리 과정을 함께 익힘</li>
+              <li>구조 모델 작성 및 검증까지 연결되는 실무형 구성</li>
+            </ul>
+          </section>
+          <section class="detail-section full">
+            <h3>참고교재</h3>
+            <p><em>Introduction to Macromolecular Crystallography</em> · <em>Principles of Protein X-Ray Crystallography</em></p>
+          </section>
+        </div>
+        <div class="source-row">
+          <span>요약 기준: 2026학년도 2학기 강의계획서</span>
+          <a class="source-link" href="./단백질화학및실험.pdf">원본 PDF 보기</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="course parchment" id="course-biochemistry">
+      <summary>
+        <div class="summary-inner">
+          <div>
+            <span class="course-number">05 · 전공선택</span>
+            <h2>생화학 1</h2>
+            <p class="course-meta">최재현 교수 · 3학점 · 상대평가 · 이론 · 시험 중심</p>
+          </div>
+          <span class="toggle-indicator" aria-hidden="true"></span>
+        </div>
+      </summary>
+      <div class="course-body">
+        <p class="lead">생명체의 구성 원리와 화학반응을 분자 수준에서 이해하는 생화학 기초 과목입니다.</p>
+        <dl class="fact-grid">
+          <div><dt>담당 교수</dt><dd>최재현</dd></div>
+          <div><dt>과목코드</dt><dd>2150161901-01</dd></div>
+          <div><dt>대상</dt><dd>의생명시스템 2학년</dd></div>
+          <div><dt>수업</dt><dd>3학점 / 주 3시간</dd></div>
+        </dl>
+        <div class="detail-grid">
+          <section class="detail-section">
+            <h3>무엇을 배우나</h3>
+            <ul>
+              <li>세포 구조와 생체분자, 물의 성질과 역할</li>
+              <li>아미노산·펩타이드·단백질의 구조와 기능</li>
+              <li>단백질-리간드 결합과 효소 촉매 반응</li>
+              <li>탄수화물과 당생물학</li>
+              <li>핵산 구조, 유전자 클로닝과 유전체학</li>
+              <li>지질, 생체막과 물질 수송</li>
+            </ul>
+          </section>
+          <section class="detail-section">
+            <h3>평가</h3>
+            <table class="evaluation">
+              <thead><tr><th>항목</th><th>비율</th></tr></thead>
+              <tbody>
+                <tr><td>중간고사</td><td>40%</td></tr>
+                <tr><td>기말고사</td><td>40%</td></tr>
+                <tr><td>출석</td><td>10%</td></tr>
+                <tr><td>수업 참여도</td><td>10%</td></tr>
+              </tbody>
+            </table>
+          </section>
+          <section class="detail-section">
+            <h3>학기 흐름</h3>
+            <ol>
+              <li>1-2주: 생화학의 기초와 물</li>
+              <li>3-7주: 아미노산, 단백질, 효소</li>
+              <li>8주: 탄수화물·당생물학과 중간고사</li>
+              <li>9-11주: 핵산과 DNA 기반 정보기술</li>
+              <li>12-14주: 지질, 생체막과 수송</li>
+              <li>15주: 복습과 기말고사</li>
+            </ol>
+          </section>
+          <section class="detail-section">
+            <h3>수강 포인트</h3>
+            <ul>
+              <li>중간·기말고사가 총 80%인 시험 중심 과목</li>
+              <li>수업 준비 자료는 강의 슬라이드</li>
+              <li>주차별 진도는 강의 진행에 따라 바뀔 수 있음</li>
+            </ul>
+          </section>
+          <section class="detail-section full">
+            <h3>교재</h3>
+            <p><em>Lehninger Principles of Biochemistry</em>, 7판 · Nelson &amp; Cox · 2017</p>
+          </section>
+        </div>
+        <div class="source-row">
+          <span>요약 기준: 2026학년도 2학기 강의계획서</span>
+          <a class="source-link" href="./생화학1.pdf">원본 PDF 보기</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="course dark" id="course-chapel">
+      <summary>
+        <div class="summary-inner">
+          <div>
+            <span class="course-number">06 · 채플</span>
+            <h2>독서채플</h2>
+            <p class="course-meta">서기태 교수 · 0.5학점 · Pass/Fail · 출석 100%</p>
+          </div>
+          <span class="toggle-indicator" aria-hidden="true"></span>
+        </div>
+      </summary>
+      <div class="course-body">
+        <p class="lead">종교와 인간의 삶을 책과 강의를 통해 성찰하고 자신의 가치관과 삶의 방향을 정립합니다.</p>
+        <dl class="fact-grid">
+          <div><dt>담당 교수</dt><dd>서기태</dd></div>
+          <div><dt>과목코드</dt><dd>2150051503-03</dd></div>
+          <div><dt>대상</dt><dd>2·3학년</dd></div>
+          <div><dt>수업</dt><dd>0.5학점 / 주 1시간</dd></div>
+        </dl>
+        <div class="detail-grid">
+          <section class="detail-section">
+            <h3>이수 조건</h3>
+            <ul>
+              <li>총 8회 중 7회 이상 출석해야 Pass</li>
+              <li>10분 이내 입장은 최대 2회까지 지각 인정</li>
+              <li>지각 3회는 결석 1회로 처리</li>
+              <li>휴강·공휴일 온라인 보강은 LMS에서 확인</li>
+            </ul>
+          </section>
+          <section class="detail-section">
+            <h3>평가</h3>
+            <table class="evaluation">
+              <thead><tr><th>항목</th><th>비율</th></tr></thead>
+              <tbody><tr><td>출석</td><td>100%</td></tr></tbody>
+            </table>
+          </section>
+          <section class="detail-section full">
+            <h3>수업 일정</h3>
+            <ol>
+              <li>9/10: 프롤로그 - 아름다움과 집짓기</li>
+              <li>9/17: 사람은 누구나 아름다운 존재</li>
+              <li>9/24: 나만의 아름다움 찾기(온라인)</li>
+              <li>10/1: 하나님을 아름답게 바라보는 방법</li>
+              <li>10/8: 고통 속에서도 빛나는 아름다움</li>
+              <li>10/15: 아름답게 살아가는 삶</li>
+              <li>10/22: 온라인 채플</li>
+              <li>10/29: 에필로그 - 사람은 꽃보다 아름답다</li>
+            </ol>
+          </section>
+          <section class="detail-section full">
+            <h3>교재</h3>
+            <p><em>꽃보다 아름다운 사람 이야기</em> · 이상억 · 생명의말씀사 · 2013</p>
+          </section>
+        </div>
+        <div class="source-row">
+          <span>요약 기준: 2026학년도 2학기 강의계획서</span>
+          <a class="source-link" href="./독서채플.pdf">원본 PDF 보기</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="course" id="course-linear-algebra">
+      <summary>
+        <div class="summary-inner">
+          <div>
+            <span class="course-number">07 · 전공선택</span>
+            <h2>선형대수</h2>
+            <p class="course-meta">김미미 교수 · 3학점 · 상대평가 · 이론 · 퀴즈 2회</p>
+          </div>
+          <span class="toggle-indicator" aria-hidden="true"></span>
+        </div>
+      </summary>
+      <div class="course-body">
+        <p class="lead">생명정보학 연구의 토대가 되는 행렬, 벡터공간, 기저·차원, 고유값과 대각화를 배웁니다.</p>
+        <dl class="fact-grid">
+          <div><dt>담당 교수</dt><dd>김미미</dd></div>
+          <div><dt>과목코드</dt><dd>2150558101-01</dd></div>
+          <div><dt>대상</dt><dd>의생명시스템 2학년</dd></div>
+          <div><dt>수업</dt><dd>3학점 / 주 3시간</dd></div>
+        </dl>
+        <div class="detail-grid">
+          <section class="detail-section">
+            <h3>무엇을 배우나</h3>
+            <ul>
+              <li>가우스 소거법, 행렬 연산과 역행렬</li>
+              <li>선형변환과 행렬변환의 합성</li>
+              <li>행렬식과 크라머의 규칙</li>
+              <li>벡터공간, 놈·점곱·거리·직교성과 외적</li>
+              <li>부분공간, 선형독립, 기저와 차원</li>
+              <li>랭크, 무효차수, 고유값과 대각화</li>
+            </ul>
+          </section>
+          <section class="detail-section">
+            <h3>평가</h3>
+            <table class="evaluation">
+              <thead><tr><th>항목</th><th>비율</th></tr></thead>
+              <tbody>
+                <tr><td>중간고사</td><td>40%</td></tr>
+                <tr><td>기말고사</td><td>40%</td></tr>
+                <tr><td>출석</td><td>10%</td></tr>
+                <tr><td>퀴즈</td><td>10%</td></tr>
+              </tbody>
+            </table>
+          </section>
+          <section class="detail-section">
+            <h3>주요 일정</h3>
+            <ol>
+              <li>4주: 퀴즈 1</li>
+              <li>8주: 중간고사 - 1.1절부터 3.2절</li>
+              <li>11주: 퀴즈 2</li>
+              <li>15주: 기말고사 - 3.3절부터 5.2절</li>
+            </ol>
+          </section>
+          <section class="detail-section">
+            <h3>준비사항</h3>
+            <ul>
+              <li>준비물: 교재와 필기도구</li>
+              <li>시험 비중이 총 80%로 높음</li>
+              <li>각 장의 계산 연습과 개념 복습이 중요함</li>
+            </ul>
+          </section>
+          <section class="detail-section full">
+            <h3>교재</h3>
+            <p><em>알기 쉬운 선형대수</em>, 제12판 · Howard Anton 외 · 한빛아카데미 · 2024</p>
+            <p class="muted">참고: <em>Contemporary Linear Algebra</em> · H. Anton &amp; R. Busby</p>
+          </section>
+        </div>
+        <div class="source-row">
+          <span>요약 기준: 2026학년도 2학기 강의계획서</span>
+          <a class="source-link" href="./선형대수.pdf">원본 PDF 보기</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="course dark-alt" id="course-chinese">
+      <summary>
+        <div class="summary-inner">
+          <div>
+            <span class="course-number">08 · 교양선택</span>
+            <h2>초급중국어회화</h2>
+            <p class="course-meta">황해금 교수 · 3학점 · 상대평가 · 생활 회화 · 발표</p>
+          </div>
+          <span class="toggle-indicator" aria-hidden="true"></span>
+        </div>
+      </summary>
+      <div class="course-body">
+        <p class="lead">핵심 문형과 실용 표현을 반복 연습해 일상적인 상황에서 자연스럽게 대화하는 힘을 기릅니다.</p>
+        <dl class="fact-grid">
+          <div><dt>담당 교수</dt><dd>황해금</dd></div>
+          <div><dt>과목코드</dt><dd>2150631301-01</dd></div>
+          <div><dt>대상</dt><dd>전체 학년*</dd></div>
+          <div><dt>수업</dt><dd>3학점 / 주 3시간</dd></div>
+        </dl>
+        <div class="detail-grid">
+          <section class="detail-section">
+            <h3>무엇을 배우나</h3>
+            <ul>
+              <li>인사, 숫자, 날씨, 위치 표현</li>
+              <li>쇼핑, 교통, 병원, 건강과 스포츠</li>
+              <li>식사 초대, 계절, 여행 계획, 작별 인사</li>
+              <li>조사, 동사 중첩과 각종 보어</li>
+              <li>비교문, 사역동사, 조동사와 부사</li>
+              <li>중국의 생활문화 이해</li>
+            </ul>
+          </section>
+          <section class="detail-section">
+            <h3>평가</h3>
+            <table class="evaluation">
+              <thead><tr><th>항목</th><th>원문 기재 비율</th></tr></thead>
+              <tbody>
+                <tr><td>출석</td><td>20%</td></tr>
+                <tr><td>수시평가</td><td>20%</td></tr>
+                <tr><td>중간고사</td><td>30%</td></tr>
+                <tr><td>기말고사</td><td>40%</td></tr>
+              </tbody>
+            </table>
+            <p class="notice">원문 비율의 합계가 110%입니다. 실제 적용 비율은 LMS 또는 담당 교수 안내를 확인하세요.</p>
+          </section>
+          <section class="detail-section">
+            <h3>학기 흐름</h3>
+            <ol>
+              <li>1주: 오리엔테이션과 입문 복습</li>
+              <li>2-7주: 인사·숫자·날씨·쇼핑·교통·위치</li>
+              <li>8주: 중간고사와 피드백</li>
+              <li>9-14주: 병원·건강·식사·계절·여행·작별</li>
+              <li>15주: 기말고사와 피드백</li>
+            </ol>
+          </section>
+          <section class="detail-section">
+            <h3>수강 포인트</h3>
+            <ul>
+              <li>중국어 입문 과정을 접한 학생에게 적합</li>
+              <li>결석 1회당 2점 감점</li>
+              <li>지각 또는 조퇴 3회는 결석 1회로 처리</li>
+              <li>*중문 전공 및 중국 국적 학생은 제외</li>
+            </ul>
+          </section>
+          <section class="detail-section full">
+            <h3>교재</h3>
+            <p><em>(최신개정) 스피킹 중국어 Step 2</em> · JRC중국어연구소 · 맛있는Books · 2022</p>
+          </section>
+        </div>
+        <div class="source-row">
+          <span>요약 기준: 2026학년도 2학기 강의계획서</span>
+          <a class="source-link" href="./초급중국어회화.pdf">원본 PDF 보기</a>
+        </div>
+      </div>
+    </details>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-title">강의계획서 핵심 요약</p>
+      <p>이 페이지는 원본 강의계획서를 빠르게 살펴보기 위한 요약입니다. 평가 방식과 일정은 변경될 수 있으므로 실제 수강 시 LMS와 담당 교수 공지를 함께 확인하세요.</p>
+      <p>2026학년도 2학기 · 총 8개 과목</p>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const storageKey = "course-syllabus-summary-open-v1";
+      const courses = Array.from(document.querySelectorAll("details.course"));
+      const expandAll = document.getElementById("expand-all");
+      const collapseAll = document.getElementById("collapse-all");
+      const printPage = document.getElementById("print-page");
+      const openCount = document.getElementById("open-count");
+      let beforePrintState = [];
+
+      const updateCount = () => {
+        const count = courses.filter((course) => course.open).length;
+        openCount.textContent = `${count} / ${courses.length} 펼침`;
+      };
+
+      const saveState = () => {
+        try {
+          const openIds = courses.filter((course) => course.open).map((course) => course.id);
+          localStorage.setItem(storageKey, JSON.stringify(openIds));
+        } catch (_) {
+          // Local persistence is optional; the page remains fully usable without it.
+        }
+      };
+
+      const setAll = (open) => {
+        courses.forEach((course) => { course.open = open; });
+        updateCount();
+        saveState();
+      };
+
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey) || "[]");
+        if (Array.isArray(saved)) {
+          courses.forEach((course) => { course.open = saved.includes(course.id); });
+        }
+      } catch (_) {
+        // Ignore malformed or unavailable local storage.
+      }
+
+      courses.forEach((course) => {
+        course.addEventListener("toggle", () => {
+          updateCount();
+          saveState();
+        });
+      });
+
+      expandAll.addEventListener("click", () => setAll(true));
+      collapseAll.addEventListener("click", () => setAll(false));
+      printPage.addEventListener("click", () => window.print());
+
+      window.addEventListener("beforeprint", () => {
+        beforePrintState = courses.map((course) => course.open);
+        courses.forEach((course) => { course.open = true; });
+      });
+
+      window.addEventListener("afterprint", () => {
+        courses.forEach((course, index) => { course.open = beforePrintState[index]; });
+        updateCount();
+      });
+
+      updateCount();
+    })();
+  </script>
+</body>
+</html>
